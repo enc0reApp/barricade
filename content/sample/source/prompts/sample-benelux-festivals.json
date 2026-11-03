@@ -1,0 +1,2364 @@
+{
+  "slug": "sample-benelux-festivals",
+  "text": "Name a music festival in Belgium or the Netherlands",
+  "hint": "Current or defunct. Big indoor dance events count.",
+  "types": [
+    "festival"
+  ],
+  "difficulty": 3,
+  "boundary": "Recurring music festivals held in Belgium or the Netherlands, any era: every music festival on Dutch Wikipedia's 'Lijst van Nederlandse muziekfestivals' and 'Lijst van Belgische muziekfestivals' and in English Wikipedia's music-festival categories for both countries, plus widely covered festivals missing from both (DGTL, Dekmantel, Loveland, Draaimolen…). Large ticketed indoor dance events (Qlimax, Sensation, Thunderdome, Rampage, Reverze) and ADE count. Excluded: TV/song contests (Eurovision, Nationaal Songfestival), pride parades, carnivals, beer/grape/hop fairs, theatre and arts festivals (Oerol, Kunstenfestivaldesarts), touring brands with only a stray Dutch date (Sonisphere), and Q-Base (held in Weeze, Germany).",
+  "answers": [
+    {
+      "name": "Lowlands",
+      "type": "festival",
+      "aliases": [
+        "A Campingflight to Lowlands Paradise",
+        "Lowlands Festival"
+      ],
+      "wiki": "Lowlands (festival)",
+      "guess": "main"
+    },
+    {
+      "name": "Pukkelpop",
+      "type": "festival",
+      "aliases": [
+        "PKP",
+        "Pukkel"
+      ],
+      "wiki": "Pukkelpop",
+      "guess": "main"
+    },
+    {
+      "name": "Rock Werchter",
+      "type": "festival",
+      "aliases": [
+        "Werchter"
+      ],
+      "wiki": "Rock Werchter",
+      "guess": "main"
+    },
+    {
+      "name": "Tomorrowland",
+      "type": "festival",
+      "aliases": [
+        "TML",
+        "Tomorrowland Festival"
+      ],
+      "wiki": "Tomorrowland (festival)",
+      "guess": "main"
+    },
+    {
+      "name": "Amsterdam Dance Event",
+      "type": "festival",
+      "aliases": [
+        "ADE"
+      ],
+      "wiki": "Amsterdam Dance Event",
+      "guess": "side",
+      "note": "Five days, 1,000+ events across Amsterdam every October"
+    },
+    {
+      "name": "Awakenings",
+      "type": "festival",
+      "aliases": [
+        "Awakenings Festival"
+      ],
+      "wiki": "Awakenings (festival)",
+      "guess": "side"
+    },
+    {
+      "name": "Best Kept Secret",
+      "type": "festival",
+      "aliases": [
+        "BKS"
+      ],
+      "wiki": "Best Kept Secret (festival)",
+      "guess": "side"
+    },
+    {
+      "name": "Defqon.1",
+      "type": "festival",
+      "aliases": [
+        "Defqon",
+        "DQ1",
+        "Defqon.1 Weekend Festival"
+      ],
+      "wiki": "Defqon.1",
+      "guess": "side",
+      "note": "Hardstyle's summer mothership in Biddinghuizen"
+    },
+    {
+      "name": "Dekmantel",
+      "type": "festival",
+      "aliases": [
+        "Dekmantel Festival"
+      ],
+      "wiki": null,
+      "guess": "side",
+      "flag": "tote"
+    },
+    {
+      "name": "DGTL",
+      "type": "festival",
+      "aliases": [
+        "DGTL Amsterdam",
+        "Digital Festival"
+      ],
+      "wiki": null,
+      "guess": "side"
+    },
+    {
+      "name": "Dour Festival",
+      "type": "festival",
+      "aliases": [
+        "Dour"
+      ],
+      "wiki": "Dour Festival",
+      "guess": "side"
+    },
+    {
+      "name": "Down the Rabbit Hole",
+      "type": "festival",
+      "aliases": [
+        "DTRH"
+      ],
+      "wiki": "Down the Rabbit Hole (festival)",
+      "guess": "side"
+    },
+    {
+      "name": "Graspop Metal Meeting",
+      "type": "festival",
+      "aliases": [
+        "Graspop",
+        "GMM"
+      ],
+      "wiki": "Graspop Metal Meeting",
+      "guess": "side"
+    },
+    {
+      "name": "Mysteryland",
+      "type": "festival",
+      "wiki": "Mysteryland",
+      "guess": "side",
+      "note": "The world's longest-running dance festival, since 1993"
+    },
+    {
+      "name": "North Sea Jazz Festival",
+      "type": "festival",
+      "aliases": [
+        "North Sea Jazz",
+        "NSJ"
+      ],
+      "wiki": "North Sea Jazz Festival",
+      "guess": "side"
+    },
+    {
+      "name": "Pinkpop",
+      "type": "festival",
+      "aliases": [
+        "Pinkpop Festival"
+      ],
+      "wiki": "Pinkpop Festival",
+      "guess": "side",
+      "note": "Running since 1970 — the oldest yearly pop festival still going"
+    },
+    {
+      "name": "Couleur Café",
+      "type": "festival",
+      "wiki": "Couleur Café",
+      "guess": "tent"
+    },
+    {
+      "name": "Eurosonic Noorderslag",
+      "type": "festival",
+      "aliases": [
+        "Noorderslag",
+        "Eurosonic",
+        "ESNS"
+      ],
+      "wiki": "Eurosonic Noorderslag",
+      "guess": "tent"
+    },
+    {
+      "name": "Extrema Outdoor",
+      "type": "festival",
+      "aliases": [
+        "Extrema"
+      ],
+      "wiki": null,
+      "guess": "tent"
+    },
+    {
+      "name": "Gentse Feesten",
+      "type": "festival",
+      "aliases": [
+        "Ghent Festival",
+        "Ghent Festivities"
+      ],
+      "wiki": "Gentse Feesten",
+      "guess": "tent"
+    },
+    {
+      "name": "Into the Great Wide Open",
+      "type": "festival",
+      "aliases": [
+        "ITGWO"
+      ],
+      "wiki": "Into the Great Wide Open",
+      "guess": "tent"
+    },
+    {
+      "name": "Le Guess Who?",
+      "type": "festival",
+      "wiki": "Le Guess Who?",
+      "guess": "tent"
+    },
+    {
+      "name": "Les Ardentes",
+      "type": "festival",
+      "aliases": [
+        "Ardentes"
+      ],
+      "wiki": "Les Ardentes",
+      "guess": "tent"
+    },
+    {
+      "name": "Lokerse Feesten",
+      "type": "festival",
+      "aliases": [
+        "Lokerse"
+      ],
+      "wiki": "Lokerse Feesten",
+      "guess": "tent"
+    },
+    {
+      "name": "Paaspop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "tent"
+    },
+    {
+      "name": "Qlimax",
+      "type": "festival",
+      "wiki": "Qlimax",
+      "guess": "tent",
+      "note": "Hardstyle's indoor black mass in Arnhem's GelreDome"
+    },
+    {
+      "name": "Roadburn",
+      "type": "festival",
+      "aliases": [
+        "Roadburn Festival"
+      ],
+      "wiki": "Roadburn Festival",
+      "guess": "tent",
+      "note": "Tilburg's heavy-music pilgrimage"
+    },
+    {
+      "name": "Sensation",
+      "type": "festival",
+      "aliases": [
+        "Sensation White"
+      ],
+      "wiki": "Sensation (event)",
+      "guess": "tent",
+      "note": "Dress code: all white. Amsterdam Arena, 2000–2017"
+    },
+    {
+      "name": "Thunderdome",
+      "type": "festival",
+      "aliases": [
+        "Thunderdome Festival"
+      ],
+      "wiki": "Thunderdome (music festival)",
+      "guess": "tent",
+      "note": "Gabber's mothership since 1992"
+    },
+    {
+      "name": "Vierdaagsefeesten",
+      "type": "festival",
+      "wiki": null,
+      "guess": "tent",
+      "note": "A week-long party around Nijmegen's Four Days Marches"
+    },
+    {
+      "name": "Zwarte Cross",
+      "type": "festival",
+      "aliases": [
+        "De Zwarte Cross"
+      ],
+      "wiki": "Zwarte Cross",
+      "guess": "tent",
+      "note": "Motocross, stunts and bands: Europe's biggest 'motorcross festival'"
+    },
+    {
+      "name": "A State of Trance",
+      "type": "festival",
+      "aliases": [
+        "ASOT"
+      ],
+      "wiki": "A State of Trance",
+      "guess": "basement"
+    },
+    {
+      "name": "Amsterdam Music Festival",
+      "type": "festival",
+      "aliases": [
+        "AMF"
+      ],
+      "wiki": "Amsterdam Music Festival",
+      "guess": "basement"
+    },
+    {
+      "name": "Amsterdam Open Air",
+      "type": "festival",
+      "aliases": [
+        "AOA"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Bevrijdingsfestival",
+      "type": "festival",
+      "aliases": [
+        "Bevrijdingsfestivals",
+        "Liberation Day festival"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Bospop",
+      "type": "festival",
+      "wiki": "Bospop",
+      "guess": "basement"
+    },
+    {
+      "name": "Brussels Summer Festival",
+      "type": "festival",
+      "aliases": [
+        "BSF"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Cactusfestival",
+      "type": "festival",
+      "aliases": [
+        "Cactus"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Castlefest",
+      "type": "festival",
+      "wiki": "Castlefest",
+      "guess": "basement"
+    },
+    {
+      "name": "Concert at Sea",
+      "type": "festival",
+      "wiki": "Concert at SEA",
+      "guess": "basement"
+    },
+    {
+      "name": "Dance Valley",
+      "type": "festival",
+      "wiki": "Dance Valley",
+      "guess": "basement"
+    },
+    {
+      "name": "Decibel Outdoor",
+      "type": "festival",
+      "aliases": [
+        "Decibel"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Dominator",
+      "type": "festival",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Draaimolen",
+      "type": "festival",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Dranouter",
+      "type": "festival",
+      "aliases": [
+        "Festival Dranouter",
+        "Folk Dranouter"
+      ],
+      "wiki": "Folk Dranouter",
+      "guess": "basement"
+    },
+    {
+      "name": "Dynamo Open Air",
+      "type": "festival",
+      "aliases": [
+        "Dynamo"
+      ],
+      "wiki": "Dynamo Open Air",
+      "guess": "basement",
+      "note": "Grew out of an Eindhoven metal club; ~118,000 came in 1995"
+    },
+    {
+      "name": "Esperanzah!",
+      "type": "festival",
+      "wiki": "Esperanzah!",
+      "guess": "basement"
+    },
+    {
+      "name": "FortaRock",
+      "type": "festival",
+      "aliases": [
+        "Fortarock Festival"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Francofolies de Spa",
+      "type": "festival",
+      "aliases": [
+        "Francofolies"
+      ],
+      "wiki": "Les Francofolies de Spa",
+      "guess": "basement"
+    },
+    {
+      "name": "Gent Jazz",
+      "type": "festival",
+      "aliases": [
+        "Gent Jazz Festival"
+      ],
+      "wiki": "Gent Jazz Festival",
+      "guess": "basement"
+    },
+    {
+      "name": "Groezrock",
+      "type": "festival",
+      "wiki": "Groezrock",
+      "guess": "basement"
+    },
+    {
+      "name": "I Love Techno",
+      "type": "festival",
+      "wiki": "I Love Techno",
+      "guess": "basement",
+      "note": "Ghent's indoor techno marathon until 2013"
+    },
+    {
+      "name": "Ieperfest",
+      "type": "festival",
+      "aliases": [
+        "Ieper Hardcore Fest"
+      ],
+      "wiki": "Ieperfest",
+      "guess": "basement"
+    },
+    {
+      "name": "Intents",
+      "type": "festival",
+      "aliases": [
+        "Intents Festival"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Jazz Middelheim",
+      "type": "festival",
+      "wiki": "Jazz Middelheim",
+      "guess": "basement"
+    },
+    {
+      "name": "Jera On Air",
+      "type": "festival",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Laundry Day",
+      "type": "festival",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Loveland",
+      "type": "festival",
+      "aliases": [
+        "Loveland Festival"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Masters of Hardcore",
+      "type": "festival",
+      "aliases": [
+        "MOH"
+      ],
+      "wiki": "Masters of Hardcore",
+      "guess": "basement"
+    },
+    {
+      "name": "Milkshake Festival",
+      "type": "festival",
+      "aliases": [
+        "Milkshake"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Paradise City Festival",
+      "type": "festival",
+      "aliases": [
+        "Paradise City"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Parkpop",
+      "type": "festival",
+      "wiki": "Parkpop",
+      "guess": "basement",
+      "note": "One of Europe's biggest free pop festivals, in The Hague"
+    },
+    {
+      "name": "Psy-Fi",
+      "type": "festival",
+      "aliases": [
+        "Psy-Fi Festival"
+      ],
+      "wiki": "Psy-Fi",
+      "guess": "basement"
+    },
+    {
+      "name": "Rampage",
+      "type": "festival",
+      "aliases": [
+        "Rampage Open Air"
+      ],
+      "wiki": null,
+      "guess": "basement",
+      "note": "The world's biggest drum & bass event, in Antwerp's Sportpaleis"
+    },
+    {
+      "name": "Reggae Geel",
+      "type": "festival",
+      "wiki": "Reggae Geel",
+      "guess": "basement"
+    },
+    {
+      "name": "Reverze",
+      "type": "festival",
+      "wiki": "Reverze",
+      "guess": "basement"
+    },
+    {
+      "name": "Rock Zottegem",
+      "type": "festival",
+      "wiki": "Rock Zottegem",
+      "guess": "basement"
+    },
+    {
+      "name": "Sfinks",
+      "type": "festival",
+      "aliases": [
+        "Sfinks Mixed",
+        "Sfinks Mundial",
+        "Sfinks Festival"
+      ],
+      "wiki": "Sfinks Festival",
+      "guess": "basement"
+    },
+    {
+      "name": "Straf_Werk",
+      "type": "festival",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Suikerrock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "TW Classic",
+      "type": "festival",
+      "wiki": "TW Classic",
+      "guess": "basement"
+    },
+    {
+      "name": "Verknipt",
+      "type": "festival",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Welcome to the Future",
+      "type": "festival",
+      "wiki": "Welcome to the Future (festival)",
+      "guess": "basement"
+    },
+    {
+      "name": "Werchter Boutique",
+      "type": "festival",
+      "wiki": "Werchter Boutique",
+      "guess": "basement"
+    },
+    {
+      "name": "Wildeburg",
+      "type": "festival",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Wish Outdoor",
+      "type": "festival",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": ")toon)",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Aaltjesdagen",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Absolutely Free Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Afrika Festival Hertme",
+      "type": "festival",
+      "aliases": [
+        "Afrika Festival"
+      ],
+      "wiki": "Afrika Festival Hertme",
+      "guess": "htbt"
+    },
+    {
+      "name": "Afro-Latino Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Afropolitan Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Airbag Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Alcatraz Metal Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Amersfoort Jazz",
+      "type": "festival",
+      "wiki": "Amersfoort Jazz",
+      "guess": "htbt"
+    },
+    {
+      "name": "Amsterdam Metalfest",
+      "type": "festival",
+      "wiki": "Amsterdam Metalfest",
+      "guess": "htbt"
+    },
+    {
+      "name": "Amsterdam Roots Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Amsterdam Underground Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Antilliaanse Feesten",
+      "type": "festival",
+      "wiki": "Antilliaanse Feesten",
+      "guess": "htbt"
+    },
+    {
+      "name": "Appelpop",
+      "type": "festival",
+      "wiki": "Appelpop",
+      "guess": "htbt"
+    },
+    {
+      "name": "Arnhem Metal Meeting",
+      "type": "festival",
+      "wiki": "Arnhem Metal Meeting",
+      "guess": "htbt"
+    },
+    {
+      "name": "Arrow Rock Festival",
+      "type": "festival",
+      "wiki": "Arrow Rock Festival",
+      "guess": "htbt"
+    },
+    {
+      "name": "Ars Musica",
+      "type": "festival",
+      "wiki": "Ars Musica (festival)",
+      "guess": "htbt"
+    },
+    {
+      "name": "ATØM Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bachfestival Antwerpen",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Backyard Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Baroeg Open Air",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bastionfestival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bazar Curieux",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Beachland",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Beachweekend",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Beatstad",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Beveren Buiten",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bevrijdingspop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bezemrock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bluegrass Beeg",
+      "type": "festival",
+      "wiki": "Bluegrass Beeg",
+      "guess": "htbt"
+    },
+    {
+      "name": "Blues Peer",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bluesrock Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bluesroute Helmond",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bomboclat",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "BOMfestival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Booch?",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Boomtown Gent",
+      "type": "festival",
+      "aliases": [
+        "Boomtown Festival Gent"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Booty Rave Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Borstrock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "BProck",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Brakrock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Breda Barst",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Breda Jazz Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Brosella",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bru-X-elles Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bruis",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Brussels Jazz Weekend",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Buikrock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Campo Solar",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Carpe Noctem",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Casa Blanca",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Cirque Magique",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Citadelic",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Clamotte Rock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Colora Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Contrair Open Air",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "CORE Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Crammerock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Crisisfestival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Crossing Border",
+      "type": "festival",
+      "wiki": "Crossing Border Festival",
+      "guess": "htbt"
+    },
+    {
+      "name": "Dance D-Vision",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Dauwpop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "De Koer Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Deep in The Woods",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Denderpop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Dicky Woodstock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Dioniss Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Django à Liberchies",
+      "type": "festival",
+      "wiki": "Django à Liberchies",
+      "guess": "htbt"
+    },
+    {
+      "name": "Dodo Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "DOEL Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Dokk'em Open Air",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Doomination",
+      "type": "festival",
+      "wiki": "Doomination",
+      "guess": "htbt"
+    },
+    {
+      "name": "Dreambeats Festival",
+      "type": "festival",
+      "aliases": [
+        "Dreambeats"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "dunk!festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Dutch Harp Festival",
+      "type": "festival",
+      "wiki": "Dutch Harp Festival",
+      "guess": "htbt"
+    },
+    {
+      "name": "Dutch Valley",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Elastiek Muziek",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Emporium",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "European World of Bluegrass",
+      "type": "festival",
+      "wiki": "European World of Bluegrass",
+      "guess": "htbt"
+    },
+    {
+      "name": "Explore the North",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Fast Forward Dance Parade",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Feest in het Park",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Festival Het Accordeon",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Festival Mundial",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Festival of Flanders",
+      "type": "festival",
+      "aliases": [
+        "Festival van Vlaanderen"
+      ],
+      "wiki": "Festival of Flanders",
+      "guess": "htbt"
+    },
+    {
+      "name": "Festival Oude Muziek Utrecht",
+      "type": "festival",
+      "wiki": "Festival Oude Muziek",
+      "guess": "htbt"
+    },
+    {
+      "name": "Fields of Rock",
+      "type": "festival",
+      "wiki": "Fields of Rock",
+      "guess": "htbt"
+    },
+    {
+      "name": "Five Days Off",
+      "type": "festival",
+      "wiki": "Five Days Off",
+      "guess": "htbt"
+    },
+    {
+      "name": "Flevo Festival",
+      "type": "festival",
+      "aliases": [
+        "Flevo",
+        "Xnoizz Flevo Festival"
+      ],
+      "wiki": "Flevo Festival",
+      "guess": "htbt"
+    },
+    {
+      "name": "Folkwoods",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Fonnefeesten",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Free Your Mind",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Freshtival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Frietrock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Fête de la Musique",
+      "type": "festival",
+      "aliases": [
+        "Fete de la Musique Brussel",
+        "Fête de la Musique Bruxelles"
+      ],
+      "wiki": "Fête de la Musique",
+      "guess": "htbt",
+      "flag": "lock"
+    },
+    {
+      "name": "Gaume Jazz Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Genk on Stage",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Geuzenpop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Gideon Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Gladiolen",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "GOGBOT",
+      "type": "festival",
+      "wiki": "GOGBOT",
+      "guess": "htbt"
+    },
+    {
+      "name": "Golden Age Rock Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Golden River City Jazz Festival",
+      "type": "festival",
+      "wiki": "Golden River City Jazz Festival",
+      "guess": "htbt"
+    },
+    {
+      "name": "Gouvy Jazz & Blues Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Grachtenfestival",
+      "type": "festival",
+      "wiki": "Grachtenfestival",
+      "guess": "htbt"
+    },
+    {
+      "name": "Grasnapolsky",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Grensrock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Grols Jazz Vesteval",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Groovy Day Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Ground Zero Festival",
+      "type": "festival",
+      "aliases": [
+        "Ground Zero"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Ham Sessions Outdoor",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Hard Bass",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Helden in het Park",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Hello Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Herbakkersfestival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Hestival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Hide & Seek Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Holland Festival",
+      "type": "festival",
+      "wiki": "Holland Festival",
+      "guess": "htbt"
+    },
+    {
+      "name": "Holland International Blues Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Holland Pop Festival",
+      "type": "festival",
+      "aliases": [
+        "Kralingen"
+      ],
+      "wiki": "Holland Pop Festival",
+      "guess": "htbt",
+      "note": "1970 in Kralingen: the 'Dutch Woodstock', with Pink Floyd and Jefferson Airplane"
+    },
+    {
+      "name": "Hook Rock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Houtfestival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Huntenpop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Hype O Dream",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "IJsseljazz",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Incubate",
+      "type": "festival",
+      "wiki": "Incubate (festival)",
+      "guess": "htbt"
+    },
+    {
+      "name": "Indian Summer Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Into the Grave",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Into the Woods",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Into this Wood",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Jazz Bilzen",
+      "type": "festival",
+      "wiki": "Jazz Bilzen",
+      "guess": "htbt",
+      "note": "One of Europe's first pop festivals, 1965–1981"
+    },
+    {
+      "name": "Jazz Festival Enkhuizen",
+      "type": "festival",
+      "wiki": "Jazz Festival Enkhuizen",
+      "guess": "htbt"
+    },
+    {
+      "name": "Jazz in 't Park",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Jazz in Duketown",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Julianapop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Katse Feesten",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Kingsland",
+      "type": "festival",
+      "aliases": [
+        "Kingsland Festival"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Klub Dramatik",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Knallers",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Kneistival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Kuna Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Kwakoe Zomerfestival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Labadoux",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Lakedance",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Land of love",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "LaSemo Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Last Minute Summer Event",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "LatinVillage",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Laus Polyphoniae",
+      "type": "festival",
+      "wiki": "Laus Polyphoniae",
+      "guess": "htbt"
+    },
+    {
+      "name": "Leffingeleuren",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Legacy Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Les Granges Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Les Nuits Botanique",
+      "type": "festival",
+      "aliases": [
+        "Nuits Botanique",
+        "Les Nuits"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Les Sentiers de Sart-Risbart",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Les Solidarités",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Lief Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Linkerwoofer",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Liquicity",
+      "type": "festival",
+      "aliases": [
+        "Liquicity Festival"
+      ],
+      "wiki": "Liquicity",
+      "guess": "htbt"
+    },
+    {
+      "name": "Live is Live",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Lolands",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "London Calling",
+      "type": "festival",
+      "wiki": "London Calling (festival)",
+      "guess": "htbt",
+      "note": "An indie festival in Amsterdam's Paradiso, despite the name"
+    },
+    {
+      "name": "M-idzomer",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Maanrock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "MAfestival",
+      "type": "festival",
+      "wiki": "MAfestival Brugge",
+      "guess": "htbt"
+    },
+    {
+      "name": "Maliepop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "ManiFiesta",
+      "type": "festival",
+      "wiki": "ManiFiesta",
+      "guess": "htbt"
+    },
+    {
+      "name": "Marktrock",
+      "type": "festival",
+      "aliases": [
+        "Marktrock Poperinge"
+      ],
+      "wiki": "Marktrock",
+      "guess": "htbt"
+    },
+    {
+      "name": "Meakusma Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Metal Female Voices Fest",
+      "type": "festival",
+      "aliases": [
+        "MFVF"
+      ],
+      "wiki": "Metal Female Voices Fest",
+      "guess": "htbt"
+    },
+    {
+      "name": "Metropolis Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Midsummer Mozertiade",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Moods!",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Moonfield",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Motel Mozaïque",
+      "type": "festival",
+      "wiki": "Motel Mozaïque",
+      "guess": "htbt"
+    },
+    {
+      "name": "Music Meeting",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Musica Republica",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Musica Sacra",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Na Fir Bolg",
+      "type": "festival",
+      "wiki": "Na fir bolg",
+      "guess": "htbt"
+    },
+    {
+      "name": "Nach van 't Limburgse Leed",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Nirwana Tuinfeest",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Nostalgie Beach Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "November Music",
+      "type": "festival",
+      "wiki": "November Music",
+      "guess": "htbt"
+    },
+    {
+      "name": "Occultfest",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Odegand",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Oerrock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "On(w)ijs Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Op De Tôffel",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Orlando Festival",
+      "type": "festival",
+      "wiki": "Orlando Festival",
+      "guess": "htbt"
+    },
+    {
+      "name": "Ostend Beach",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Output Festival",
+      "type": "festival",
+      "wiki": "Output Festival",
+      "guess": "htbt"
+    },
+    {
+      "name": "Parkpop Oostkamp",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Paulusfeesten",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Picking Bones",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Pinkpop Classic",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Pitfest",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Pop@Park",
+      "type": "festival",
+      "aliases": [
+        "Pop at Park"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Popronde",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "ProgPower Europe",
+      "type": "festival",
+      "wiki": "ProgPower Europe",
+      "guess": "htbt"
+    },
+    {
+      "name": "Release Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Repmond Rock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Retro sur Mer",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rewire",
+      "type": "festival",
+      "aliases": [
+        "Rewire Festival"
+      ],
+      "wiki": "Rewire Festival",
+      "guess": "htbt"
+    },
+    {
+      "name": "Rhâââ Lovely Festival",
+      "type": "festival",
+      "aliases": [
+        "Rhaaa Lovely"
+      ],
+      "wiki": "Rhâââ Lovely Festival",
+      "guess": "htbt"
+    },
+    {
+      "name": "Ribs & Blues",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rijvers Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Robles Rock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rock Herk",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rock Olmen",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rock Ternat",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rock voor Specials",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rock Zammel",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rockin' Park",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Ronquières Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rotterdam Rave",
+      "type": "festival",
+      "wiki": "Rotterdam Rave",
+      "guess": "htbt"
+    },
+    {
+      "name": "Schippop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Scène sur Sambre",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Sinner's Day",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Sjock Festival",
+      "type": "festival",
+      "wiki": "Sjock Festival",
+      "guess": "htbt"
+    },
+    {
+      "name": "Sjwaampop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Skanifest",
+      "type": "festival",
+      "wiki": "Skanifest",
+      "guess": "htbt"
+    },
+    {
+      "name": "Slinkse Sinkse",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Soenda",
+      "type": "festival",
+      "aliases": [
+        "Soenda Festival"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Solar Weekend",
+      "type": "festival",
+      "aliases": [
+        "Solar Weekend Festival",
+        "Solar"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Space Safari",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Springpop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "State-X New Forms",
+      "type": "festival",
+      "wiki": "State-X",
+      "guess": "htbt"
+    },
+    {
+      "name": "Strandfestival ZAND",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Stöppelhaene",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Summer Darkness",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Sunrise Festival",
+      "type": "festival",
+      "aliases": [
+        "Sunrise"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Supremacy",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Swing",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Tegentonen",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Ten Days Off",
+      "type": "festival",
+      "wiki": "Ten Days Off",
+      "guess": "htbt",
+      "note": "Ten nights of techno during the Gentse Feesten"
+    },
+    {
+      "name": "The Flying Dutch",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "The Hague Jazz",
+      "type": "festival",
+      "wiki": "The Hague Jazz",
+      "guess": "htbt"
+    },
+    {
+      "name": "The Qontinent",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "TodaysArt",
+      "type": "festival",
+      "wiki": "TodaysArt",
+      "guess": "htbt"
+    },
+    {
+      "name": "Trance Energy",
+      "type": "festival",
+      "wiki": "Trance Energy",
+      "guess": "htbt"
+    },
+    {
+      "name": "TROMP Percussion Eindhoven",
+      "type": "festival",
+      "aliases": [
+        "TROMP"
+      ],
+      "wiki": "TROMP Percussion Eindhoven",
+      "guess": "htbt"
+    },
+    {
+      "name": "Tuinfeest",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Ubuntu Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Upside Down",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Valkhof Festival",
+      "type": "festival",
+      "aliases": [
+        "de-Affaire"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Vestrock",
+      "type": "festival",
+      "wiki": "VESTROCK",
+      "guess": "htbt"
+    },
+    {
+      "name": "Vijverfestival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Voodoo Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Vunzige Deuntjes",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "W-Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Walden Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Wantijpop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Waterpop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "WeCanDance",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Welcome to the Village",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Wereld Muziek Concours",
+      "type": "festival",
+      "aliases": [
+        "WMC",
+        "World Music Contest"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Werfpop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "West Quarter Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Westerpop",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Whisper",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Wicked Jazz Sounds",
+      "type": "festival",
+      "wiki": "Wicked Jazz Sounds",
+      "guess": "htbt"
+    },
+    {
+      "name": "WILDFEST",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Wonderfeel",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "WOO HAH!",
+      "type": "festival",
+      "wiki": "WOO HAH!",
+      "guess": "htbt"
+    },
+    {
+      "name": "WoodWall",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Wâldrock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "XRDS",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Yeke Yeke Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Yellowtime Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Zandstock Festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Zeverrock",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "ZOKS-festival",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Zomer in Linden",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Zomerblik",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Zomerparkfeest",
+      "type": "festival",
+      "wiki": null,
+      "guess": "htbt"
+    }
+  ],
+  "sources": [
+    "https://nl.wikipedia.org/wiki/Lijst_van_Nederlandse_muziekfestivals",
+    "https://nl.wikipedia.org/wiki/Lijst_van_Belgische_muziekfestivals",
+    "https://en.wikipedia.org/wiki/List_of_music_festivals_in_the_Netherlands",
+    "https://en.wikipedia.org/wiki/Category:Music_festivals_in_Belgium",
+    "https://en.wikipedia.org/wiki/Category:Music_festivals_in_the_Netherlands"
+  ],
+  "notes": "English titles come from nl→en interlanguage links. Valkhof Festival and Vierdaagsefeesten both redirect to the Four Days Marches article and Maliepop links to Parkpop's, so they carry wiki null to keep fame separate. The Belgian list contains many festivals without articles; they are kept (the list is the boundary)."
+}

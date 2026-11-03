@@ -1,0 +1,243 @@
+.status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  font-family: var(--font-pixel-line);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+}
+
+.status p {
+  margin: 0;
+}
+
+.big {
+  font-family: var(--font-pixel);
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  color: var(--ink) !important;
+}
+
+.small {
+  font-size: 11px;
+  color: var(--ink-quiet);
+}
+
+.count {
+  font-family: var(--font-pixel);
+  font-size: 18px;
+  color: var(--cyan);
+}
+
+.panel {
+  --fill: rgba(8, 11, 26, 0.9);
+  --step: 6px;
+  padding: 18px 16px 16px;
+}
+
+.headline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.setline {
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-dim);
+}
+
+.stats {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+}
+
+.stats > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  background: rgba(8, 11, 26, 0.88);
+  box-shadow: inset 0 0 0 2px #1c2449;
+  clip-path: var(--stepped-sm);
+}
+
+.stats dt {
+  font-size: 9px;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-quiet);
+}
+
+.stats dd {
+  margin: 0;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.stats .you {
+  color: var(--magenta);
+}
+
+.h2 {
+  margin: 0 0 14px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-wider);
+  color: var(--cyan);
+}
+
+/* Pixel-bar histogram: stage on the left, the car park on the right. */
+.hist {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 120px;
+  padding: 0 2px;
+  border-bottom: 2px solid var(--panel-edge-hi);
+}
+
+.col {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.bar {
+  display: block;
+  width: 100%;
+  background: repeating-linear-gradient(to top, var(--uv) 0 4px, color-mix(in srgb, var(--uv) 70%, #000) 4px 6px);
+}
+
+.col[data-you] .bar {
+  background: repeating-linear-gradient(to top, var(--magenta) 0 4px, color-mix(in srgb, var(--magenta) 70%, #000) 4px 6px);
+  box-shadow: 0 0 8px rgba(255, 79, 163, 0.5);
+}
+
+.axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--ink-quiet);
+}
+
+.rn {
+  margin: 0 0 6px;
+  font-size: 10px;
+  letter-spacing: var(--tracking-wider);
+  color: var(--magenta);
+}
+
+.prompt {
+  margin: 0 0 14px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.top {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.ans {
+  --c: var(--tier-main);
+  display: grid;
+  grid-template-columns: minmax(0, 9.5em) 1fr 3.4em;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+}
+
+.ans[data-tier="tote"] {
+  --c: var(--tier-tote);
+}
+.ans[data-tier="side"] {
+  --c: var(--tier-side);
+}
+.ans[data-tier="tent"] {
+  --c: var(--tier-tent);
+}
+.ans[data-tier="basement"] {
+  --c: var(--tier-basement);
+}
+.ans[data-tier="htbt"] {
+  --c: var(--tier-htbt);
+}
+
+.ansName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.02em;
+}
+
+.ansBar {
+  height: 10px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ansBar > span {
+  display: block;
+  height: 100%;
+  background: var(--c);
+}
+
+.ansPct {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-dim);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.lone {
+  margin: 12px 0 0;
+  font-family: var(--font-pixel-line);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+}
+
+.lone b {
+  font-family: var(--font-pixel);
+  font-weight: 500;
+  color: var(--tier-htbt);
+}
+
+.names {
+  color: var(--ink-quiet);
+}
+
+.miss {
+  margin: 4px 0 0;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink-quiet);
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}

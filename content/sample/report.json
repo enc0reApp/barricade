@@ -1,0 +1,520 @@
+{
+  "kind": "sample",
+  "generatedAt": "2026-11-03T05:00:11.185Z",
+  "epoch": "2026-01-01",
+  "normalizeVersion": 1,
+  "fame": {
+    "entries": 2345,
+    "fetchedAt": "2026-11-03T04:49:31.265Z"
+  },
+  "totals": {
+    "prompts": 7,
+    "scheduledPrompts": 7,
+    "days": 1,
+    "answers": 2898,
+    "entities": 2898,
+    "mergedEntities": 0,
+    "catalogKeys": 3981,
+    "droppedKeys": 0,
+    "forcedTiers": 0,
+    "promptsWithWarnings": 2
+  },
+  "idCollisions": [],
+  "days": [
+    {
+      "number": 1,
+      "date": "2026-01-01",
+      "prompts": [
+        "sample-drum-machines",
+        "sample-german-cities",
+        "sample-coachella-headliners",
+        "sample-berlin-clubs",
+        "sample-benelux-festivals",
+        "sample-techno-subgenres",
+        "sample-pro-audio-brands"
+      ],
+      "answers": 2898,
+      "tiers": {
+        "main": 25,
+        "tote": 5,
+        "side": 59,
+        "tent": 116,
+        "basement": 257,
+        "htbt": 2436
+      },
+      "summary": "#1 2026-01-01 \"SAMPLE SET\" · 7 prompts · d1122334 · gear/city/artist/venue/festival/genre/soundsystem · 2898 answers · M25 T5 S59 N116 B257 H2436 · 2 flagged",
+      "title": "SAMPLE SET"
+    }
+  ],
+  "prompts": [
+    {
+      "slug": "sample-benelux-festivals",
+      "text": "Name a music festival in Belgium or the Netherlands",
+      "rarity": "blend",
+      "difficulty": 3,
+      "primaryType": "festival",
+      "days": [
+        1
+      ],
+      "answers": 350,
+      "withFame": 106,
+      "missingWiki": [],
+      "disambiguationWiki": [],
+      "tiers": {
+        "main": 1,
+        "tote": 1,
+        "side": 11,
+        "tent": 19,
+        "basement": 47,
+        "htbt": 271
+      },
+      "top": [
+        {
+          "name": "Tomorrowland",
+          "tier": "main",
+          "share": 0.2047
+        },
+        {
+          "name": "Pukkelpop",
+          "tier": "side",
+          "share": 0.04339
+        },
+        {
+          "name": "Rock Werchter",
+          "tier": "side",
+          "share": 0.03943
+        },
+        {
+          "name": "Pinkpop",
+          "tier": "side",
+          "share": 0.03874
+        },
+        {
+          "name": "Lowlands",
+          "tier": "side",
+          "share": 0.03694
+        }
+      ],
+      "drifts": [],
+      "droppedKeys": [],
+      "forced": [],
+      "flags": [
+        {
+          "name": "Dekmantel",
+          "flag": "tote"
+        },
+        {
+          "name": "Fête de la Musique",
+          "flag": "lock"
+        }
+      ],
+      "warnings": [
+        "only 106/350 answers have fame (rarity mostly from guesses)"
+      ]
+    },
+    {
+      "slug": "sample-berlin-clubs",
+      "text": "Name a nightclub in Berlin",
+      "rarity": "guess",
+      "difficulty": 2,
+      "primaryType": "venue",
+      "days": [
+        1
+      ],
+      "answers": 228,
+      "withFame": 19,
+      "missingWiki": [],
+      "disambiguationWiki": [],
+      "tiers": {
+        "main": 3,
+        "tote": 0,
+        "side": 6,
+        "tent": 9,
+        "basement": 28,
+        "htbt": 182
+      },
+      "top": [
+        {
+          "name": "Berghain",
+          "tier": "main",
+          "share": 0.1458
+        },
+        {
+          "name": "KitKatClub",
+          "tier": "main",
+          "share": 0.1458
+        },
+        {
+          "name": "Tresor",
+          "tier": "main",
+          "share": 0.1458
+        },
+        {
+          "name": "://about blank",
+          "tier": "side",
+          "share": 0.03645
+        },
+        {
+          "name": "Kater Blau",
+          "tier": "side",
+          "share": 0.03645
+        }
+      ],
+      "drifts": [],
+      "droppedKeys": [],
+      "forced": [],
+      "flags": [],
+      "warnings": []
+    },
+    {
+      "slug": "sample-coachella-headliners",
+      "text": "Name an act that has headlined Coachella",
+      "rarity": "guess",
+      "difficulty": 2,
+      "primaryType": "artist",
+      "days": [
+        1
+      ],
+      "answers": 65,
+      "withFame": 65,
+      "missingWiki": [],
+      "disambiguationWiki": [],
+      "tiers": {
+        "main": 6,
+        "tote": 1,
+        "side": 22,
+        "tent": 26,
+        "basement": 8,
+        "htbt": 2
+      },
+      "top": [
+        {
+          "name": "Beyoncé",
+          "tier": "main",
+          "share": 0.06606
+        },
+        {
+          "name": "Billie Eilish",
+          "tier": "main",
+          "share": 0.06606
+        },
+        {
+          "name": "Frank Ocean",
+          "tier": "main",
+          "share": 0.06606
+        },
+        {
+          "name": "Justin Bieber",
+          "tier": "main",
+          "share": 0.06606
+        },
+        {
+          "name": "Lady Gaga",
+          "tier": "main",
+          "share": 0.06606
+        }
+      ],
+      "drifts": [],
+      "droppedKeys": [],
+      "forced": [],
+      "flags": [
+        {
+          "name": "Radiohead",
+          "flag": "tote"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "slug": "sample-drum-machines",
+      "text": "Name a drum machine",
+      "rarity": "blend",
+      "difficulty": 1,
+      "primaryType": "gear",
+      "days": [
+        1
+      ],
+      "answers": 97,
+      "withFame": 34,
+      "missingWiki": [],
+      "disambiguationWiki": [],
+      "tiers": {
+        "main": 4,
+        "tote": 1,
+        "side": 8,
+        "tent": 9,
+        "basement": 32,
+        "htbt": 43
+      },
+      "top": [
+        {
+          "name": "Roland TR-808",
+          "tier": "main",
+          "share": 0.2707
+        },
+        {
+          "name": "Roland TR-909",
+          "tier": "main",
+          "share": 0.1175
+        },
+        {
+          "name": "Akai MPC",
+          "tier": "main",
+          "share": 0.06664
+        },
+        {
+          "name": "LinnDrum",
+          "tier": "main",
+          "share": 0.06183
+        },
+        {
+          "name": "Roland TR-606",
+          "tier": "tote",
+          "share": 0.02963
+        }
+      ],
+      "drifts": [],
+      "droppedKeys": [],
+      "forced": [],
+      "flags": [
+        {
+          "name": "Roland TR-606",
+          "flag": "tote"
+        },
+        {
+          "name": "BeatBuddy",
+          "flag": "lock"
+        }
+      ],
+      "warnings": [
+        "only 34/97 answers have fame (rarity mostly from guesses)"
+      ]
+    },
+    {
+      "slug": "sample-german-cities",
+      "text": "Name a city in Germany",
+      "rarity": "fame",
+      "difficulty": 1,
+      "primaryType": "city",
+      "days": [
+        1
+      ],
+      "answers": 2072,
+      "withFame": 2072,
+      "missingWiki": [],
+      "disambiguationWiki": [],
+      "tiers": {
+        "main": 5,
+        "tote": 0,
+        "side": 1,
+        "tent": 34,
+        "basement": 117,
+        "htbt": 1915
+      },
+      "top": [
+        {
+          "name": "Berlin",
+          "tier": "main",
+          "share": 0.06
+        },
+        {
+          "name": "Cologne",
+          "tier": "main",
+          "share": 0.06
+        },
+        {
+          "name": "Frankfurt",
+          "tier": "main",
+          "share": 0.06
+        },
+        {
+          "name": "Hamburg",
+          "tier": "main",
+          "share": 0.06
+        },
+        {
+          "name": "Munich",
+          "tier": "main",
+          "share": 0.06
+        }
+      ],
+      "drifts": [
+        {
+          "name": "Duisburg",
+          "guess": "side",
+          "tier": "basement",
+          "share": 0.002957,
+          "views": 8412,
+          "steps": 2
+        },
+        {
+          "name": "Mülheim",
+          "guess": "tent",
+          "tier": "htbt",
+          "share": 0.0007944,
+          "views": 2547,
+          "steps": 2
+        },
+        {
+          "name": "Herne",
+          "guess": "tent",
+          "tier": "htbt",
+          "share": 0.0002747,
+          "views": 970,
+          "steps": 2
+        },
+        {
+          "name": "Hamm",
+          "guess": "tent",
+          "tier": "htbt",
+          "share": 0.00004837,
+          "views": 200,
+          "steps": 2
+        }
+      ],
+      "droppedKeys": [],
+      "forced": [],
+      "flags": [
+        {
+          "name": "Berlin",
+          "flag": "lock"
+        },
+        {
+          "name": "Hamburg",
+          "flag": "lock"
+        },
+        {
+          "name": "Munich",
+          "flag": "lock"
+        },
+        {
+          "name": "Cologne",
+          "flag": "lock"
+        },
+        {
+          "name": "Frankfurt",
+          "flag": "lock"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "slug": "sample-pro-audio-brands",
+      "text": "Name a loudspeaker brand you'd see at a festival or club",
+      "rarity": "guess",
+      "difficulty": 4,
+      "primaryType": "soundsystem",
+      "days": [
+        1
+      ],
+      "answers": 52,
+      "withFame": 28,
+      "missingWiki": [],
+      "disambiguationWiki": [],
+      "tiers": {
+        "main": 2,
+        "tote": 1,
+        "side": 6,
+        "tent": 9,
+        "basement": 18,
+        "htbt": 16
+      },
+      "top": [
+        {
+          "name": "Funktion-One",
+          "tier": "tote",
+          "share": 0.165
+        },
+        {
+          "name": "JBL",
+          "tier": "main",
+          "share": 0.165
+        },
+        {
+          "name": "L-Acoustics",
+          "tier": "main",
+          "share": 0.165
+        },
+        {
+          "name": "Bose",
+          "tier": "side",
+          "share": 0.04126
+        },
+        {
+          "name": "d&b audiotechnik",
+          "tier": "side",
+          "share": 0.04126
+        }
+      ],
+      "drifts": [],
+      "droppedKeys": [],
+      "forced": [],
+      "flags": [
+        {
+          "name": "Funktion-One",
+          "flag": "tote"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "slug": "sample-techno-subgenres",
+      "text": "Name a subgenre of techno",
+      "rarity": "guess",
+      "difficulty": 3,
+      "primaryType": "genre",
+      "days": [
+        1
+      ],
+      "answers": 34,
+      "withFame": 21,
+      "missingWiki": [],
+      "disambiguationWiki": [],
+      "tiers": {
+        "main": 4,
+        "tote": 1,
+        "side": 5,
+        "tent": 10,
+        "basement": 7,
+        "htbt": 7
+      },
+      "top": [
+        {
+          "name": "Acid techno",
+          "tier": "main",
+          "share": 0.1427
+        },
+        {
+          "name": "Hard techno",
+          "tier": "main",
+          "share": 0.1427
+        },
+        {
+          "name": "Melodic techno",
+          "tier": "main",
+          "share": 0.1427
+        },
+        {
+          "name": "Minimal techno",
+          "tier": "main",
+          "share": 0.1427
+        },
+        {
+          "name": "Detroit techno",
+          "tier": "tote",
+          "share": 0.03568
+        }
+      ],
+      "drifts": [],
+      "droppedKeys": [],
+      "forced": [],
+      "flags": [
+        {
+          "name": "Detroit techno",
+          "flag": "tote"
+        }
+      ],
+      "warnings": []
+    }
+  ]
+}

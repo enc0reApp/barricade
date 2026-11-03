@@ -1,0 +1,204 @@
+.dock {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  max-width: calc(var(--column) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding: 10px var(--gutter) calc(12px + var(--safe-bottom));
+  transition:
+    opacity 200ms ease,
+    transform 260ms ease;
+}
+
+.dock[data-hidden] {
+  opacity: 0;
+  transform: translateY(24px);
+  pointer-events: none;
+}
+
+/* ───── VU-meter timer ───── */
+.vu {
+  --on: var(--vu-green);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.vu[data-level="warn"] {
+  --on: var(--vu-amber);
+}
+
+.vu[data-level="danger"] {
+  --on: var(--vu-red);
+}
+
+.secs {
+  width: 2.2ch;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--on);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 6px color-mix(in srgb, var(--on) 55%, transparent);
+}
+
+.segments {
+  flex: 1;
+  display: flex;
+  gap: 2px;
+  height: 14px;
+  padding: 2px;
+  background: rgba(5, 7, 16, 0.9);
+  box-shadow: inset 0 0 0 1px #1d2448;
+}
+
+.seg {
+  flex: 1;
+  background: var(--vu-off);
+  transition: background 120ms steps(1);
+}
+
+.seg[data-on] {
+  background: var(--on);
+  box-shadow: 0 0 4px color-mix(in srgb, var(--on) 60%, transparent);
+}
+
+/* ───── input row ───── */
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.field {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  isolation: isolate;
+  --step: 4px;
+}
+
+.field::before,
+.field::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  clip-path: var(--stepped);
+}
+
+.field::before {
+  inset: 0;
+  background: #2a8fa6;
+  z-index: -2;
+}
+
+.field:focus-within::before {
+  background: var(--cyan);
+}
+
+.field::after {
+  inset: 2px;
+  background: #080b1a;
+  z-index: -1;
+}
+
+.field[data-shake="a"] {
+  animation: shakeA 150ms steps(4);
+}
+
+.field[data-shake="b"] {
+  animation: shakeB 150ms steps(4);
+}
+
+.input {
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-pixel);
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  outline: none;
+  caret-color: var(--cyan);
+}
+
+.input::placeholder {
+  color: var(--ink-quiet);
+  letter-spacing: 0.08em;
+}
+
+.push {
+  min-width: 96px;
+  min-height: 56px;
+  font-size: 17px;
+  padding: 0 16px;
+}
+
+.feedback {
+  position: relative;
+  z-index: 4;
+  margin: 0 auto;
+  min-height: 1.5em;
+  padding: 0 var(--gutter);
+  max-width: calc(var(--column) + var(--gutter) * 2);
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: var(--ink-dim);
+  text-shadow:
+    0 1px 0 #000,
+    0 0 8px #000;
+}
+
+.feedback[data-tone="warn"] {
+  color: var(--warn);
+}
+
+.feedback[data-tone="good"] {
+  color: var(--tier-tent);
+}
+
+@keyframes shakeA {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes shakeB {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field[data-shake] {
+    animation: none;
+  }
+}

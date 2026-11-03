@@ -1,0 +1,167 @@
+/* The full-screen play frame. It tracks the visual viewport, so the input
+   dock at its foot rides above the on-screen keyboard. */
+.frame {
+  --stage-gap: clamp(28px, calc(17vh - 70px), 120px);
+  --ruler-top: calc(var(--safe-top) + 112px);
+  --ruler-bottom: 168px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--vv-top, 0px);
+  height: var(--vv-h, 100dvh);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.frame[data-off] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.frame[data-phase="reveal"],
+.frame[data-phase="finishing"] {
+  --ruler-bottom: 118px;
+}
+
+.frame[data-kb] {
+  --stage-gap: 8px;
+}
+
+.frame[data-archive] {
+  --hud-pad: 26px;
+}
+
+@media (min-width: 900px) {
+  .frame {
+    --stage-gap: clamp(28px, calc(30vh - 84px), 230px);
+  }
+}
+
+.archiveTag {
+  position: absolute;
+  top: calc(var(--safe-top) + 6px);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  margin: 0;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: var(--tracking-wider);
+  color: var(--amber);
+}
+
+.cardSlot {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: calc(var(--column) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding: var(--stage-gap) calc(var(--gutter) + var(--ruler-space)) 0 var(--gutter);
+  transition: padding 200ms ease;
+}
+
+.spacer {
+  flex: 1;
+  min-height: 8px;
+}
+
+.revealSlot {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--safe-top) + 112px);
+  bottom: 118px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: calc(var(--column) + var(--gutter) * 2);
+  margin: 0 auto;
+}
+
+.cardCenter {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 calc(var(--gutter) + var(--ruler-space)) 0 var(--gutter);
+  pointer-events: none;
+}
+
+.cardCenter > * {
+  pointer-events: auto;
+}
+
+.keep {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: calc(var(--column) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding: 0 calc(var(--gutter) + var(--ruler-space)) calc(18px + var(--safe-bottom)) var(--gutter);
+}
+
+.keep :global(.px-btn) {
+  font-size: clamp(14px, 4vw, 18px);
+  letter-spacing: 0.16em;
+  gap: 0.7em;
+}
+
+.keep :global(.px-btn)[data-long] {
+  font-size: clamp(13px, 3.6vw, 17px);
+  letter-spacing: 0.1em;
+  gap: 0.5em;
+  padding: 0 12px;
+}
+
+.retry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 16px;
+  text-align: center;
+  font-family: var(--font-pixel-line);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--warn);
+  background: rgba(5, 6, 13, 0.75);
+}
+
+.retry p {
+  margin: 0;
+}
+
+.printing {
+  margin: 0;
+  padding: 14px 18px;
+  font-size: 16px;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink);
+  background: rgba(5, 6, 13, 0.7);
+  animation: breathe 1.4s ease-in-out infinite alternate;
+}
+
+.rulerDesk {
+  --ruler-top: 52vh;
+  --ruler-bottom: 40px;
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .rulerDesk {
+    display: block;
+  }
+}
+
+@keyframes breathe {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.6;
+  }
+}

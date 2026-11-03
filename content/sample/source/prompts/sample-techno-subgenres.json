@@ -1,0 +1,323 @@
+{
+  "slug": "sample-techno-subgenres",
+  "text": "Name a subgenre of techno",
+  "hint": "Styles and scene names count. Hardcore techno counts.",
+  "types": [
+    "genre"
+  ],
+  "difficulty": 3,
+  "boundary": "Styles classed as techno: the subgenres and regional scenes in Wikipedia's Techno infobox, the Techno family in 'List of electronic music genres', Category:Techno genres, and hardcore techno with the styles Wikipedia calls subgenres of it (gabber, frenchcore, mainstream hardcore); plus established DJ/record-store techno labels (peak time, driving, raw, deep, hypnotic, dark, hardgroove, schranz, tribal, Berlin techno). Excluded: genres Wikipedia files under another parent even when techno-flavoured — tech house and microhouse (house), techstep (drum and bass), hard trance, hardstyle, electroclash, ghettotech, Afro tech, IDM — and hardcore offshoots not described as techno (speedcore, happy hardcore, breakcore).",
+  "rarity": "guess",
+  "answers": [
+    {
+      "name": "Melodic techno",
+      "type": "genre",
+      "aliases": [
+        "Melodic",
+        "Melodic house and techno"
+      ],
+      "wiki": "Melodic techno",
+      "guess": "main"
+    },
+    {
+      "name": "Hard techno",
+      "type": "genre",
+      "wiki": null,
+      "guess": "main"
+    },
+    {
+      "name": "Minimal techno",
+      "type": "genre",
+      "aliases": [
+        "Minimal"
+      ],
+      "wiki": "Minimal techno",
+      "guess": "main"
+    },
+    {
+      "name": "Acid techno",
+      "type": "genre",
+      "aliases": [
+        "Acid"
+      ],
+      "wiki": "Acid techno",
+      "guess": "main"
+    },
+    {
+      "name": "Detroit techno",
+      "type": "genre",
+      "aliases": [
+        "Detroit"
+      ],
+      "wiki": "Detroit techno",
+      "guess": "side",
+      "flag": "tote",
+      "note": "Where it all started: Juan Atkins, Derrick May, Kevin Saunderson"
+    },
+    {
+      "name": "Industrial techno",
+      "type": "genre",
+      "aliases": [
+        "Industrial"
+      ],
+      "wiki": "Industrial techno",
+      "guess": "side"
+    },
+    {
+      "name": "Dub techno",
+      "type": "genre",
+      "aliases": [
+        "Dub"
+      ],
+      "wiki": "Dub techno",
+      "guess": "side",
+      "note": "Basic Channel's echo-drenched Berlin sound"
+    },
+    {
+      "name": "Peak time techno",
+      "type": "genre",
+      "aliases": [
+        "Peak time",
+        "Peak time / driving techno"
+      ],
+      "wiki": null,
+      "guess": "side"
+    },
+    {
+      "name": "Hardcore techno",
+      "type": "genre",
+      "aliases": [
+        "Hardcore"
+      ],
+      "wiki": "Hardcore (electronic dance music genre)",
+      "guess": "side"
+    },
+    {
+      "name": "Gabber",
+      "type": "genre",
+      "aliases": [
+        "Gabba",
+        "Gabberhouse",
+        "Early hardcore"
+      ],
+      "wiki": "Gabber",
+      "guess": "side",
+      "note": "Rotterdam's 150+ BPM answer to Amsterdam's house scene"
+    },
+    {
+      "name": "Hypnotic techno",
+      "type": "genre",
+      "aliases": [
+        "Hypnotic"
+      ],
+      "wiki": null,
+      "guess": "tent"
+    },
+    {
+      "name": "Deep techno",
+      "type": "genre",
+      "aliases": [
+        "Deep"
+      ],
+      "wiki": null,
+      "guess": "tent"
+    },
+    {
+      "name": "Dark techno",
+      "type": "genre",
+      "aliases": [
+        "Dark"
+      ],
+      "wiki": null,
+      "guess": "tent"
+    },
+    {
+      "name": "Raw techno",
+      "type": "genre",
+      "aliases": [
+        "Raw"
+      ],
+      "wiki": null,
+      "guess": "tent"
+    },
+    {
+      "name": "Driving techno",
+      "type": "genre",
+      "aliases": [
+        "Driving"
+      ],
+      "wiki": null,
+      "guess": "tent"
+    },
+    {
+      "name": "Hardgroove",
+      "type": "genre",
+      "aliases": [
+        "Hardgroove techno"
+      ],
+      "wiki": null,
+      "guess": "tent",
+      "note": "Loopy, percussive late-'90s techno — think Ben Sims"
+    },
+    {
+      "name": "Schranz",
+      "type": "genre",
+      "wiki": null,
+      "guess": "tent",
+      "note": "Pounding, distorted German hard techno popularised by Chris Liebing"
+    },
+    {
+      "name": "Ambient techno",
+      "type": "genre",
+      "wiki": "Ambient techno",
+      "guess": "tent"
+    },
+    {
+      "name": "Berlin techno",
+      "type": "genre",
+      "wiki": null,
+      "guess": "tent"
+    },
+    {
+      "name": "Free tekno",
+      "type": "genre",
+      "aliases": [
+        "Tekno",
+        "Hardtek"
+      ],
+      "wiki": "Free tekno",
+      "guess": "tent",
+      "note": "The sound of illegal free parties and teknivals"
+    },
+    {
+      "name": "Tribal techno",
+      "type": "genre",
+      "aliases": [
+        "Tribal"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Bleep techno",
+      "type": "genre",
+      "aliases": [
+        "Bleep",
+        "Bleep and bass"
+      ],
+      "wiki": "Bleep techno",
+      "guess": "basement",
+      "note": "Sheffield's late-'80s Warp sound: bleeps over sub-bass"
+    },
+    {
+      "name": "Birmingham sound",
+      "type": "genre",
+      "aliases": [
+        "Birmingham techno"
+      ],
+      "wiki": "Birmingham sound",
+      "guess": "basement",
+      "note": "Surgeon and Regis's stripped, relentless '90s sound"
+    },
+    {
+      "name": "Frenchcore",
+      "type": "genre",
+      "wiki": "Frenchcore",
+      "guess": "basement"
+    },
+    {
+      "name": "Tech trance",
+      "type": "genre",
+      "wiki": "Tech trance",
+      "guess": "basement"
+    },
+    {
+      "name": "Belgian techno",
+      "type": "genre",
+      "aliases": [
+        "Belgian hardcore techno",
+        "Belgian hardcore",
+        "Rave techno"
+      ],
+      "wiki": "Belgian hardcore techno",
+      "guess": "basement",
+      "note": "The early-'90s 'hoover' rave sound of R&S Records"
+    },
+    {
+      "name": "Toytown techno",
+      "type": "genre",
+      "aliases": [
+        "Toytown",
+        "Kiddy rave"
+      ],
+      "wiki": "Toytown techno",
+      "guess": "basement",
+      "note": "Early-'90s rave built on samples from children's TV"
+    },
+    {
+      "name": "Mainstream hardcore",
+      "type": "genre",
+      "aliases": [
+        "Mainstyle",
+        "Nu style gabber"
+      ],
+      "wiki": "Mainstream hardcore",
+      "guess": "htbt"
+    },
+    {
+      "name": "Schaffel",
+      "type": "genre",
+      "wiki": "Schaffel",
+      "guess": "htbt",
+      "note": "Techno with a glam-rock shuffle, via Cologne's Kompakt"
+    },
+    {
+      "name": "Bouncy techno",
+      "type": "genre",
+      "aliases": [
+        "Bouncy"
+      ],
+      "wiki": "Bouncy techno",
+      "guess": "htbt",
+      "note": "Scotland's early-'90s rave sound"
+    },
+    {
+      "name": "Nortec",
+      "type": "genre",
+      "wiki": "Nortec",
+      "guess": "htbt",
+      "note": "Tijuana's mash-up of norteño brass and techno"
+    },
+    {
+      "name": "Tecno brega",
+      "type": "genre",
+      "aliases": [
+        "Technobrega"
+      ],
+      "wiki": "Tecno brega",
+      "guess": "htbt",
+      "note": "Belém's DIY party sound, sold on street-market CDs"
+    },
+    {
+      "name": "Jungletek",
+      "type": "genre",
+      "wiki": null,
+      "guess": "htbt",
+      "note": "Free-party tekno with jungle breaks"
+    },
+    {
+      "name": "Raggatek",
+      "type": "genre",
+      "wiki": null,
+      "guess": "htbt",
+      "note": "Free-party tekno with ragga vocals"
+    }
+  ],
+  "sources": [
+    "https://en.wikipedia.org/wiki/Techno",
+    "https://en.wikipedia.org/wiki/List_of_electronic_music_genres",
+    "https://en.wikipedia.org/wiki/Category:Techno_genres",
+    "https://en.wikipedia.org/wiki/Hardcore_(electronic_dance_music_genre)"
+  ],
+  "notes": "'Hard techno' redirects to the Hardcore article on enwiki, so it carries wiki null to keep its fame separate from hardcore techno. Hardtek is an alias of free tekno (Wikipedia treats them as one). Jungletek and Raggatek are free-tekno substyles named in the genre list. Rarity is guess-only: melodic techno's article gets ~200 views a month while it is the most-named style today, and gabber/hardcore pageviews reflect subculture curiosity."
+}

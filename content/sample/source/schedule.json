@@ -1,0 +1,18 @@
+{
+  "epoch": "2026-01-01",
+  "days": [
+    {
+      "number": 1,
+      "title": "SAMPLE SET",
+      "prompts": [
+        "sample-drum-machines",
+        "sample-german-cities",
+        "sample-coachella-headliners",
+        "sample-berlin-clubs",
+        "sample-benelux-festivals",
+        "sample-techno-subgenres",
+        "sample-pro-audio-brands"
+      ]
+    }
+  ]
+}

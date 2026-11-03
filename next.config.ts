@@ -1,8 +1,15 @@
 import type { NextConfig } from "next";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const ROOT = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Pin the workspace root (a stray lockfile higher up the tree confuses inference).
+  turbopack: { root: ROOT },
+  outputFileTracingRoot: ROOT,
   // Lets several local processes (dev servers, builds) coexist: NEXT_DIST_DIR=.next-ui pnpm dev
   distDir: process.env.NEXT_DIST_DIR || ".next",
   // Server code reads these from disk at runtime; make sure they ship with the functions.

@@ -1,8 +1,73 @@
-/* Base reset. Component styles live next to components (CSS modules). */
+/* Base reset + shared pixel primitives. Component styles live next to components (CSS modules). */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/* Extra tokens (the contract palette lives in tokens.css). */
+:root {
+  --step: 4px;
+  --vu-green: #3ddc84;
+  --vu-amber: #ffb547;
+  --vu-red: #ff5468;
+  --vu-off: #1b2246;
+  /* --ink-faint is ~3.3:1 on the night sky; text that carries meaning uses this (≥4.5:1). */
+  --ink-quiet: #7f87b4;
+  --paper: #f1eee8;
+  --paper-shade: #e2ddd3;
+  --paper-ink: #0b0d17;
+  --paper-ink-soft: #4a4e63;
+  --glass: rgba(9, 13, 30, 0.86);
+  --glass-hi: rgba(18, 25, 54, 0.9);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --ruler-space: 52px;
+
+  /* Stepped (notched) corners: two 4px steps per corner. */
+  --stepped: polygon(
+    0 calc(var(--step) * 2),
+    var(--step) calc(var(--step) * 2),
+    var(--step) var(--step),
+    calc(var(--step) * 2) var(--step),
+    calc(var(--step) * 2) 0,
+    calc(100% - var(--step) * 2) 0,
+    calc(100% - var(--step) * 2) var(--step),
+    calc(100% - var(--step)) var(--step),
+    calc(100% - var(--step)) calc(var(--step) * 2),
+    100% calc(var(--step) * 2),
+    100% calc(100% - var(--step) * 2),
+    calc(100% - var(--step)) calc(100% - var(--step) * 2),
+    calc(100% - var(--step)) calc(100% - var(--step)),
+    calc(100% - var(--step) * 2) calc(100% - var(--step)),
+    calc(100% - var(--step) * 2) 100%,
+    calc(var(--step) * 2) 100%,
+    calc(var(--step) * 2) calc(100% - var(--step)),
+    var(--step) calc(100% - var(--step)),
+    var(--step) calc(100% - var(--step) * 2),
+    0 calc(100% - var(--step) * 2)
+  );
+  /* One step per corner, for small chips. */
+  --stepped-sm: polygon(
+    0 var(--step),
+    var(--step) var(--step),
+    var(--step) 0,
+    calc(100% - var(--step)) 0,
+    calc(100% - var(--step)) var(--step),
+    100% var(--step),
+    100% calc(100% - var(--step)),
+    calc(100% - var(--step)) calc(100% - var(--step)),
+    calc(100% - var(--step)) 100%,
+    var(--step) 100%,
+    var(--step) calc(100% - var(--step)),
+    0 calc(100% - var(--step))
+  );
+}
+
+@media (min-width: 900px) {
+  :root {
+    --ruler-space: 0px;
+  }
 }
 
 html,
@@ -15,6 +80,7 @@ body {
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeSpeed;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -22,9 +88,24 @@ body {
   overflow-x: hidden;
 }
 
+html.lock,
+html.lock body {
+  overflow: hidden;
+  overscroll-behavior: none;
+  height: 100%;
+}
+
 button,
 input {
   font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
   color: inherit;
 }
 
@@ -43,6 +124,190 @@ input {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* ───────── pixel panel: edge + fill, both stepped ───────── */
+.px-panel {
+  --edge: var(--panel-edge);
+  --fill: var(--glass);
+  --bw: 2px;
+  position: relative;
+  isolation: isolate;
+}
+
+.px-panel::before,
+.px-panel::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  clip-path: var(--stepped);
+}
+
+.px-panel::before {
+  inset: 0;
+  background: var(--edge);
+  z-index: -2;
+}
+
+.px-panel::after {
+  inset: var(--bw);
+  background:
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 3px),
+    var(--fill);
+  z-index: -1;
+}
+
+/* ───────── pixel buttons ───────── */
+.px-btn {
+  --edge: var(--cyan);
+  --fill: #0e1631;
+  --bw: 3px;
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9em;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  font-size: 15px;
+  line-height: 1;
+  white-space: nowrap;
+  filter: drop-shadow(0 0 6px rgba(69, 229, 255, 0.35));
+  transition:
+    transform 120ms steps(2),
+    filter 160ms ease;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.px-btn::before,
+.px-btn::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  clip-path: var(--stepped);
+}
+
+.px-btn::before {
+  inset: 0;
+  background: var(--edge);
+  z-index: -2;
+}
+
+.px-btn::after {
+  inset: var(--bw);
+  background:
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 3px),
+    var(--fill);
+  z-index: -1;
+}
+
+.px-btn:hover {
+  filter: drop-shadow(0 0 10px rgba(69, 229, 255, 0.55));
+}
+
+.px-btn:active {
+  transform: translateY(2px);
+}
+
+.px-btn:disabled {
+  cursor: default;
+  opacity: 0.55;
+  filter: none;
+}
+
+.px-btn:focus-visible {
+  outline: none;
+  filter: drop-shadow(0 0 0 var(--ink)) drop-shadow(0 0 8px rgba(241, 238, 232, 0.8));
+}
+
+.px-btn--hot {
+  --edge: var(--magenta);
+  --fill: var(--magenta);
+  color: #160611;
+  filter: drop-shadow(0 0 8px rgba(255, 79, 163, 0.45));
+}
+
+.px-btn--hot:hover {
+  filter: drop-shadow(0 0 12px rgba(255, 79, 163, 0.7));
+}
+
+.px-btn--ghost {
+  --edge: var(--panel-edge-hi);
+  --fill: rgba(10, 14, 34, 0.82);
+  --bw: 2px;
+  color: var(--ink-dim);
+  filter: none;
+  font-size: 12px;
+  min-height: 44px;
+  padding: 0 14px;
+}
+
+.px-btn--ghost:hover {
+  --edge: var(--cyan);
+  color: var(--ink);
+  filter: none;
+}
+
+.px-btn--big {
+  min-height: 72px;
+  font-size: 18px;
+  width: 100%;
+}
+
+.tri {
+  display: inline-block;
+  font-size: 1.3em;
+  line-height: 0;
+  transform: translateY(-0.04em);
+}
+
+/* ───────── type helpers ───────── */
+.eyebrow {
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ───────── app/loading.tsx ───────── */
+.route-loading {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(60% 40% at 50% 62%, rgba(139, 92, 255, 0.22), transparent 70%),
+    linear-gradient(to bottom, var(--sky-0), var(--sky-1) 55%, var(--field-0));
+}
+
+.route-loading span {
+  font-size: 16px;
+  letter-spacing: var(--tracking-wider);
+  color: var(--ink-dim);
+  animation: route-breathe 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes route-breathe {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.5;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,0 +1,542 @@
+{
+  "slug": "sample-coachella-headliners",
+  "text": "Name an act that has headlined Coachella",
+  "hint": "Any year, 1999–2026.",
+  "types": [
+    "artist"
+  ],
+  "difficulty": 2,
+  "boundary": "Acts billed as headliners of the Coachella Valley Music and Arts Festival in Indio, 1999–2026, per the headliners column and edition prose of Wikipedia's Coachella article — including announced headliners of the cancelled 2020 edition (RATM, Travis Scott, Frank Ocean) and co-headliners (Prince/Portishead 2008, Swedish House Mafia & The Weeknd 2022, Blink-182 2023, Anyma 2026). Non-headline legends (Daft Punk 2006, Madonna 2006) and the S.S. Coachella cruise (Pulp, Hot Chip) do not count.",
+  "answers": [
+    {
+      "name": "Beyoncé",
+      "type": "artist",
+      "aliases": [
+        "Beyonce Knowles",
+        "Queen Bey",
+        "Beychella"
+      ],
+      "wiki": "Beyoncé",
+      "guess": "main",
+      "note": "'Beychella' 2018: the first Black woman to headline"
+    },
+    {
+      "name": "Lady Gaga",
+      "type": "artist",
+      "aliases": [
+        "Gaga"
+      ],
+      "wiki": "Lady Gaga",
+      "guess": "main",
+      "note": "Headlined 2017 and 2025"
+    },
+    {
+      "name": "Sabrina Carpenter",
+      "type": "artist",
+      "aliases": [
+        "Sabrina"
+      ],
+      "wiki": "Sabrina Carpenter",
+      "guess": "main"
+    },
+    {
+      "name": "Justin Bieber",
+      "type": "artist",
+      "aliases": [
+        "Bieber"
+      ],
+      "wiki": "Justin Bieber",
+      "guess": "main"
+    },
+    {
+      "name": "Billie Eilish",
+      "type": "artist",
+      "aliases": [
+        "Billie"
+      ],
+      "wiki": "Billie Eilish",
+      "guess": "main"
+    },
+    {
+      "name": "Frank Ocean",
+      "type": "artist",
+      "wiki": "Frank Ocean",
+      "guess": "main",
+      "note": "Booked for the cancelled 2020 edition, finally headlined in 2023"
+    },
+    {
+      "name": "Bad Bunny",
+      "type": "artist",
+      "wiki": "Bad Bunny",
+      "guess": "side",
+      "note": "Coachella's first Latin headliner, 2023"
+    },
+    {
+      "name": "Harry Styles",
+      "type": "artist",
+      "aliases": [
+        "Harry"
+      ],
+      "wiki": "Harry Styles",
+      "guess": "side"
+    },
+    {
+      "name": "Ariana Grande",
+      "type": "artist",
+      "aliases": [
+        "Ariana"
+      ],
+      "wiki": "Ariana Grande",
+      "guess": "side",
+      "note": "Youngest headliner ever, at 25 in 2019"
+    },
+    {
+      "name": "Kendrick Lamar",
+      "type": "artist",
+      "aliases": [
+        "Kendrick",
+        "K.Dot"
+      ],
+      "wiki": "Kendrick Lamar",
+      "guess": "side"
+    },
+    {
+      "name": "Travis Scott",
+      "type": "artist",
+      "wiki": "Travis Scott",
+      "guess": "side",
+      "note": "Booked for 2020, finally headlined in 2025"
+    },
+    {
+      "name": "Drake",
+      "type": "artist",
+      "aliases": [
+        "Drizzy"
+      ],
+      "wiki": "Drake (musician)",
+      "guess": "side"
+    },
+    {
+      "name": "Eminem",
+      "type": "artist",
+      "aliases": [
+        "Slim Shady",
+        "Marshall Mathers"
+      ],
+      "wiki": "Eminem",
+      "guess": "side"
+    },
+    {
+      "name": "The Weeknd",
+      "type": "artist",
+      "aliases": [
+        "Abel Tesfaye"
+      ],
+      "wiki": "The Weeknd",
+      "guess": "side"
+    },
+    {
+      "name": "Radiohead",
+      "type": "artist",
+      "wiki": "Radiohead",
+      "guess": "side",
+      "flag": "tote",
+      "note": "Headlined three times: 2004, 2012 and 2017"
+    },
+    {
+      "name": "Kanye West",
+      "type": "artist",
+      "aliases": [
+        "Ye",
+        "Kanye"
+      ],
+      "wiki": "Kanye West",
+      "guess": "side",
+      "note": "Headlined 2011, then pulled out of 2022"
+    },
+    {
+      "name": "Tyler, the Creator",
+      "type": "artist",
+      "aliases": [
+        "Tyler"
+      ],
+      "wiki": "Tyler, the Creator",
+      "guess": "side"
+    },
+    {
+      "name": "Lana Del Rey",
+      "type": "artist",
+      "aliases": [
+        "Lana"
+      ],
+      "wiki": "Lana Del Rey",
+      "guess": "side"
+    },
+    {
+      "name": "Blackpink",
+      "type": "artist",
+      "wiki": "Blackpink",
+      "guess": "side",
+      "note": "First Asian act to headline, 2023"
+    },
+    {
+      "name": "Doja Cat",
+      "type": "artist",
+      "aliases": [
+        "Doja"
+      ],
+      "wiki": "Doja Cat",
+      "guess": "side"
+    },
+    {
+      "name": "Coldplay",
+      "type": "artist",
+      "wiki": "Coldplay",
+      "guess": "side"
+    },
+    {
+      "name": "Karol G",
+      "type": "artist",
+      "wiki": "Karol G",
+      "guess": "side",
+      "note": "Coachella's first Latina headliner, 2026"
+    },
+    {
+      "name": "Calvin Harris",
+      "type": "artist",
+      "wiki": "Calvin Harris",
+      "guess": "side"
+    },
+    {
+      "name": "Post Malone",
+      "type": "artist",
+      "aliases": [
+        "Posty"
+      ],
+      "wiki": "Post Malone",
+      "guess": "side"
+    },
+    {
+      "name": "Green Day",
+      "type": "artist",
+      "wiki": "Green Day",
+      "guess": "side"
+    },
+    {
+      "name": "Red Hot Chili Peppers",
+      "type": "artist",
+      "aliases": [
+        "RHCP",
+        "Chili Peppers"
+      ],
+      "wiki": "Red Hot Chili Peppers",
+      "guess": "side",
+      "note": "Headlined 2003, 2007 and 2013"
+    },
+    {
+      "name": "Childish Gambino",
+      "type": "artist",
+      "aliases": [
+        "Donald Glover",
+        "Gambino"
+      ],
+      "wiki": "Donald Glover",
+      "guess": "side"
+    },
+    {
+      "name": "Tame Impala",
+      "type": "artist",
+      "aliases": [
+        "Kevin Parker"
+      ],
+      "wiki": "Tame Impala",
+      "guess": "side"
+    },
+    {
+      "name": "Swedish House Mafia",
+      "type": "artist",
+      "aliases": [
+        "SHM"
+      ],
+      "wiki": "Swedish House Mafia",
+      "guess": "side",
+      "note": "Filled the 2022 Sunday slot with The Weeknd"
+    },
+    {
+      "name": "Arcade Fire",
+      "type": "artist",
+      "wiki": "Arcade Fire",
+      "guess": "tent"
+    },
+    {
+      "name": "Paul McCartney",
+      "type": "artist",
+      "aliases": [
+        "McCartney",
+        "Macca"
+      ],
+      "wiki": "Paul McCartney",
+      "guess": "tent",
+      "note": "Blew through the 2009 curfew by 54 minutes"
+    },
+    {
+      "name": "Prince",
+      "type": "artist",
+      "wiki": "Prince (musician)",
+      "guess": "tent"
+    },
+    {
+      "name": "Guns N' Roses",
+      "type": "artist",
+      "aliases": [
+        "Guns and Roses",
+        "GNR"
+      ],
+      "wiki": "Guns N' Roses",
+      "guess": "tent",
+      "note": "Slash and Duff back in the band for the 2016 reunion"
+    },
+    {
+      "name": "AC/DC",
+      "type": "artist",
+      "wiki": "AC/DC",
+      "guess": "tent"
+    },
+    {
+      "name": "Jay-Z",
+      "type": "artist",
+      "aliases": [
+        "Hova"
+      ],
+      "wiki": "Jay-Z",
+      "guess": "tent"
+    },
+    {
+      "name": "Muse",
+      "type": "artist",
+      "wiki": "Muse (band)",
+      "guess": "tent"
+    },
+    {
+      "name": "Gorillaz",
+      "type": "artist",
+      "wiki": "Gorillaz",
+      "guess": "tent"
+    },
+    {
+      "name": "The Killers",
+      "type": "artist",
+      "wiki": "The Killers",
+      "guess": "tent"
+    },
+    {
+      "name": "The Strokes",
+      "type": "artist",
+      "wiki": "The Strokes",
+      "guess": "tent"
+    },
+    {
+      "name": "Rage Against the Machine",
+      "type": "artist",
+      "aliases": [
+        "RATM",
+        "Rage"
+      ],
+      "wiki": "Rage Against the Machine",
+      "guess": "tent",
+      "note": "Headlined 1999 and 2007; booked again for the cancelled 2020"
+    },
+    {
+      "name": "Snoop Dogg",
+      "type": "artist",
+      "aliases": [
+        "Snoop",
+        "Snoop Lion"
+      ],
+      "wiki": "Snoop Dogg",
+      "guess": "tent"
+    },
+    {
+      "name": "Dr. Dre",
+      "type": "artist",
+      "aliases": [
+        "Dre",
+        "Doctor Dre"
+      ],
+      "wiki": "Dr. Dre",
+      "guess": "tent",
+      "note": "His 2012 set with Snoop brought out the Tupac 'hologram'"
+    },
+    {
+      "name": "Outkast",
+      "type": "artist",
+      "wiki": "Outkast",
+      "guess": "tent",
+      "note": "Reunited to headline in 2014"
+    },
+    {
+      "name": "Björk",
+      "type": "artist",
+      "wiki": "Björk",
+      "guess": "tent",
+      "note": "The festival's first female headliner — and she did it twice"
+    },
+    {
+      "name": "The Cure",
+      "type": "artist",
+      "wiki": "The Cure",
+      "guess": "tent",
+      "note": "Had the power cut for running past curfew in 2009"
+    },
+    {
+      "name": "Blink-182",
+      "type": "artist",
+      "aliases": [
+        "Blink"
+      ],
+      "wiki": "Blink-182",
+      "guess": "tent",
+      "note": "Took Frank Ocean's weekend-two slot in 2023"
+    },
+    {
+      "name": "No Doubt",
+      "type": "artist",
+      "wiki": "No Doubt",
+      "guess": "tent",
+      "note": "Reunited to headline in 2024"
+    },
+    {
+      "name": "Anyma",
+      "type": "artist",
+      "aliases": [
+        "Matteo Milleri"
+      ],
+      "wiki": "Anyma",
+      "guess": "tent"
+    },
+    {
+      "name": "Kings of Leon",
+      "type": "artist",
+      "wiki": "Kings of Leon",
+      "guess": "tent"
+    },
+    {
+      "name": "Nine Inch Nails",
+      "type": "artist",
+      "aliases": [
+        "NIN"
+      ],
+      "wiki": "Nine Inch Nails",
+      "guess": "tent"
+    },
+    {
+      "name": "Jack White",
+      "type": "artist",
+      "wiki": "Jack White",
+      "guess": "tent"
+    },
+    {
+      "name": "LCD Soundsystem",
+      "type": "artist",
+      "aliases": [
+        "LCD"
+      ],
+      "wiki": "LCD Soundsystem",
+      "guess": "tent",
+      "note": "Reunited to headline in 2016"
+    },
+    {
+      "name": "Depeche Mode",
+      "type": "artist",
+      "wiki": "Depeche Mode",
+      "guess": "tent"
+    },
+    {
+      "name": "Tool",
+      "type": "artist",
+      "wiki": "Tool (band)",
+      "guess": "tent",
+      "note": "Headlined the very first Coachella in 1999, and again in 2006"
+    },
+    {
+      "name": "Beastie Boys",
+      "type": "artist",
+      "aliases": [
+        "Beasties"
+      ],
+      "wiki": "Beastie Boys",
+      "guess": "tent"
+    },
+    {
+      "name": "The Black Keys",
+      "type": "artist",
+      "wiki": "The Black Keys",
+      "guess": "basement"
+    },
+    {
+      "name": "Phoenix",
+      "type": "artist",
+      "wiki": "Phoenix (French band)",
+      "guess": "basement"
+    },
+    {
+      "name": "Beck",
+      "type": "artist",
+      "wiki": "Beck",
+      "guess": "basement",
+      "note": "Headlined the very first Coachella, 1999"
+    },
+    {
+      "name": "Oasis",
+      "type": "artist",
+      "wiki": "Oasis (band)",
+      "guess": "basement"
+    },
+    {
+      "name": "Roger Waters",
+      "type": "artist",
+      "wiki": "Roger Waters",
+      "guess": "basement",
+      "note": "His inflatable pig floated off into the desert in 2008"
+    },
+    {
+      "name": "Blur",
+      "type": "artist",
+      "wiki": "Blur (band)",
+      "guess": "basement"
+    },
+    {
+      "name": "The Stone Roses",
+      "type": "artist",
+      "wiki": "The Stone Roses",
+      "guess": "basement",
+      "note": "Reunion headline set in 2013"
+    },
+    {
+      "name": "Jack Johnson",
+      "type": "artist",
+      "wiki": "Jack Johnson (musician)",
+      "guess": "basement"
+    },
+    {
+      "name": "Jane's Addiction",
+      "type": "artist",
+      "wiki": "Jane's Addiction",
+      "guess": "htbt",
+      "note": "Saved the one-day 2001 edition when nobody else would headline"
+    },
+    {
+      "name": "Portishead",
+      "type": "artist",
+      "wiki": "Portishead (band)",
+      "guess": "htbt",
+      "note": "Shared top billing with Prince on the 2008 Saturday"
+    }
+  ],
+  "sources": [
+    "https://en.wikipedia.org/wiki/Coachella",
+    "https://en.wikipedia.org/wiki/Coachella_2026"
+  ],
+  "notes": "Every act here has played a headline slot except where noted as booked for the cancelled 2020 (all three later headlined anyway except RATM, who had headlined 1999 and 2007). Kanye's 2019 Sunday Service was not a headline set. Rarity is guess-only: global celebrity fame (Eminem, Kanye, Drake) is not Coachella salience — blending put Beyoncé fifth.",
+  "rarity": "guess"
+}

@@ -1,0 +1,2931 @@
+{
+ "format": 1,
+ "normalizeVersion": 1,
+ "kind": "sample",
+ "generatedAt": "2026-11-01T00:00:00.000Z",
+ "epoch": "2026-11-01",
+ "puzzles": [
+  {
+   "number": 1,
+   "date": "2026-11-01",
+   "title": "FIXTURE ONE",
+   "prompts": [
+    {
+     "id": "uk-festivals",
+     "text": "Name a music festival held in the UK",
+     "types": [
+      "festival"
+     ],
+     "difficulty": 1,
+     "seconds": 25,
+     "answers": [
+      {
+       "id": "festival:glastonbury",
+       "name": "Glastonbury",
+       "type": "festival",
+       "tier": "main",
+       "share": 0.3,
+       "keys": [
+        "glastonbury",
+        "glastonburyfestival",
+        "glasto"
+       ]
+      },
+      {
+       "id": "festival:reading-festival",
+       "name": "Reading Festival",
+       "type": "festival",
+       "tier": "main",
+       "share": 0.2,
+       "keys": [
+        "readingfestival",
+        "reading",
+        "readingandleeds",
+        "readingleeds"
+       ]
+      },
+      {
+       "id": "festival:leeds-festival",
+       "name": "Leeds Festival",
+       "type": "festival",
+       "tier": "main",
+       "share": 0.12,
+       "keys": [
+        "leedsfestival",
+        "leeds",
+        "readingandleeds",
+        "readingleeds"
+       ]
+      },
+      {
+       "id": "festival:download-festival",
+       "name": "Download Festival",
+       "type": "festival",
+       "tier": "main",
+       "share": 0.1,
+       "keys": [
+        "downloadfestival",
+        "download"
+       ]
+      },
+      {
+       "id": "festival:boomtown",
+       "name": "Boomtown",
+       "type": "festival",
+       "tier": "tote",
+       "share": 0.05,
+       "keys": [
+        "boomtown",
+        "boomtownfair"
+       ]
+      },
+      {
+       "id": "festival:creamfields",
+       "name": "Creamfields",
+       "type": "festival",
+       "tier": "side",
+       "share": 0.04,
+       "keys": [
+        "creamfields"
+       ]
+      },
+      {
+       "id": "festival:field-day",
+       "name": "Field Day",
+       "type": "festival",
+       "tier": "side",
+       "share": 0.03,
+       "keys": [
+        "fieldday"
+       ]
+      },
+      {
+       "id": "festival:boardmasters",
+       "name": "Boardmasters",
+       "type": "festival",
+       "tier": "side",
+       "share": 0.025,
+       "keys": [
+        "boardmasters"
+       ]
+      },
+      {
+       "id": "festival:green-man",
+       "name": "Green Man",
+       "type": "festival",
+       "tier": "tent",
+       "share": 0.01,
+       "keys": [
+        "greenman"
+       ],
+       "note": "In the Brecon Beacons since 2003"
+      },
+      {
+       "id": "festival:bestival",
+       "name": "Bestival",
+       "type": "festival",
+       "tier": "tent",
+       "share": 0.008,
+       "keys": [
+        "bestival"
+       ]
+      },
+      {
+       "id": "festival:houghton",
+       "name": "Houghton",
+       "type": "festival",
+       "tier": "basement",
+       "share": 0.003,
+       "keys": [
+        "houghton"
+       ],
+       "note": "Craig Richards' festival in the Norfolk woods"
+      },
+      {
+       "id": "festival:lovebox",
+       "name": "Lovebox",
+       "type": "festival",
+       "tier": "basement",
+       "share": 0.002,
+       "keys": [
+        "lovebox"
+       ]
+      },
+      {
+       "id": "festival:field-maneuvers",
+       "name": "Field Maneuvers",
+       "type": "festival",
+       "tier": "htbt",
+       "share": 0.0006,
+       "keys": [
+        "fieldmaneuvers"
+       ],
+       "note": "Secret-location dance festival, capped at a few thousand"
+      },
+      {
+       "id": "festival:freerotation",
+       "name": "Freerotation",
+       "type": "festival",
+       "tier": "htbt",
+       "share": 0.0005,
+       "keys": [
+        "freerotation"
+       ]
+      },
+      {
+       "id": "festival:gottwood",
+       "name": "Gottwood",
+       "type": "festival",
+       "tier": "htbt",
+       "share": 0.0004,
+       "keys": [
+        "gottwood"
+       ]
+      }
+     ],
+     "hint": "Past or present."
+    },
+    {
+     "id": "berlin-clubs",
+     "text": "Name a club in Berlin",
+     "types": [
+      "venue"
+     ],
+     "difficulty": 2,
+     "seconds": 25,
+     "answers": [
+      {
+       "id": "venue:berghain",
+       "name": "Berghain",
+       "type": "venue",
+       "tier": "main",
+       "share": 0.35,
+       "keys": [
+        "berghain"
+       ]
+      },
+      {
+       "id": "venue:tresor",
+       "name": "Tresor",
+       "type": "venue",
+       "tier": "side",
+       "share": 0.05,
+       "keys": [
+        "tresor"
+       ]
+      },
+      {
+       "id": "venue:watergate",
+       "name": "Watergate",
+       "type": "venue",
+       "tier": "side",
+       "share": 0.04,
+       "keys": [
+        "watergate"
+       ]
+      },
+      {
+       "id": "venue:panorama-bar",
+       "name": "Panorama Bar",
+       "type": "venue",
+       "tier": "side",
+       "share": 0.03,
+       "keys": [
+        "panoramabar"
+       ]
+      },
+      {
+       "id": "venue:sisyphos",
+       "name": "Sisyphos",
+       "type": "venue",
+       "tier": "tent",
+       "share": 0.012,
+       "keys": [
+        "sisyphos"
+       ],
+       "note": "Built in an old dog-biscuit factory"
+      },
+      {
+       "id": "venue:kitkatclub",
+       "name": "KitKatClub",
+       "type": "venue",
+       "tier": "tent",
+       "share": 0.01,
+       "keys": [
+        "kitkatclub",
+        "kitkat"
+       ]
+      },
+      {
+       "id": "venue:about-blank",
+       "name": "About Blank",
+       "type": "venue",
+       "tier": "tent",
+       "share": 0.009,
+       "keys": [
+        "aboutblank"
+       ]
+      },
+      {
+       "id": "venue:ritter-butzke",
+       "name": "Ritter Butzke",
+       "type": "venue",
+       "tier": "basement",
+       "share": 0.003,
+       "keys": [
+        "ritterbutzke"
+       ]
+      },
+      {
+       "id": "venue:griessmuhle",
+       "name": "Griessmühle",
+       "type": "venue",
+       "tier": "basement",
+       "share": 0.002,
+       "keys": [
+        "griessmuhle",
+        "griessmuehle"
+       ]
+      },
+      {
+       "id": "venue:ohm",
+       "name": "OHM",
+       "type": "venue",
+       "tier": "htbt",
+       "share": 0.0008,
+       "keys": [
+        "ohm"
+       ],
+       "note": "Tiny room in a former power station"
+      },
+      {
+       "id": "venue:saule",
+       "name": "Säule",
+       "type": "venue",
+       "tier": "htbt",
+       "share": 0.0005,
+       "keys": [
+        "saule"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "dance-genres",
+     "text": "Name a genre of electronic dance music",
+     "types": [
+      "genre"
+     ],
+     "difficulty": 1,
+     "seconds": 25,
+     "answers": [
+      {
+       "id": "genre:house",
+       "name": "House",
+       "type": "genre",
+       "tier": "main",
+       "share": 0.25,
+       "keys": [
+        "house"
+       ]
+      },
+      {
+       "id": "genre:techno",
+       "name": "Techno",
+       "type": "genre",
+       "tier": "main",
+       "share": 0.22,
+       "keys": [
+        "techno"
+       ]
+      },
+      {
+       "id": "genre:drum-and-bass",
+       "name": "Drum and bass",
+       "type": "genre",
+       "tier": "main",
+       "share": 0.15,
+       "keys": [
+        "drumandbass",
+        "drumbass",
+        "dnb",
+        "dandb",
+        "db"
+       ]
+      },
+      {
+       "id": "genre:dubstep",
+       "name": "Dubstep",
+       "type": "genre",
+       "tier": "side",
+       "share": 0.05,
+       "keys": [
+        "dubstep"
+       ]
+      },
+      {
+       "id": "genre:trance",
+       "name": "Trance",
+       "type": "genre",
+       "tier": "side",
+       "share": 0.04,
+       "keys": [
+        "trance"
+       ]
+      },
+      {
+       "id": "genre:uk-garage",
+       "name": "UK garage",
+       "type": "genre",
+       "tier": "side",
+       "share": 0.035,
+       "keys": [
+        "ukgarage",
+        "ukg",
+        "garage"
+       ]
+      },
+      {
+       "id": "genre:jungle",
+       "name": "Jungle",
+       "type": "genre",
+       "tier": "tote",
+       "share": 0.05,
+       "keys": [
+        "jungle"
+       ]
+      },
+      {
+       "id": "genre:hardstyle",
+       "name": "Hardstyle",
+       "type": "genre",
+       "tier": "tent",
+       "share": 0.012,
+       "keys": [
+        "hardstyle"
+       ]
+      },
+      {
+       "id": "genre:footwork",
+       "name": "Footwork",
+       "type": "genre",
+       "tier": "tent",
+       "share": 0.01,
+       "keys": [
+        "footwork"
+       ]
+      },
+      {
+       "id": "genre:breakcore",
+       "name": "Breakcore",
+       "type": "genre",
+       "tier": "basement",
+       "share": 0.003,
+       "keys": [
+        "breakcore"
+       ]
+      },
+      {
+       "id": "genre:gqom",
+       "name": "Gqom",
+       "type": "genre",
+       "tier": "basement",
+       "share": 0.002,
+       "keys": [
+        "gqom"
+       ],
+       "note": "Durban's broken-beat house sound"
+      },
+      {
+       "id": "genre:speed-garage",
+       "name": "Speed garage",
+       "type": "genre",
+       "tier": "htbt",
+       "share": 0.0007,
+       "keys": [
+        "speedgarage"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "lollapalooza-cities",
+     "text": "Name a city that has hosted a Lollapalooza",
+     "types": [
+      "city"
+     ],
+     "difficulty": 3,
+     "seconds": 25,
+     "answers": [
+      {
+       "id": "city:chicago",
+       "name": "Chicago",
+       "type": "city",
+       "tier": "main",
+       "share": 0.5,
+       "keys": [
+        "chicago"
+       ]
+      },
+      {
+       "id": "city:berlin",
+       "name": "Berlin",
+       "type": "city",
+       "tier": "side",
+       "share": 0.05,
+       "keys": [
+        "berlin"
+       ]
+      },
+      {
+       "id": "city:paris",
+       "name": "Paris",
+       "type": "city",
+       "tier": "side",
+       "share": 0.04,
+       "keys": [
+        "paris"
+       ]
+      },
+      {
+       "id": "city:sao-paulo",
+       "name": "São Paulo",
+       "type": "city",
+       "tier": "tent",
+       "share": 0.012,
+       "keys": [
+        "saopaulo"
+       ]
+      },
+      {
+       "id": "city:santiago",
+       "name": "Santiago",
+       "type": "city",
+       "tier": "tent",
+       "share": 0.01,
+       "keys": [
+        "santiago"
+       ]
+      },
+      {
+       "id": "city:buenos-aires",
+       "name": "Buenos Aires",
+       "type": "city",
+       "tier": "tent",
+       "share": 0.009,
+       "keys": [
+        "buenosaires"
+       ]
+      },
+      {
+       "id": "city:stockholm",
+       "name": "Stockholm",
+       "type": "city",
+       "tier": "basement",
+       "share": 0.003,
+       "keys": [
+        "stockholm"
+       ]
+      },
+      {
+       "id": "city:mumbai",
+       "name": "Mumbai",
+       "type": "city",
+       "tier": "basement",
+       "share": 0.002,
+       "keys": [
+        "mumbai",
+        "bombay"
+       ]
+      }
+     ],
+     "hint": "Any edition, past or present."
+    },
+    {
+     "id": "sound-systems",
+     "text": "Name a sound system",
+     "types": [
+      "soundsystem"
+     ],
+     "difficulty": 3,
+     "seconds": 25,
+     "answers": [
+      {
+       "id": "soundsystem:funktion-one",
+       "name": "Funktion-One",
+       "type": "soundsystem",
+       "tier": "main",
+       "share": 0.3,
+       "keys": [
+        "funktionone",
+        "funktion1",
+        "f1"
+       ]
+      },
+      {
+       "id": "soundsystem:l-acoustics",
+       "name": "L-Acoustics",
+       "type": "soundsystem",
+       "tier": "main",
+       "share": 0.12,
+       "keys": [
+        "lacoustics"
+       ]
+      },
+      {
+       "id": "soundsystem:d-and-b-audiotechnik",
+       "name": "d&b audiotechnik",
+       "type": "soundsystem",
+       "tier": "side",
+       "share": 0.05,
+       "keys": [
+        "dandbaudiotechnik",
+        "dbaudiotechnik",
+        "dnbaudiotechnik"
+       ]
+      },
+      {
+       "id": "soundsystem:void-acoustics",
+       "name": "Void Acoustics",
+       "type": "soundsystem",
+       "tier": "side",
+       "share": 0.03,
+       "keys": [
+        "voidacoustics",
+        "void"
+       ]
+      },
+      {
+       "id": "soundsystem:meyer-sound",
+       "name": "Meyer Sound",
+       "type": "soundsystem",
+       "tier": "side",
+       "share": 0.025,
+       "keys": [
+        "meyersound",
+        "meyer"
+       ]
+      },
+      {
+       "id": "soundsystem:martin-audio",
+       "name": "Martin Audio",
+       "type": "soundsystem",
+       "tier": "tent",
+       "share": 0.01,
+       "keys": [
+        "martinaudio"
+       ]
+      },
+      {
+       "id": "soundsystem:stone-love",
+       "name": "Stone Love",
+       "type": "soundsystem",
+       "tier": "tent",
+       "share": 0.008,
+       "keys": [
+        "stonelove",
+        "stonelovemovement"
+       ],
+       "note": "Kingston dancehall sound since 1972"
+      },
+      {
+       "id": "soundsystem:jah-shaka",
+       "name": "Jah Shaka",
+       "type": "soundsystem",
+       "tier": "basement",
+       "share": 0.003,
+       "keys": [
+        "jahshaka",
+        "jahshakasoundsystem"
+       ]
+      },
+      {
+       "id": "soundsystem:channel-one",
+       "name": "Channel One",
+       "type": "soundsystem",
+       "tier": "basement",
+       "share": 0.002,
+       "keys": [
+        "channelone",
+        "channel1",
+        "channelonesoundsystem",
+        "channel1soundsystem"
+       ]
+      },
+      {
+       "id": "soundsystem:saxon-studio",
+       "name": "Saxon Studio",
+       "type": "soundsystem",
+       "tier": "htbt",
+       "share": 0.0005,
+       "keys": [
+        "saxonstudio",
+        "saxon",
+        "saxonsound"
+       ]
+      }
+     ],
+     "hint": "Speaker brands and sound-system crews both count."
+    },
+    {
+     "id": "drum-machines",
+     "text": "Name a drum machine",
+     "types": [
+      "gear"
+     ],
+     "difficulty": 4,
+     "seconds": 25,
+     "answers": [
+      {
+       "id": "gear:roland-tr-808",
+       "name": "Roland TR-808",
+       "type": "gear",
+       "tier": "main",
+       "share": 0.4,
+       "keys": [
+        "rolandtr808",
+        "808",
+        "tr808"
+       ]
+      },
+      {
+       "id": "gear:roland-tr-909",
+       "name": "Roland TR-909",
+       "type": "gear",
+       "tier": "main",
+       "share": 0.2,
+       "keys": [
+        "rolandtr909",
+        "909",
+        "tr909"
+       ]
+      },
+      {
+       "id": "gear:akai-mpc60",
+       "name": "Akai MPC60",
+       "type": "gear",
+       "tier": "tote",
+       "share": 0.05,
+       "keys": [
+        "akaimpc60",
+        "mpc60",
+        "mpc"
+       ]
+      },
+      {
+       "id": "gear:linndrum",
+       "name": "LinnDrum",
+       "type": "gear",
+       "tier": "side",
+       "share": 0.03,
+       "keys": [
+        "linndrum",
+        "lm2"
+       ]
+      },
+      {
+       "id": "gear:roland-tr-707",
+       "name": "Roland TR-707",
+       "type": "gear",
+       "tier": "tent",
+       "share": 0.01,
+       "keys": [
+        "rolandtr707",
+        "707",
+        "tr707"
+       ]
+      },
+      {
+       "id": "gear:e-mu-sp-1200",
+       "name": "E-mu SP-1200",
+       "type": "gear",
+       "tier": "tent",
+       "share": 0.009,
+       "keys": [
+        "emusp1200",
+        "sp1200"
+       ]
+      },
+      {
+       "id": "gear:elektron-machinedrum",
+       "name": "Elektron Machinedrum",
+       "type": "gear",
+       "tier": "basement",
+       "share": 0.002,
+       "keys": [
+        "elektronmachinedrum",
+        "machinedrum"
+       ]
+      },
+      {
+       "id": "gear:simmons-sds-v",
+       "name": "Simmons SDS-V",
+       "type": "gear",
+       "tier": "htbt",
+       "share": 0.0005,
+       "keys": [
+        "simmonssdsv",
+        "sdsv",
+        "sds5"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "glastonbury-stages",
+     "text": "Name a stage or area at Glastonbury",
+     "types": [
+      "stage"
+     ],
+     "difficulty": 4,
+     "seconds": 20,
+     "answers": [
+      {
+       "id": "stage:pyramid-stage",
+       "name": "Pyramid Stage",
+       "type": "stage",
+       "tier": "main",
+       "share": 0.45,
+       "keys": [
+        "pyramidstage",
+        "pyramid"
+       ]
+      },
+      {
+       "id": "stage:other-stage",
+       "name": "Other Stage",
+       "type": "stage",
+       "tier": "main",
+       "share": 0.2,
+       "keys": [
+        "otherstage"
+       ]
+      },
+      {
+       "id": "stage:arcadia",
+       "name": "Arcadia",
+       "type": "stage",
+       "tier": "tote",
+       "share": 0.06,
+       "keys": [
+        "arcadia",
+        "arcadiaspectacular"
+       ]
+      },
+      {
+       "id": "stage:west-holts",
+       "name": "West Holts",
+       "type": "stage",
+       "tier": "side",
+       "share": 0.04,
+       "keys": [
+        "westholts"
+       ]
+      },
+      {
+       "id": "stage:avalon",
+       "name": "Avalon",
+       "type": "stage",
+       "tier": "side",
+       "share": 0.03,
+       "keys": [
+        "avalon"
+       ]
+      },
+      {
+       "id": "stage:shangri-la",
+       "name": "Shangri-La",
+       "type": "stage",
+       "tier": "tent",
+       "share": 0.012,
+       "keys": [
+        "shangrila"
+       ]
+      },
+      {
+       "id": "stage:park",
+       "name": "The Park",
+       "type": "stage",
+       "tier": "tent",
+       "share": 0.01,
+       "keys": [
+        "park",
+        "parkstage"
+       ]
+      },
+      {
+       "id": "stage:block9",
+       "name": "Block9",
+       "type": "stage",
+       "tier": "basement",
+       "share": 0.003,
+       "keys": [
+        "block9"
+       ]
+      },
+      {
+       "id": "stage:acoustic-stage",
+       "name": "Acoustic Stage",
+       "type": "stage",
+       "tier": "basement",
+       "share": 0.002,
+       "keys": [
+        "acousticstage"
+       ]
+      },
+      {
+       "id": "stage:strummerville",
+       "name": "Strummerville",
+       "type": "stage",
+       "tier": "htbt",
+       "share": 0.0006,
+       "keys": [
+        "strummerville"
+       ],
+       "note": "Campfire area named for Joe Strummer"
+      },
+      {
+       "id": "stage:williams-green",
+       "name": "Williams Green",
+       "type": "stage",
+       "tier": "htbt",
+       "share": 0.0005,
+       "keys": [
+        "williamsgreen"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "number": 2,
+   "date": "2026-11-02",
+   "prompts": [
+    {
+     "id": "detroit-techno-artists",
+     "text": "Name a Detroit techno artist",
+     "types": [
+      "artist"
+     ],
+     "difficulty": 2,
+     "seconds": 25,
+     "answers": [
+      {
+       "id": "artist:jeff-mills",
+       "name": "Jeff Mills",
+       "type": "artist",
+       "tier": "main",
+       "share": 0.3,
+       "keys": [
+        "jeffmills"
+       ]
+      },
+      {
+       "id": "artist:juan-atkins",
+       "name": "Juan Atkins",
+       "type": "artist",
+       "tier": "main",
+       "share": 0.2,
+       "keys": [
+        "juanatkins"
+       ]
+      },
+      {
+       "id": "artist:derrick-may",
+       "name": "Derrick May",
+       "type": "artist",
+       "tier": "main",
+       "share": 0.15,
+       "keys": [
+        "derrickmay"
+       ]
+      },
+      {
+       "id": "artist:drexciya",
+       "name": "Drexciya",
+       "type": "artist",
+       "tier": "tote",
+       "share": 0.05,
+       "keys": [
+        "drexciya"
+       ]
+      },
+      {
+       "id": "artist:kevin-saunderson",
+       "name": "Kevin Saunderson",
+       "type": "artist",
+       "tier": "side",
+       "share": 0.05,
+       "keys": [
+        "kevinsaunderson"
+       ]
+      },
+      {
+       "id": "artist:carl-craig",
+       "name": "Carl Craig",
+       "type": "artist",
+       "tier": "side",
+       "share": 0.04,
+       "keys": [
+        "carlcraig"
+       ]
+      },
+      {
+       "id": "artist:underground-resistance",
+       "name": "Underground Resistance",
+       "type": "artist",
+       "tier": "side",
+       "share": 0.03,
+       "keys": [
+        "undergroundresistance",
+        "ur"
+       ]
+      },
+      {
+       "id": "artist:robert-hood",
+       "name": "Robert Hood",
+       "type": "artist",
+       "tier": "tent",
+       "share": 0.012,
+       "keys": [
+        "roberthood"
+       ]
+      },
+      {
+       "id": "artist:moodymann",
+       "name": "Moodymann",
+       "type": "artist",
+       "tier": "tent",
+       "share": 0.01,
+       "keys": [
+        "moodymann",
+        "kennydixonjr"
+       ]
+      },
+      {
+       "id": "artist:theo-parrish",
+       "name": "Theo Parrish",
+       "type": "artist",
+       "tier": "basement",
+       "share": 0.003,
+       "keys": [
+        "theoparrish"
+       ]
+      },
+      {
+       "id": "artist:omar-s",
+       "name": "Omar S",
+       "type": "artist",
+       "tier": "basement",
+       "share": 0.002,
+       "keys": [
+        "omars"
+       ]
+      },
+      {
+       "id": "artist:dj-stingray",
+       "name": "DJ Stingray",
+       "type": "artist",
+       "tier": "htbt",
+       "share": 0.0005,
+       "keys": [
+        "djstingray",
+        "stingray313"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "detroit-labels",
+     "text": "Name a record label from Detroit",
+     "types": [
+      "label"
+     ],
+     "difficulty": 4,
+     "seconds": 25,
+     "answers": [
+      {
+       "id": "label:motown",
+       "name": "Motown",
+       "type": "label",
+       "tier": "main",
+       "share": 0.4,
+       "keys": [
+        "motown"
+       ]
+      },
+      {
+       "id": "label:underground-resistance",
+       "name": "Underground Resistance",
+       "type": "label",
+       "tier": "side",
+       "share": 0.05,
+       "keys": [
+        "undergroundresistance",
+        "ur",
+        "submerge"
+       ]
+      },
+      {
+       "id": "label:transmat",
+       "name": "Transmat",
+       "type": "label",
+       "tier": "side",
+       "share": 0.03,
+       "keys": [
+        "transmat"
+       ]
+      },
+      {
+       "id": "label:kms",
+       "name": "KMS",
+       "type": "label",
+       "tier": "tent",
+       "share": 0.01,
+       "keys": [
+        "kms"
+       ]
+      },
+      {
+       "id": "label:planet-e",
+       "name": "Planet E",
+       "type": "label",
+       "tier": "tent",
+       "share": 0.008,
+       "keys": [
+        "planete",
+        "planetecommunications"
+       ]
+      },
+      {
+       "id": "label:submerge",
+       "name": "Submerge",
+       "type": "label",
+       "tier": "tent",
+       "share": 0.004,
+       "keys": [
+        "submerge"
+       ]
+      },
+      {
+       "id": "label:metroplex",
+       "name": "Metroplex",
+       "type": "label",
+       "tier": "basement",
+       "share": 0.003,
+       "keys": [
+        "metroplex"
+       ]
+      },
+      {
+       "id": "label:sound-signature",
+       "name": "Sound Signature",
+       "type": "label",
+       "tier": "basement",
+       "share": 0.002,
+       "keys": [
+        "soundsignature"
+       ]
+      },
+      {
+       "id": "label:fxhe",
+       "name": "FXHE",
+       "type": "label",
+       "tier": "htbt",
+       "share": 0.0006,
+       "keys": [
+        "fxhe"
+       ],
+       "note": "Omar S's own label"
+      },
+      {
+       "id": "label:mahogani-music",
+       "name": "Mahogani Music",
+       "type": "label",
+       "tier": "htbt",
+       "share": 0.0005,
+       "keys": [
+        "mahoganimusic",
+        "mahogani"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "ibiza-clubs",
+     "text": "Name a club in Ibiza",
+     "types": [
+      "venue"
+     ],
+     "difficulty": 2,
+     "seconds": 25,
+     "answers": [
+      {
+       "id": "venue:amnesia",
+       "name": "Amnesia",
+       "type": "venue",
+       "tier": "main",
+       "share": 0.3,
+       "keys": [
+        "amnesia"
+       ]
+      },
+      {
+       "id": "venue:pacha",
+       "name": "Pacha",
+       "type": "venue",
+       "tier": "main",
+       "share": 0.25,
+       "keys": [
+        "pacha"
+       ]
+      },
+      {
+       "id": "venue:ushuaia",
+       "name": "Ushuaïa",
+       "type": "venue",
+       "tier": "main",
+       "share": 0.15,
+       "keys": [
+        "ushuaia",
+        "ushuaiaibiza"
+       ]
+      },
+      {
+       "id": "venue:space",
+       "name": "Space",
+       "type": "venue",
+       "tier": "tote",
+       "share": 0.05,
+       "keys": [
+        "space"
+       ],
+       "note": "Closed in 2016"
+      },
+      {
+       "id": "venue:hi-ibiza",
+       "name": "Hï Ibiza",
+       "type": "venue",
+       "tier": "side",
+       "share": 0.05,
+       "keys": [
+        "hiibiza"
+       ]
+      },
+      {
+       "id": "venue:dc-10",
+       "name": "DC-10",
+       "type": "venue",
+       "tier": "side",
+       "share": 0.04,
+       "keys": [
+        "dc10"
+       ]
+      },
+      {
+       "id": "venue:privilege",
+       "name": "Privilege",
+       "type": "venue",
+       "tier": "side",
+       "share": 0.03,
+       "keys": [
+        "privilege",
+        "ku",
+        "privilegeibiza"
+       ]
+      },
+      {
+       "id": "venue:eden",
+       "name": "Eden",
+       "type": "venue",
+       "tier": "tent",
+       "share": 0.01,
+       "keys": [
+        "eden"
+       ]
+      },
+      {
+       "id": "venue:es-paradis",
+       "name": "Es Paradis",
+       "type": "venue",
+       "tier": "tent",
+       "share": 0.008,
+       "keys": [
+        "esparadis"
+       ]
+      },
+      {
+       "id": "venue:sankeys-ibiza",
+       "name": "Sankeys Ibiza",
+       "type": "venue",
+       "tier": "basement",
+       "share": 0.002,
+       "keys": [
+        "sankeysibiza"
+       ]
+      },
+      {
+       "id": "venue:cova-santa",
+       "name": "Cova Santa",
+       "type": "venue",
+       "tier": "htbt",
+       "share": 0.0005,
+       "keys": [
+        "covasanta"
+       ]
+      }
+     ],
+     "hint": "Defunct ones count."
+    },
+    {
+     "id": "tomorrowland-countries",
+     "text": "Name a country that has hosted a Tomorrowland",
+     "types": [
+      "country"
+     ],
+     "difficulty": 3,
+     "seconds": 25,
+     "answers": [
+      {
+       "id": "country:belgium",
+       "name": "Belgium",
+       "type": "country",
+       "tier": "main",
+       "share": 0.6,
+       "keys": [
+        "belgium"
+       ]
+      },
+      {
+       "id": "country:united-states",
+       "name": "United States",
+       "type": "country",
+       "tier": "side",
+       "share": 0.05,
+       "keys": [
+        "unitedstates",
+        "usa",
+        "us",
+        "america"
+       ]
+      },
+      {
+       "id": "country:brazil",
+       "name": "Brazil",
+       "type": "country",
+       "tier": "side",
+       "share": 0.04,
+       "keys": [
+        "brazil"
+       ]
+      },
+      {
+       "id": "country:france",
+       "name": "France",
+       "type": "country",
+       "tier": "side",
+       "share": 0.03,
+       "keys": [
+        "france"
+       ],
+       "note": "Tomorrowland Winter, Alpe d'Huez"
+      }
+     ],
+     "hint": "Any edition, any spin-off."
+    },
+    {
+     "id": "boiler-room-cities",
+     "text": "Name a city Boiler Room has broadcast from",
+     "types": [
+      "city"
+     ],
+     "difficulty": 3,
+     "seconds": 25,
+     "answers": [
+      {
+       "id": "city:london",
+       "name": "London",
+       "type": "city",
+       "tier": "main",
+       "share": 0.3,
+       "keys": [
+        "london"
+       ]
+      },
+      {
+       "id": "city:berlin",
+       "name": "Berlin",
+       "type": "city",
+       "tier": "main",
+       "share": 0.2,
+       "keys": [
+        "berlin"
+       ]
+      },
+      {
+       "id": "city:new-york",
+       "name": "New York",
+       "type": "city",
+       "tier": "side",
+       "share": 0.05,
+       "keys": [
+        "newyork",
+        "nyc",
+        "newyorkcity"
+       ]
+      },
+      {
+       "id": "city:los-angeles",
+       "name": "Los Angeles",
+       "type": "city",
+       "tier": "side",
+       "share": 0.04,
+       "keys": [
+        "losangeles",
+        "la"
+       ]
+      },
+      {
+       "id": "city:amsterdam",
+       "name": "Amsterdam",
+       "type": "city",
+       "tier": "side",
+       "share": 0.03,
+       "keys": [
+        "amsterdam"
+       ]
+      },
+      {
+       "id": "city:tokyo",
+       "name": "Tokyo",
+       "type": "city",
+       "tier": "tent",
+       "share": 0.01,
+       "keys": [
+        "tokyo"
+       ]
+      },
+      {
+       "id": "city:johannesburg",
+       "name": "Johannesburg",
+       "type": "city",
+       "tier": "tent",
+       "share": 0.008,
+       "keys": [
+        "johannesburg",
+        "joburg"
+       ]
+      },
+      {
+       "id": "city:sao-paulo",
+       "name": "São Paulo",
+       "type": "city",
+       "tier": "tent",
+       "share": 0.006,
+       "keys": [
+        "saopaulo",
+        "sampa",
+        "sp"
+       ]
+      },
+      {
+       "id": "city:tbilisi",
+       "name": "Tbilisi",
+       "type": "city",
+       "tier": "basement",
+       "share": 0.003,
+       "keys": [
+        "tbilisi"
+       ]
+      },
+      {
+       "id": "city:lagos",
+       "name": "Lagos",
+       "type": "city",
+       "tier": "basement",
+       "share": 0.002,
+       "keys": [
+        "lagos"
+       ]
+      },
+      {
+       "id": "city:kyiv",
+       "name": "Kyiv",
+       "type": "city",
+       "tier": "htbt",
+       "share": 0.0005,
+       "keys": [
+        "kyiv",
+        "kiev"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "roland-synths",
+     "text": "Name a synthesizer made by Roland",
+     "types": [
+      "gear"
+     ],
+     "difficulty": 4,
+     "seconds": 25,
+     "answers": [
+      {
+       "id": "gear:juno-106",
+       "name": "Juno-106",
+       "type": "gear",
+       "tier": "main",
+       "share": 0.25,
+       "keys": [
+        "juno106",
+        "juno"
+       ]
+      },
+      {
+       "id": "gear:tb-303",
+       "name": "TB-303",
+       "type": "gear",
+       "tier": "main",
+       "share": 0.2,
+       "keys": [
+        "tb303",
+        "303"
+       ]
+      },
+      {
+       "id": "gear:juno-60",
+       "name": "Juno-60",
+       "type": "gear",
+       "tier": "side",
+       "share": 0.04,
+       "keys": [
+        "juno60",
+        "juno"
+       ]
+      },
+      {
+       "id": "gear:jupiter-8",
+       "name": "Jupiter-8",
+       "type": "gear",
+       "tier": "side",
+       "share": 0.035,
+       "keys": [
+        "jupiter8",
+        "jp8"
+       ]
+      },
+      {
+       "id": "gear:sh-101",
+       "name": "SH-101",
+       "type": "gear",
+       "tier": "side",
+       "share": 0.03,
+       "keys": [
+        "sh101",
+        "101"
+       ]
+      },
+      {
+       "id": "gear:alpha-juno",
+       "name": "Alpha Juno",
+       "type": "gear",
+       "tier": "tent",
+       "share": 0.01,
+       "keys": [
+        "alphajuno"
+       ]
+      },
+      {
+       "id": "gear:jx-3p",
+       "name": "JX-3P",
+       "type": "gear",
+       "tier": "tent",
+       "share": 0.008,
+       "keys": [
+        "jx3p"
+       ]
+      },
+      {
+       "id": "gear:mks-80",
+       "name": "MKS-80",
+       "type": "gear",
+       "tier": "basement",
+       "share": 0.002,
+       "keys": [
+        "mks80",
+        "superjupiter"
+       ]
+      },
+      {
+       "id": "gear:system-100",
+       "name": "System-100",
+       "type": "gear",
+       "tier": "htbt",
+       "share": 0.0005,
+       "keys": [
+        "system100"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "dutch-festivals",
+     "text": "Name a music festival in the Netherlands",
+     "types": [
+      "festival"
+     ],
+     "difficulty": 3,
+     "seconds": 25,
+     "answers": [
+      {
+       "id": "festival:awakenings",
+       "name": "Awakenings",
+       "type": "festival",
+       "tier": "main",
+       "share": 0.25,
+       "keys": [
+        "awakenings"
+       ]
+      },
+      {
+       "id": "festival:mysteryland",
+       "name": "Mysteryland",
+       "type": "festival",
+       "tier": "main",
+       "share": 0.12,
+       "keys": [
+        "mysteryland"
+       ]
+      },
+      {
+       "id": "festival:dekmantel",
+       "name": "Dekmantel",
+       "type": "festival",
+       "tier": "tote",
+       "share": 0.06,
+       "keys": [
+        "dekmantel"
+       ]
+      },
+      {
+       "id": "festival:lowlands",
+       "name": "Lowlands",
+       "type": "festival",
+       "tier": "side",
+       "share": 0.05,
+       "keys": [
+        "lowlands"
+       ]
+      },
+      {
+       "id": "festival:dgtl",
+       "name": "DGTL",
+       "type": "festival",
+       "tier": "side",
+       "share": 0.04,
+       "keys": [
+        "dgtl"
+       ]
+      },
+      {
+       "id": "festival:defqon-1",
+       "name": "Defqon.1",
+       "type": "festival",
+       "tier": "side",
+       "share": 0.035,
+       "keys": [
+        "defqon1",
+        "defqon"
+       ]
+      },
+      {
+       "id": "festival:pinkpop",
+       "name": "Pinkpop",
+       "type": "festival",
+       "tier": "side",
+       "share": 0.03,
+       "keys": [
+        "pinkpop"
+       ]
+      },
+      {
+       "id": "festival:down-the-rabbit-hole",
+       "name": "Down the Rabbit Hole",
+       "type": "festival",
+       "tier": "tent",
+       "share": 0.01,
+       "keys": [
+        "downtherabbithole",
+        "dtrh"
+       ]
+      },
+      {
+       "id": "festival:best-kept-secret",
+       "name": "Best Kept Secret",
+       "type": "festival",
+       "tier": "tent",
+       "share": 0.008,
+       "keys": [
+        "bestkeptsecret"
+       ]
+      },
+      {
+       "id": "festival:draaimolen",
+       "name": "Draaimolen",
+       "type": "festival",
+       "tier": "basement",
+       "share": 0.003,
+       "keys": [
+        "draaimolen"
+       ]
+      },
+      {
+       "id": "festival:strange-sounds-from-beyond",
+       "name": "Strange Sounds from Beyond",
+       "type": "festival",
+       "tier": "htbt",
+       "share": 0.0005,
+       "keys": [
+        "strangesoundsfrombeyond"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "catalog": [
+  {
+   "id": "artist:carl-craig",
+   "name": "Carl Craig",
+   "type": "artist",
+   "keys": [
+    "carlcraig"
+   ]
+  },
+  {
+   "id": "artist:daft-punk",
+   "name": "Daft Punk",
+   "type": "artist",
+   "keys": [
+    "daftpunk"
+   ]
+  },
+  {
+   "id": "artist:derrick-may",
+   "name": "Derrick May",
+   "type": "artist",
+   "keys": [
+    "derrickmay"
+   ]
+  },
+  {
+   "id": "artist:dj-stingray",
+   "name": "DJ Stingray",
+   "type": "artist",
+   "keys": [
+    "djstingray",
+    "stingray313"
+   ]
+  },
+  {
+   "id": "artist:drexciya",
+   "name": "Drexciya",
+   "type": "artist",
+   "keys": [
+    "drexciya"
+   ]
+  },
+  {
+   "id": "artist:jeff-mills",
+   "name": "Jeff Mills",
+   "type": "artist",
+   "keys": [
+    "jeffmills"
+   ]
+  },
+  {
+   "id": "artist:juan-atkins",
+   "name": "Juan Atkins",
+   "type": "artist",
+   "keys": [
+    "juanatkins"
+   ]
+  },
+  {
+   "id": "artist:kevin-saunderson",
+   "name": "Kevin Saunderson",
+   "type": "artist",
+   "keys": [
+    "kevinsaunderson"
+   ]
+  },
+  {
+   "id": "artist:moodymann",
+   "name": "Moodymann",
+   "type": "artist",
+   "keys": [
+    "moodymann",
+    "kennydixonjr"
+   ]
+  },
+  {
+   "id": "artist:omar-s",
+   "name": "Omar S",
+   "type": "artist",
+   "keys": [
+    "omars"
+   ]
+  },
+  {
+   "id": "artist:robert-hood",
+   "name": "Robert Hood",
+   "type": "artist",
+   "keys": [
+    "roberthood"
+   ]
+  },
+  {
+   "id": "artist:theo-parrish",
+   "name": "Theo Parrish",
+   "type": "artist",
+   "keys": [
+    "theoparrish"
+   ]
+  },
+  {
+   "id": "artist:underground-resistance",
+   "name": "Underground Resistance",
+   "type": "artist",
+   "keys": [
+    "undergroundresistance",
+    "ur"
+   ]
+  },
+  {
+   "id": "city:amsterdam",
+   "name": "Amsterdam",
+   "type": "city",
+   "keys": [
+    "amsterdam"
+   ]
+  },
+  {
+   "id": "city:berlin",
+   "name": "Berlin",
+   "type": "city",
+   "keys": [
+    "berlin"
+   ]
+  },
+  {
+   "id": "city:buenos-aires",
+   "name": "Buenos Aires",
+   "type": "city",
+   "keys": [
+    "buenosaires"
+   ]
+  },
+  {
+   "id": "city:chicago",
+   "name": "Chicago",
+   "type": "city",
+   "keys": [
+    "chicago"
+   ]
+  },
+  {
+   "id": "city:johannesburg",
+   "name": "Johannesburg",
+   "type": "city",
+   "keys": [
+    "johannesburg",
+    "joburg"
+   ]
+  },
+  {
+   "id": "city:kyiv",
+   "name": "Kyiv",
+   "type": "city",
+   "keys": [
+    "kyiv",
+    "kiev"
+   ]
+  },
+  {
+   "id": "city:lagos",
+   "name": "Lagos",
+   "type": "city",
+   "keys": [
+    "lagos"
+   ]
+  },
+  {
+   "id": "city:london",
+   "name": "London",
+   "type": "city",
+   "keys": [
+    "london"
+   ]
+  },
+  {
+   "id": "city:los-angeles",
+   "name": "Los Angeles",
+   "type": "city",
+   "keys": [
+    "losangeles",
+    "la"
+   ]
+  },
+  {
+   "id": "city:mumbai",
+   "name": "Mumbai",
+   "type": "city",
+   "keys": [
+    "mumbai",
+    "bombay"
+   ]
+  },
+  {
+   "id": "city:new-york",
+   "name": "New York",
+   "type": "city",
+   "keys": [
+    "newyork",
+    "nyc",
+    "newyorkcity"
+   ]
+  },
+  {
+   "id": "city:paris",
+   "name": "Paris",
+   "type": "city",
+   "keys": [
+    "paris"
+   ]
+  },
+  {
+   "id": "city:santiago",
+   "name": "Santiago",
+   "type": "city",
+   "keys": [
+    "santiago"
+   ]
+  },
+  {
+   "id": "city:sao-paulo",
+   "name": "São Paulo",
+   "type": "city",
+   "keys": [
+    "saopaulo",
+    "sampa",
+    "sp"
+   ]
+  },
+  {
+   "id": "city:stockholm",
+   "name": "Stockholm",
+   "type": "city",
+   "keys": [
+    "stockholm"
+   ]
+  },
+  {
+   "id": "city:tbilisi",
+   "name": "Tbilisi",
+   "type": "city",
+   "keys": [
+    "tbilisi"
+   ]
+  },
+  {
+   "id": "city:tokyo",
+   "name": "Tokyo",
+   "type": "city",
+   "keys": [
+    "tokyo"
+   ]
+  },
+  {
+   "id": "country:belgium",
+   "name": "Belgium",
+   "type": "country",
+   "keys": [
+    "belgium"
+   ]
+  },
+  {
+   "id": "country:brazil",
+   "name": "Brazil",
+   "type": "country",
+   "keys": [
+    "brazil"
+   ]
+  },
+  {
+   "id": "country:france",
+   "name": "France",
+   "type": "country",
+   "keys": [
+    "france"
+   ]
+  },
+  {
+   "id": "country:united-states",
+   "name": "United States",
+   "type": "country",
+   "keys": [
+    "unitedstates",
+    "usa",
+    "us",
+    "america"
+   ]
+  },
+  {
+   "id": "festival:awakenings",
+   "name": "Awakenings",
+   "type": "festival",
+   "keys": [
+    "awakenings"
+   ]
+  },
+  {
+   "id": "festival:best-kept-secret",
+   "name": "Best Kept Secret",
+   "type": "festival",
+   "keys": [
+    "bestkeptsecret"
+   ]
+  },
+  {
+   "id": "festival:bestival",
+   "name": "Bestival",
+   "type": "festival",
+   "keys": [
+    "bestival"
+   ]
+  },
+  {
+   "id": "festival:boardmasters",
+   "name": "Boardmasters",
+   "type": "festival",
+   "keys": [
+    "boardmasters"
+   ]
+  },
+  {
+   "id": "festival:boomtown",
+   "name": "Boomtown",
+   "type": "festival",
+   "keys": [
+    "boomtown",
+    "boomtownfair"
+   ]
+  },
+  {
+   "id": "festival:coachella",
+   "name": "Coachella",
+   "type": "festival",
+   "keys": [
+    "coachella",
+    "coachellavalleymusicandartsfestival",
+    "coachellavalleymusicartsfestival"
+   ]
+  },
+  {
+   "id": "festival:creamfields",
+   "name": "Creamfields",
+   "type": "festival",
+   "keys": [
+    "creamfields"
+   ]
+  },
+  {
+   "id": "festival:defqon-1",
+   "name": "Defqon.1",
+   "type": "festival",
+   "keys": [
+    "defqon1",
+    "defqon"
+   ]
+  },
+  {
+   "id": "festival:dekmantel",
+   "name": "Dekmantel",
+   "type": "festival",
+   "keys": [
+    "dekmantel"
+   ]
+  },
+  {
+   "id": "festival:dgtl",
+   "name": "DGTL",
+   "type": "festival",
+   "keys": [
+    "dgtl"
+   ]
+  },
+  {
+   "id": "festival:down-the-rabbit-hole",
+   "name": "Down the Rabbit Hole",
+   "type": "festival",
+   "keys": [
+    "downtherabbithole",
+    "dtrh"
+   ]
+  },
+  {
+   "id": "festival:download-festival",
+   "name": "Download Festival",
+   "type": "festival",
+   "keys": [
+    "downloadfestival",
+    "download"
+   ]
+  },
+  {
+   "id": "festival:draaimolen",
+   "name": "Draaimolen",
+   "type": "festival",
+   "keys": [
+    "draaimolen"
+   ]
+  },
+  {
+   "id": "festival:field-day",
+   "name": "Field Day",
+   "type": "festival",
+   "keys": [
+    "fieldday"
+   ]
+  },
+  {
+   "id": "festival:field-maneuvers",
+   "name": "Field Maneuvers",
+   "type": "festival",
+   "keys": [
+    "fieldmaneuvers"
+   ]
+  },
+  {
+   "id": "festival:freerotation",
+   "name": "Freerotation",
+   "type": "festival",
+   "keys": [
+    "freerotation"
+   ]
+  },
+  {
+   "id": "festival:glastonbury",
+   "name": "Glastonbury",
+   "type": "festival",
+   "keys": [
+    "glastonbury",
+    "glastonburyfestival",
+    "glasto"
+   ]
+  },
+  {
+   "id": "festival:gottwood",
+   "name": "Gottwood",
+   "type": "festival",
+   "keys": [
+    "gottwood"
+   ]
+  },
+  {
+   "id": "festival:green-man",
+   "name": "Green Man",
+   "type": "festival",
+   "keys": [
+    "greenman"
+   ]
+  },
+  {
+   "id": "festival:houghton",
+   "name": "Houghton",
+   "type": "festival",
+   "keys": [
+    "houghton"
+   ]
+  },
+  {
+   "id": "festival:leeds-festival",
+   "name": "Leeds Festival",
+   "type": "festival",
+   "keys": [
+    "leedsfestival",
+    "leeds",
+    "readingandleeds",
+    "readingleeds"
+   ]
+  },
+  {
+   "id": "festival:lovebox",
+   "name": "Lovebox",
+   "type": "festival",
+   "keys": [
+    "lovebox"
+   ]
+  },
+  {
+   "id": "festival:lowlands",
+   "name": "Lowlands",
+   "type": "festival",
+   "keys": [
+    "lowlands"
+   ]
+  },
+  {
+   "id": "festival:mysteryland",
+   "name": "Mysteryland",
+   "type": "festival",
+   "keys": [
+    "mysteryland"
+   ]
+  },
+  {
+   "id": "festival:pinkpop",
+   "name": "Pinkpop",
+   "type": "festival",
+   "keys": [
+    "pinkpop"
+   ]
+  },
+  {
+   "id": "festival:reading-festival",
+   "name": "Reading Festival",
+   "type": "festival",
+   "keys": [
+    "readingfestival",
+    "reading",
+    "readingandleeds",
+    "readingleeds"
+   ]
+  },
+  {
+   "id": "festival:strange-sounds-from-beyond",
+   "name": "Strange Sounds from Beyond",
+   "type": "festival",
+   "keys": [
+    "strangesoundsfrombeyond"
+   ]
+  },
+  {
+   "id": "gear:akai-mpc60",
+   "name": "Akai MPC60",
+   "type": "gear",
+   "keys": [
+    "akaimpc60",
+    "mpc60",
+    "mpc"
+   ]
+  },
+  {
+   "id": "gear:alpha-juno",
+   "name": "Alpha Juno",
+   "type": "gear",
+   "keys": [
+    "alphajuno"
+   ]
+  },
+  {
+   "id": "gear:e-mu-sp-1200",
+   "name": "E-mu SP-1200",
+   "type": "gear",
+   "keys": [
+    "emusp1200",
+    "sp1200"
+   ]
+  },
+  {
+   "id": "gear:elektron-machinedrum",
+   "name": "Elektron Machinedrum",
+   "type": "gear",
+   "keys": [
+    "elektronmachinedrum",
+    "machinedrum"
+   ]
+  },
+  {
+   "id": "gear:juno-106",
+   "name": "Juno-106",
+   "type": "gear",
+   "keys": [
+    "juno106",
+    "juno"
+   ]
+  },
+  {
+   "id": "gear:juno-60",
+   "name": "Juno-60",
+   "type": "gear",
+   "keys": [
+    "juno60",
+    "juno"
+   ]
+  },
+  {
+   "id": "gear:jupiter-8",
+   "name": "Jupiter-8",
+   "type": "gear",
+   "keys": [
+    "jupiter8",
+    "jp8"
+   ]
+  },
+  {
+   "id": "gear:jx-3p",
+   "name": "JX-3P",
+   "type": "gear",
+   "keys": [
+    "jx3p"
+   ]
+  },
+  {
+   "id": "gear:linndrum",
+   "name": "LinnDrum",
+   "type": "gear",
+   "keys": [
+    "linndrum",
+    "lm2"
+   ]
+  },
+  {
+   "id": "gear:mks-80",
+   "name": "MKS-80",
+   "type": "gear",
+   "keys": [
+    "mks80",
+    "superjupiter"
+   ]
+  },
+  {
+   "id": "gear:roland-tr-707",
+   "name": "Roland TR-707",
+   "type": "gear",
+   "keys": [
+    "rolandtr707",
+    "707",
+    "tr707"
+   ]
+  },
+  {
+   "id": "gear:roland-tr-808",
+   "name": "Roland TR-808",
+   "type": "gear",
+   "keys": [
+    "rolandtr808",
+    "808",
+    "tr808"
+   ]
+  },
+  {
+   "id": "gear:roland-tr-909",
+   "name": "Roland TR-909",
+   "type": "gear",
+   "keys": [
+    "rolandtr909",
+    "909",
+    "tr909"
+   ]
+  },
+  {
+   "id": "gear:sh-101",
+   "name": "SH-101",
+   "type": "gear",
+   "keys": [
+    "sh101",
+    "101"
+   ]
+  },
+  {
+   "id": "gear:simmons-sds-v",
+   "name": "Simmons SDS-V",
+   "type": "gear",
+   "keys": [
+    "simmonssdsv",
+    "sdsv",
+    "sds5"
+   ]
+  },
+  {
+   "id": "gear:system-100",
+   "name": "System-100",
+   "type": "gear",
+   "keys": [
+    "system100"
+   ]
+  },
+  {
+   "id": "gear:tb-303",
+   "name": "TB-303",
+   "type": "gear",
+   "keys": [
+    "tb303",
+    "303"
+   ]
+  },
+  {
+   "id": "genre:breakcore",
+   "name": "Breakcore",
+   "type": "genre",
+   "keys": [
+    "breakcore"
+   ]
+  },
+  {
+   "id": "genre:drum-and-bass",
+   "name": "Drum and bass",
+   "type": "genre",
+   "keys": [
+    "drumandbass",
+    "drumbass",
+    "dnb",
+    "dandb",
+    "db"
+   ]
+  },
+  {
+   "id": "genre:dubstep",
+   "name": "Dubstep",
+   "type": "genre",
+   "keys": [
+    "dubstep"
+   ]
+  },
+  {
+   "id": "genre:footwork",
+   "name": "Footwork",
+   "type": "genre",
+   "keys": [
+    "footwork"
+   ]
+  },
+  {
+   "id": "genre:gqom",
+   "name": "Gqom",
+   "type": "genre",
+   "keys": [
+    "gqom"
+   ]
+  },
+  {
+   "id": "genre:hardstyle",
+   "name": "Hardstyle",
+   "type": "genre",
+   "keys": [
+    "hardstyle"
+   ]
+  },
+  {
+   "id": "genre:house",
+   "name": "House",
+   "type": "genre",
+   "keys": [
+    "house"
+   ]
+  },
+  {
+   "id": "genre:jungle",
+   "name": "Jungle",
+   "type": "genre",
+   "keys": [
+    "jungle"
+   ]
+  },
+  {
+   "id": "genre:speed-garage",
+   "name": "Speed garage",
+   "type": "genre",
+   "keys": [
+    "speedgarage"
+   ]
+  },
+  {
+   "id": "genre:techno",
+   "name": "Techno",
+   "type": "genre",
+   "keys": [
+    "techno"
+   ]
+  },
+  {
+   "id": "genre:trance",
+   "name": "Trance",
+   "type": "genre",
+   "keys": [
+    "trance"
+   ]
+  },
+  {
+   "id": "genre:uk-garage",
+   "name": "UK garage",
+   "type": "genre",
+   "keys": [
+    "ukgarage",
+    "ukg",
+    "garage"
+   ]
+  },
+  {
+   "id": "label:fxhe",
+   "name": "FXHE",
+   "type": "label",
+   "keys": [
+    "fxhe"
+   ]
+  },
+  {
+   "id": "label:kms",
+   "name": "KMS",
+   "type": "label",
+   "keys": [
+    "kms"
+   ]
+  },
+  {
+   "id": "label:mahogani-music",
+   "name": "Mahogani Music",
+   "type": "label",
+   "keys": [
+    "mahoganimusic",
+    "mahogani"
+   ]
+  },
+  {
+   "id": "label:metroplex",
+   "name": "Metroplex",
+   "type": "label",
+   "keys": [
+    "metroplex"
+   ]
+  },
+  {
+   "id": "label:motown",
+   "name": "Motown",
+   "type": "label",
+   "keys": [
+    "motown"
+   ]
+  },
+  {
+   "id": "label:planet-e",
+   "name": "Planet E",
+   "type": "label",
+   "keys": [
+    "planete",
+    "planetecommunications"
+   ]
+  },
+  {
+   "id": "label:sound-signature",
+   "name": "Sound Signature",
+   "type": "label",
+   "keys": [
+    "soundsignature"
+   ]
+  },
+  {
+   "id": "label:submerge",
+   "name": "Submerge",
+   "type": "label",
+   "keys": [
+    "submerge"
+   ]
+  },
+  {
+   "id": "label:transmat",
+   "name": "Transmat",
+   "type": "label",
+   "keys": [
+    "transmat"
+   ]
+  },
+  {
+   "id": "label:underground-resistance",
+   "name": "Underground Resistance",
+   "type": "label",
+   "keys": [
+    "undergroundresistance",
+    "ur",
+    "submerge"
+   ]
+  },
+  {
+   "id": "soundsystem:channel-one",
+   "name": "Channel One",
+   "type": "soundsystem",
+   "keys": [
+    "channelone",
+    "channel1",
+    "channelonesoundsystem",
+    "channel1soundsystem"
+   ]
+  },
+  {
+   "id": "soundsystem:d-and-b-audiotechnik",
+   "name": "d&b audiotechnik",
+   "type": "soundsystem",
+   "keys": [
+    "dandbaudiotechnik",
+    "dbaudiotechnik",
+    "dnbaudiotechnik"
+   ]
+  },
+  {
+   "id": "soundsystem:funktion-one",
+   "name": "Funktion-One",
+   "type": "soundsystem",
+   "keys": [
+    "funktionone",
+    "funktion1",
+    "f1"
+   ]
+  },
+  {
+   "id": "soundsystem:jah-shaka",
+   "name": "Jah Shaka",
+   "type": "soundsystem",
+   "keys": [
+    "jahshaka",
+    "jahshakasoundsystem"
+   ]
+  },
+  {
+   "id": "soundsystem:l-acoustics",
+   "name": "L-Acoustics",
+   "type": "soundsystem",
+   "keys": [
+    "lacoustics"
+   ]
+  },
+  {
+   "id": "soundsystem:martin-audio",
+   "name": "Martin Audio",
+   "type": "soundsystem",
+   "keys": [
+    "martinaudio"
+   ]
+  },
+  {
+   "id": "soundsystem:meyer-sound",
+   "name": "Meyer Sound",
+   "type": "soundsystem",
+   "keys": [
+    "meyersound",
+    "meyer"
+   ]
+  },
+  {
+   "id": "soundsystem:saxon-studio",
+   "name": "Saxon Studio",
+   "type": "soundsystem",
+   "keys": [
+    "saxonstudio",
+    "saxon",
+    "saxonsound"
+   ]
+  },
+  {
+   "id": "soundsystem:stone-love",
+   "name": "Stone Love",
+   "type": "soundsystem",
+   "keys": [
+    "stonelove",
+    "stonelovemovement"
+   ]
+  },
+  {
+   "id": "soundsystem:void-acoustics",
+   "name": "Void Acoustics",
+   "type": "soundsystem",
+   "keys": [
+    "voidacoustics",
+    "void"
+   ]
+  },
+  {
+   "id": "stage:acoustic-stage",
+   "name": "Acoustic Stage",
+   "type": "stage",
+   "keys": [
+    "acousticstage"
+   ]
+  },
+  {
+   "id": "stage:arcadia",
+   "name": "Arcadia",
+   "type": "stage",
+   "keys": [
+    "arcadia",
+    "arcadiaspectacular"
+   ]
+  },
+  {
+   "id": "stage:avalon",
+   "name": "Avalon",
+   "type": "stage",
+   "keys": [
+    "avalon"
+   ]
+  },
+  {
+   "id": "stage:block9",
+   "name": "Block9",
+   "type": "stage",
+   "keys": [
+    "block9"
+   ]
+  },
+  {
+   "id": "stage:other-stage",
+   "name": "Other Stage",
+   "type": "stage",
+   "keys": [
+    "otherstage"
+   ]
+  },
+  {
+   "id": "stage:park",
+   "name": "The Park",
+   "type": "stage",
+   "keys": [
+    "park",
+    "parkstage"
+   ]
+  },
+  {
+   "id": "stage:pyramid-stage",
+   "name": "Pyramid Stage",
+   "type": "stage",
+   "keys": [
+    "pyramidstage",
+    "pyramid"
+   ]
+  },
+  {
+   "id": "stage:shangri-la",
+   "name": "Shangri-La",
+   "type": "stage",
+   "keys": [
+    "shangrila"
+   ]
+  },
+  {
+   "id": "stage:strummerville",
+   "name": "Strummerville",
+   "type": "stage",
+   "keys": [
+    "strummerville"
+   ]
+  },
+  {
+   "id": "stage:west-holts",
+   "name": "West Holts",
+   "type": "stage",
+   "keys": [
+    "westholts"
+   ]
+  },
+  {
+   "id": "stage:williams-green",
+   "name": "Williams Green",
+   "type": "stage",
+   "keys": [
+    "williamsgreen"
+   ]
+  },
+  {
+   "id": "venue:about-blank",
+   "name": "About Blank",
+   "type": "venue",
+   "keys": [
+    "aboutblank"
+   ]
+  },
+  {
+   "id": "venue:amnesia",
+   "name": "Amnesia",
+   "type": "venue",
+   "keys": [
+    "amnesia"
+   ]
+  },
+  {
+   "id": "venue:berghain",
+   "name": "Berghain",
+   "type": "venue",
+   "keys": [
+    "berghain"
+   ]
+  },
+  {
+   "id": "venue:cova-santa",
+   "name": "Cova Santa",
+   "type": "venue",
+   "keys": [
+    "covasanta"
+   ]
+  },
+  {
+   "id": "venue:dc-10",
+   "name": "DC-10",
+   "type": "venue",
+   "keys": [
+    "dc10"
+   ]
+  },
+  {
+   "id": "venue:eden",
+   "name": "Eden",
+   "type": "venue",
+   "keys": [
+    "eden"
+   ]
+  },
+  {
+   "id": "venue:es-paradis",
+   "name": "Es Paradis",
+   "type": "venue",
+   "keys": [
+    "esparadis"
+   ]
+  },
+  {
+   "id": "venue:fabric",
+   "name": "Fabric",
+   "type": "venue",
+   "keys": [
+    "fabric",
+    "fabriclondon"
+   ]
+  },
+  {
+   "id": "venue:griessmuhle",
+   "name": "Griessmühle",
+   "type": "venue",
+   "keys": [
+    "griessmuhle",
+    "griessmuehle"
+   ]
+  },
+  {
+   "id": "venue:hi-ibiza",
+   "name": "Hï Ibiza",
+   "type": "venue",
+   "keys": [
+    "hiibiza"
+   ]
+  },
+  {
+   "id": "venue:kitkatclub",
+   "name": "KitKatClub",
+   "type": "venue",
+   "keys": [
+    "kitkatclub",
+    "kitkat"
+   ]
+  },
+  {
+   "id": "venue:ohm",
+   "name": "OHM",
+   "type": "venue",
+   "keys": [
+    "ohm"
+   ]
+  },
+  {
+   "id": "venue:pacha",
+   "name": "Pacha",
+   "type": "venue",
+   "keys": [
+    "pacha"
+   ]
+  },
+  {
+   "id": "venue:panorama-bar",
+   "name": "Panorama Bar",
+   "type": "venue",
+   "keys": [
+    "panoramabar"
+   ]
+  },
+  {
+   "id": "venue:privilege",
+   "name": "Privilege",
+   "type": "venue",
+   "keys": [
+    "privilege",
+    "ku",
+    "privilegeibiza"
+   ]
+  },
+  {
+   "id": "venue:ritter-butzke",
+   "name": "Ritter Butzke",
+   "type": "venue",
+   "keys": [
+    "ritterbutzke"
+   ]
+  },
+  {
+   "id": "venue:sankeys-ibiza",
+   "name": "Sankeys Ibiza",
+   "type": "venue",
+   "keys": [
+    "sankeysibiza"
+   ]
+  },
+  {
+   "id": "venue:saule",
+   "name": "Säule",
+   "type": "venue",
+   "keys": [
+    "saule"
+   ]
+  },
+  {
+   "id": "venue:sisyphos",
+   "name": "Sisyphos",
+   "type": "venue",
+   "keys": [
+    "sisyphos"
+   ]
+  },
+  {
+   "id": "venue:space",
+   "name": "Space",
+   "type": "venue",
+   "keys": [
+    "space"
+   ]
+  },
+  {
+   "id": "venue:tresor",
+   "name": "Tresor",
+   "type": "venue",
+   "keys": [
+    "tresor"
+   ]
+  },
+  {
+   "id": "venue:ushuaia",
+   "name": "Ushuaïa",
+   "type": "venue",
+   "keys": [
+    "ushuaia",
+    "ushuaiaibiza"
+   ]
+  },
+  {
+   "id": "venue:watergate",
+   "name": "Watergate",
+   "type": "venue",
+   "keys": [
+    "watergate"
+   ]
+  }
+ ]
+}

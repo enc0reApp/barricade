@@ -1,0 +1,202 @@
+/* Share landing: the ticket lying in the night field. */
+
+.page {
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 42% at 50% 104%, rgba(139, 92, 255, 0.42), rgba(139, 92, 255, 0) 70%),
+    radial-gradient(ellipse 60% 30% at 50% 100%, rgba(255, 79, 163, 0.18), rgba(255, 79, 163, 0) 70%),
+    linear-gradient(180deg, var(--sky-0) 0%, var(--sky-1) 40%, var(--sky-2) 100%);
+  color: var(--ink);
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.stars {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 3px;
+  animation: twinkle 5s steps(2, end) infinite alternate;
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+.column {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: max(28px, env(safe-area-inset-top)) var(--gutter) max(28px, env(safe-area-inset-bottom));
+  text-align: center;
+}
+
+.kicker {
+  margin: 0;
+  color: var(--ink-dim);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: var(--tracking-wider);
+}
+
+.slashes {
+  color: var(--magenta);
+}
+
+.headline {
+  margin: 14px 0 0;
+  font-weight: normal;
+  font-size: clamp(24px, 5.6vw, 40px);
+  line-height: 1.12;
+  letter-spacing: 0.02em;
+  text-wrap: balance;
+}
+
+.lore {
+  margin: 10px 0 0;
+  color: var(--ink-dim);
+  font-family: var(--font-pixel-line);
+  font-size: clamp(14px, 3.6vw, 18px);
+  letter-spacing: 0.04em;
+}
+
+.loreMark {
+  color: var(--magenta);
+}
+
+.ticket {
+  width: 100%;
+  /* room for the hard shadow on the right */
+  padding-right: 8px;
+  margin-top: 26px;
+  text-align: left;
+}
+
+.sub {
+  margin: 30px 0 0;
+  font-size: clamp(18px, 4.4vw, 24px);
+  letter-spacing: 0.06em;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin-top: 18px;
+}
+
+/* Panel button: cyan edge + dark face, both with stepped corners. The glow is a
+   drop-shadow on the unclipped link so it follows the stepped silhouette. */
+.cta {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  text-decoration: none;
+  color: var(--ink);
+  filter: drop-shadow(0 0 14px rgba(69, 229, 255, 0.45));
+  transition: filter 160ms ease;
+}
+
+.cta:hover {
+  filter: drop-shadow(0 0 22px rgba(69, 229, 255, 0.7));
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 6px;
+}
+
+.ctaEdge {
+  display: block;
+  padding: 3px;
+  background: var(--cyan);
+  clip-path: polygon(
+    0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0,
+    calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px,
+    100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%,
+    8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px)
+  );
+}
+
+.ctaFace {
+  display: block;
+  padding: 18px 20px 16px;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+  font-size: clamp(17px, 4.6vw, 22px);
+  letter-spacing: var(--tracking-wide);
+  white-space: nowrap;
+  transition: background 160ms ease;
+}
+
+.cta:hover .ctaFace {
+  background: linear-gradient(180deg, #1a2350, var(--panel-2));
+}
+
+.cta:active .ctaFace {
+  transform: translateY(1px);
+}
+
+.secondary {
+  color: var(--ink-dim);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-decoration: underline;
+  text-decoration-color: var(--ink-faint);
+  text-underline-offset: 4px;
+}
+
+.secondary:hover {
+  color: var(--ink);
+  text-decoration-color: var(--cyan);
+}
+
+.footer {
+  margin-top: 40px;
+  color: var(--ink-quiet);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+@media (min-width: 720px) {
+  .column {
+    padding-top: 44px;
+  }
+
+  .ticket {
+    margin-top: 34px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stars {
+    animation: none;
+  }
+}

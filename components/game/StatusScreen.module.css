@@ -1,0 +1,82 @@
+.screen {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: calc(var(--column) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding: calc(var(--safe-top) + 7vh) var(--gutter) 0;
+}
+
+.logo {
+  align-self: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.panel {
+  --fill: rgba(9, 12, 28, 0.9);
+  --step: 6px;
+  padding: 26px 22px 24px;
+  text-align: center;
+  margin-top: auto;
+}
+
+.kicker {
+  margin: 0 0 12px;
+  font-size: 11px;
+  letter-spacing: var(--tracking-wider);
+  color: var(--magenta);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(22px, 6.4vw, 30px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+}
+
+.title[data-busy] {
+  animation: breathe 1.6s ease-in-out infinite alternate;
+}
+
+.body {
+  margin-top: 14px;
+  font-family: var(--font-pixel-line);
+  font-size: 13px;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+}
+
+.body p {
+  margin: 0 0 8px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.actions > * {
+  flex: 1 1 auto;
+}
+
+@keyframes breathe {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.55;
+  }
+}

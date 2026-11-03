@@ -1,0 +1,34 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 20px 0 calc(16px + var(--safe-bottom));
+  text-align: center;
+  font-family: var(--font-pixel-line);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--ink-quiet);
+  text-shadow: 0 1px 0 #000;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--ink-faint);
+}
+
+.footer a:hover {
+  color: var(--ink);
+}
+
+.small {
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+}

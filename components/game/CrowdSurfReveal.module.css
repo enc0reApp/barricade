@@ -1,0 +1,208 @@
+.reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  outline: none;
+}
+
+.reveal[data-playing] {
+  cursor: pointer;
+}
+
+.track {
+  position: absolute;
+  left: var(--gutter);
+  right: calc(var(--gutter) + var(--ruler-space));
+  top: 0;
+  bottom: 0;
+  transition: opacity 400ms ease;
+}
+
+.reveal:not([data-playing]) .line:not([data-final]) {
+  opacity: 0.3;
+}
+
+/* ───── tier lines ───── */
+.line {
+  --c: var(--tier-main);
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  margin-bottom: -1px;
+  background: repeating-linear-gradient(to right, color-mix(in srgb, var(--c) 45%, transparent) 0 8px, transparent 8px 14px);
+  transition:
+    background 200ms steps(2),
+    filter 200ms ease;
+}
+
+.line[data-tier="tote"] {
+  --c: var(--tier-tote);
+}
+.line[data-tier="side"] {
+  --c: var(--tier-side);
+}
+.line[data-tier="tent"] {
+  --c: var(--tier-tent);
+}
+.line[data-tier="basement"] {
+  --c: var(--tier-basement);
+}
+.line[data-tier="htbt"] {
+  --c: var(--tier-htbt);
+}
+
+.line[data-passed] {
+  background: repeating-linear-gradient(to right, var(--c) 0 8px, transparent 8px 14px);
+}
+
+.line[data-final] {
+  background: var(--c);
+  height: 3px;
+  filter: drop-shadow(0 0 6px var(--c));
+}
+
+.reveal:not([data-playing]) .line[data-final] {
+  opacity: 1;
+}
+
+.lineLabel {
+  position: absolute;
+  right: 0;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: var(--tracking-wide);
+  color: color-mix(in srgb, var(--c) 70%, var(--ink-faint));
+  white-space: nowrap;
+  text-shadow:
+    0 1px 0 #000,
+    0 0 6px #000;
+}
+
+.line[data-passed] .lineLabel {
+  color: var(--c);
+}
+
+/* ───── the plaque, carried ───── */
+.carry {
+  position: absolute;
+  left: 46%;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform;
+  margin-bottom: -18px;
+}
+
+.reveal:not([data-playing]) .carry {
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.plaque {
+  --c: var(--ink-dim);
+  position: relative;
+  isolation: isolate;
+  padding: 10px 16px 9px;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  white-space: nowrap;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.7);
+  animation: wobble 0.42s steps(2) infinite;
+  --step: 4px;
+}
+
+.plaque::before,
+.plaque::after {
+  content: "";
+  position: absolute;
+  clip-path: var(--stepped);
+}
+
+.plaque::before {
+  inset: 0;
+  background: var(--c);
+  z-index: -2;
+}
+
+.plaque::after {
+  inset: 3px;
+  background:
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 3px),
+    #141a3a;
+  z-index: -1;
+}
+
+.carry[data-landed] .plaque {
+  animation: none;
+}
+
+.carry[data-landed] .main {
+  --c: var(--tier-main);
+}
+.carry[data-landed] .tote {
+  --c: var(--tier-tote);
+}
+.carry[data-landed] .side {
+  --c: var(--tier-side);
+}
+.carry[data-landed] .tent {
+  --c: var(--tier-tent);
+}
+.carry[data-landed] .basement {
+  --c: var(--tier-basement);
+}
+.carry[data-landed] .htbt {
+  --c: var(--tier-htbt);
+}
+
+.hands {
+  display: flex;
+  gap: 10px;
+  margin-top: -6px;
+  height: 40px;
+  overflow: hidden;
+}
+
+.hand {
+  display: block;
+  animation: pass 0.5s steps(2) infinite;
+}
+
+.carry[data-landed] .hand {
+  animation: none;
+}
+
+.skip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-pixel-line);
+  font-size: 11px;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-quiet);
+}
+
+@keyframes wobble {
+  0% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes pass {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(6px);
+  }
+}

@@ -1,0 +1,66 @@
+.logo {
+  position: relative;
+  margin: 0;
+  font-family: var(--font-pixel);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-align: center;
+  white-space: nowrap;
+  isolation: isolate;
+}
+
+.logo > span {
+  position: relative;
+  z-index: 1;
+  background:
+    repeating-linear-gradient(to bottom, rgba(241, 238, 232, 1) 0 2px, rgba(241, 238, 232, 0.72) 2px 3px);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Chromatic split: cyan left, magenta right. */
+.logo::before,
+.logo::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.logo::before {
+  color: var(--cyan);
+  transform: translate(-2px, 0);
+  opacity: 0.9;
+}
+
+.logo::after {
+  color: var(--magenta);
+  transform: translate(2px, 1px);
+  opacity: 0.9;
+  mix-blend-mode: screen;
+}
+
+.lg {
+  font-size: clamp(46px, 13.4vw, 104px);
+}
+
+.md {
+  font-size: clamp(30px, 8vw, 48px);
+}
+
+.sm {
+  font-size: 20px;
+  letter-spacing: 0.08em;
+}
+
+.sm::before {
+  transform: translate(-1px, 0);
+}
+
+.sm::after {
+  transform: translate(1px, 0);
+}

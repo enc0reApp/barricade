@@ -1,0 +1,145 @@
+.doors {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: calc(var(--column) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding: calc(var(--safe-top) + 6vh) var(--gutter) 0;
+}
+
+.banner {
+  position: absolute;
+  top: calc(var(--safe-top) + 10px);
+  left: var(--gutter);
+  right: var(--gutter);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.banner span {
+  padding: 6px 12px;
+  background: var(--amber);
+  color: #1a1206;
+  font-size: 11px;
+  letter-spacing: var(--tracking-wider);
+  clip-path: var(--stepped-sm);
+  --step: 3px;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.presents {
+  margin: 0;
+  font-family: var(--font-pixel-line);
+  font-size: 11px;
+  letter-spacing: var(--tracking-wider);
+  color: var(--ink-quiet);
+}
+
+.daily {
+  margin: 4px 0 0;
+  font-size: 15px;
+  letter-spacing: 0.5em;
+  padding-left: 0.5em;
+  color: var(--cyan);
+  text-shadow: 0 0 10px rgba(69, 229, 255, 0.45);
+}
+
+.tag {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  font-family: var(--font-pixel-line);
+  font-size: 13px;
+  line-height: 1.6;
+  letter-spacing: 0.12em;
+  color: var(--ink-dim);
+  text-shadow: 0 1px 0 #000;
+}
+
+.title {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: var(--tracking-wider);
+  color: var(--magenta);
+}
+
+/* Leaves the stage on the horizon visible between the title and the CTA. */
+.window {
+  flex: 1;
+  min-height: 140px;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 4px;
+}
+
+.cta {
+  min-height: 76px;
+  font-size: 19px;
+  letter-spacing: 0.26em;
+  --fill: rgba(14, 22, 49, 0.94);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 4px;
+  font-size: 12px;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-dim);
+  text-shadow: 0 1px 0 #000;
+}
+
+.streak {
+  color: var(--amber);
+}
+
+.close {
+  margin: 0;
+  padding: 0 4px;
+  font-size: 12px;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-quiet);
+  text-shadow: 0 1px 0 #000;
+}
+
+.close a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--ink-dim);
+  text-decoration: none;
+}
+
+.count {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.nav > * {
+  flex: 1 1 auto;
+}

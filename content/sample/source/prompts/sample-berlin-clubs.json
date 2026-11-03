@@ -1,0 +1,1591 @@
+{
+  "slug": "sample-berlin-clubs",
+  "text": "Name a nightclub in Berlin",
+  "hint": "Open now or long gone.",
+  "types": [
+    "venue"
+  ],
+  "difficulty": 2,
+  "boundary": "Nightclubs, discos and dance clubs in Berlin, current or defunct: every entry in German Wikipedia's 'Liste von Clubs und Diskotheken in Berlin' (as of 2026) except former venues with no known opening or closing date, plus Berghain's in-house clubs (Panorama Bar, Lab.oratory), Säälchen, Clärchens Ballhaus and the Weimar-era Eldorado and Damenklub Violetta. Concert halls (Columbiahalle, Astra), festival sites and one-off party series are excluded.",
+  "rarity": "guess",
+  "answers": [
+    {
+      "name": "Berghain",
+      "type": "venue",
+      "aliases": [
+        "Berghain Berlin"
+      ],
+      "wiki": "Berghain",
+      "guess": "main"
+    },
+    {
+      "name": "KitKatClub",
+      "type": "venue",
+      "aliases": [
+        "KitKat"
+      ],
+      "wiki": "KitKatClub",
+      "guess": "main"
+    },
+    {
+      "name": "Tresor",
+      "type": "venue",
+      "aliases": [
+        "Tresor Berlin",
+        "Tresor Club"
+      ],
+      "wiki": "Tresor (club)",
+      "guess": "main",
+      "note": "Opened 1991 in the vault of a former department store"
+    },
+    {
+      "name": "://about blank",
+      "type": "venue",
+      "wiki": null,
+      "guess": "side"
+    },
+    {
+      "name": "Kater Blau",
+      "type": "venue",
+      "aliases": [
+        "Kater"
+      ],
+      "wiki": null,
+      "guess": "side",
+      "note": "Renamed plain 'Kater' in 2025"
+    },
+    {
+      "name": "Panorama Bar",
+      "type": "venue",
+      "aliases": [
+        "Pbar"
+      ],
+      "wiki": null,
+      "guess": "side",
+      "note": "The upstairs club in the Berghain building"
+    },
+    {
+      "name": "Salon zur Wilden Renate",
+      "type": "venue",
+      "aliases": [
+        "Wilde Renate",
+        "Renate",
+        "Zur Wilden Renate"
+      ],
+      "wiki": null,
+      "guess": "side"
+    },
+    {
+      "name": "Sisyphos",
+      "type": "venue",
+      "aliases": [
+        "Sisy"
+      ],
+      "wiki": null,
+      "guess": "side",
+      "note": "Runs for days on end in a former dog-biscuit factory"
+    },
+    {
+      "name": "Watergate",
+      "type": "venue",
+      "aliases": [
+        "Watergate Club"
+      ],
+      "wiki": null,
+      "guess": "side",
+      "note": "Spree-side club with the famous window wall, 2002–2024"
+    },
+    {
+      "name": "Bar 25",
+      "type": "venue",
+      "wiki": "Bar 25",
+      "guess": "tent",
+      "note": "The riverside wonderland of excess, 2004–2010"
+    },
+    {
+      "name": "Club der Visionäre",
+      "type": "venue",
+      "aliases": [
+        "CDV",
+        "Club der Visionaere"
+      ],
+      "wiki": "Club der Visionaere",
+      "guess": "tent"
+    },
+    {
+      "name": "Golden Gate",
+      "type": "venue",
+      "wiki": null,
+      "guess": "tent"
+    },
+    {
+      "name": "Griessmühle",
+      "type": "venue",
+      "aliases": [
+        "Griessmuehle"
+      ],
+      "wiki": null,
+      "guess": "tent",
+      "note": "Neukölln club in an old grain mill, 2012–2020"
+    },
+    {
+      "name": "OHM",
+      "type": "venue",
+      "wiki": null,
+      "guess": "tent",
+      "note": "In the old battery room of the power station next to Tresor"
+    },
+    {
+      "name": "Ritter Butzke",
+      "type": "venue",
+      "wiki": null,
+      "guess": "tent"
+    },
+    {
+      "name": "RSO",
+      "type": "venue",
+      "aliases": [
+        "RSO.Berlin",
+        "Revier Südost",
+        "Revier Suedost"
+      ],
+      "wiki": null,
+      "guess": "tent",
+      "note": "Griessmühle's crew reborn in Schöneweide"
+    },
+    {
+      "name": "SchwuZ",
+      "type": "venue",
+      "wiki": null,
+      "guess": "tent",
+      "note": "One of Germany's oldest queer clubs, 1977–2025"
+    },
+    {
+      "name": "SO36",
+      "type": "venue",
+      "wiki": "SO36",
+      "guess": "tent",
+      "note": "Kreuzberg punk institution since 1978"
+    },
+    {
+      "name": "Anomalie",
+      "type": "venue",
+      "aliases": [
+        "Anomalie Art Club"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Arena Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Birgit & Bier",
+      "type": "venue",
+      "aliases": [
+        "Birgit",
+        "Birgit und Bier"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Bunker",
+      "type": "venue",
+      "aliases": [
+        "Reichsbahnbunker"
+      ],
+      "wiki": "Reichsbahnbunker Friedrichstraße",
+      "guess": "basement",
+      "note": "Hard techno in a WWII air-raid shelter, 1992–1996"
+    },
+    {
+      "name": "Cassiopeia",
+      "type": "venue",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Chalet",
+      "type": "venue",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Cookies",
+      "type": "venue",
+      "wiki": null,
+      "guess": "basement",
+      "note": "Heinz 'Cookie' Gindullis' club, 1994–2014"
+    },
+    {
+      "name": "E-Werk",
+      "type": "venue",
+      "wiki": "E-Werk (Berlin)",
+      "guess": "basement",
+      "note": "Techno in a disused power station, 1993–1997"
+    },
+    {
+      "name": "Else",
+      "type": "venue",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Gretchen",
+      "type": "venue",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Hoppetosse",
+      "type": "venue",
+      "wiki": null,
+      "guess": "basement",
+      "note": "A club on a boat moored on the Spree"
+    },
+    {
+      "name": "Insomnia",
+      "type": "venue",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Kater Holzig",
+      "type": "venue",
+      "wiki": null,
+      "guess": "basement",
+      "note": "Bar 25's successor, 2010–2014"
+    },
+    {
+      "name": "Lab.oratory",
+      "type": "venue",
+      "wiki": null,
+      "guess": "basement",
+      "note": "The men-only fetish club in Berghain's basement"
+    },
+    {
+      "name": "Lido",
+      "type": "venue",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Maria am Ostbahnhof",
+      "type": "venue",
+      "aliases": [
+        "Maria"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Matrix",
+      "type": "venue",
+      "aliases": [
+        "Matrix Club"
+      ],
+      "wiki": "Matrix (club)",
+      "guess": "basement"
+    },
+    {
+      "name": "Mensch Meier",
+      "type": "venue",
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Ostgut",
+      "type": "venue",
+      "wiki": null,
+      "guess": "basement",
+      "note": "Berghain's predecessor in a railway depot, 1998–2003"
+    },
+    {
+      "name": "OXI",
+      "type": "venue",
+      "aliases": [
+        "OXI Berlin",
+        "OXI Club"
+      ],
+      "wiki": null,
+      "guess": "basement",
+      "note": "Successor to Polygon, which succeeded Kosmonaut"
+    },
+    {
+      "name": "Prince Charles",
+      "type": "venue",
+      "aliases": [
+        "Prinz Charles"
+      ],
+      "wiki": null,
+      "guess": "basement",
+      "note": "Built inside a former swimming pool"
+    },
+    {
+      "name": "Sage Club",
+      "type": "venue",
+      "aliases": [
+        "Sage"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Suicide Club",
+      "type": "venue",
+      "aliases": [
+        "Suicide Circus",
+        "Lokschuppen"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Säälchen",
+      "type": "venue",
+      "aliases": [
+        "Saealchen",
+        "Holzmarkt 25"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "Trauma Bar und Kino",
+      "type": "venue",
+      "aliases": [
+        "Trauma Bar",
+        "Trauma"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "UFO",
+      "type": "venue",
+      "aliases": [
+        "Ufo Club"
+      ],
+      "wiki": "Ufo (club, Berlin)",
+      "guess": "basement",
+      "note": "Berlin's first acid house club, in a basement, 1988–1990"
+    },
+    {
+      "name": "Weekend Club",
+      "type": "venue",
+      "aliases": [
+        "Weekend",
+        "House of Weekend"
+      ],
+      "wiki": null,
+      "guess": "basement"
+    },
+    {
+      "name": "YAAM",
+      "type": "venue",
+      "aliases": [
+        "Yaam Berlin"
+      ],
+      "wiki": null,
+      "guess": "basement",
+      "note": "Beach bar and reggae/Afro club on the Spree"
+    },
+    {
+      "name": "103",
+      "type": "venue",
+      "aliases": [
+        "103 Club"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "119",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "40seconds",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "808 Berlin",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "90 Grad",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Abraxas",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Abstrakt",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Adagio",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Afro Negro Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Alte Münze",
+      "type": "venue",
+      "aliases": [
+        "MUENZE",
+        "Münze"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Amber Suite",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "AMT club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Anita Berber",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Annabelles Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "arkaoda",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "ASeven Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Auster Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "b-flat",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "BABY01",
+      "type": "venue",
+      "aliases": [
+        "M01"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Badehaus",
+      "type": "venue",
+      "aliases": [
+        "Badehaus Szimpla"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Badewanne",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Ballhaus Spandau",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Ballhaus Tiergarten",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bang Bang Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bassy Cowboy Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Beat Hall",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Beautiful Balloon",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bertrams",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bi Nuu",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt",
+      "note": "Inside the Schlesisches Tor U-Bahn station"
+    },
+    {
+      "name": "Big Apple",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Big Eden",
+      "type": "venue",
+      "wiki": "Big Eden",
+      "guess": "htbt",
+      "note": "Playboy Rolf Eden's Ku'damm disco"
+    },
+    {
+      "name": "Blondes",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Blu",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bohnengold",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Boudoir",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bricks",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Bulbul",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "C115",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Café Moskau",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Café Swing",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Cartoon",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Casino",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Casino 3",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Casino II",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Cheetah",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Chez Jacki",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Closed Eye",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Club Marx",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Clärchens Ballhaus",
+      "type": "venue",
+      "aliases": [
+        "Clärchen's Ballroom",
+        "Claerchens Ballhaus"
+      ],
+      "wiki": "Clärchen's Ballroom",
+      "guess": "htbt",
+      "note": "A dance hall since 1913"
+    },
+    {
+      "name": "Coffy",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Countdown",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Cube",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Dachluke",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Damenklub Violetta",
+      "type": "venue",
+      "aliases": [
+        "Violetta"
+      ],
+      "wiki": "Damenklub Violetta",
+      "guess": "htbt",
+      "note": "A 1920s lesbian club"
+    },
+    {
+      "name": "Dazzle",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Deli an der Schillingbrücke",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Delicious Doughnuts",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Der Weiße Hase",
+      "type": "venue",
+      "aliases": [
+        "Weisser Hase",
+        "Weiße Hase"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Die Tube",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Discount",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Dr. Pong",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Dschungel",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt",
+      "note": "West Berlin hangout of Bowie and Iggy Pop"
+    },
+    {
+      "name": "DSTRKT",
+      "type": "venue",
+      "aliases": [
+        "Distrikt"
+      ],
+      "wiki": null,
+      "guess": "htbt",
+      "note": "Successor to Anomalie Art Club"
+    },
+    {
+      "name": "Duncker",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Ecstasy",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Eimer",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Eisberg",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Eldorado",
+      "type": "venue",
+      "aliases": [
+        "Eldorado Berlin"
+      ],
+      "wiki": "Eldorado (Berlin)",
+      "guess": "htbt",
+      "note": "Weimar-era queer nightclub, closed by the Nazis in 1932"
+    },
+    {
+      "name": "Empire",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Ex'n'Pop",
+      "type": "venue",
+      "aliases": [
+        "Ex n Pop"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Far Out",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Farbfernseher",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Fateclub",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Felix",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "First",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Fischlabor",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Flashpoint",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Folkpub",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Frannz",
+      "type": "venue",
+      "aliases": [
+        "Frannz Club"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Franz-Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Galaxy Disco",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Go-In",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Goya",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Hafenbar",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt",
+      "note": "A Schlager disco since 1967"
+    },
+    {
+      "name": "Hangar49",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Havanna",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Horns & Hooves",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Horst Krzbrg",
+      "type": "venue",
+      "aliases": [
+        "Horst Kreuzberg"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Humboldthain Club",
+      "type": "venue",
+      "aliases": [
+        "Humboldthain"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Icon",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "International",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Jetpower",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Joe am Ku'damm",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Joe am Wedding",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Joe's Schnapshaus",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Joy",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Kaffee Burger",
+      "type": "venue",
+      "aliases": [
+        "Cafe Burger"
+      ],
+      "wiki": "Kaffee Burger",
+      "guess": "htbt",
+      "note": "Home of Wladimir Kaminer's Russendisko"
+    },
+    {
+      "name": "King Size Bar",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Kinzo",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Klub der Republik",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Knaack Club",
+      "type": "venue",
+      "aliases": [
+        "Knaack",
+        "Knaack-Klub"
+      ],
+      "wiki": "Knaack club",
+      "guess": "htbt"
+    },
+    {
+      "name": "Kosmonaut",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Ku'Damm Karree",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Ku'dorf",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Kulturbaracke",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "KvU",
+      "type": "venue",
+      "aliases": [
+        "Kirche von Unten"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Kwia",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "La Belle",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Levee",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Linientreu",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Loftus Hall",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Lovelite",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "MAAYA",
+      "type": "venue",
+      "aliases": [
+        "Haubentaucher"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Magdalena",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Magnet",
+      "type": "venue",
+      "aliases": [
+        "Magnet Club"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Marmorbar",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Marquee",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Maschine",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Maxxim Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Metropol",
+      "type": "venue",
+      "wiki": "Metropol (Berlin)",
+      "guess": "htbt"
+    },
+    {
+      "name": "Milli Vanilli",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Ministerium für Entspannung",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Morlox",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Music Hall",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Musik & Frieden",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Naherholung Sternchen",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Nuke Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "O Tannenbaum",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "OZ",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Pal Joe",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Palast Neukölln",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Pastiche",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Pfefferbank",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Phono Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Pichelsdorfer Fenster",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Picknick",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Pinguin Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Planet",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Polar.TV",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Polygon",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Pop Inn",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Privatclub",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Re:mise",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rechenzentrum",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Ressort",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rio",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Risiko",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Riverboat",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rodeo",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rosi's",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Rummels Bucht",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Sloopy",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Soda Club",
+      "type": "venue",
+      "aliases": [
+        "Soda",
+        "Club 23",
+        "Kulturbrauerei"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Sophienclub",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Sound",
+      "type": "venue",
+      "aliases": [
+        "S.O.U.N.D."
+      ],
+      "wiki": null,
+      "guess": "htbt",
+      "note": "The disco from 'Christiane F.'"
+    },
+    {
+      "name": "Starlight Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Stattbad",
+      "type": "venue",
+      "aliases": [
+        "Stattbad Wedding"
+      ],
+      "wiki": null,
+      "guess": "htbt",
+      "note": "Raves in a drained public swimming pool, 2009–2015"
+    },
+    {
+      "name": "Sternradio",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Steve Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Strike Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Sun",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Sweet Beat",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Swing Point",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Tape",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Teledisko",
+      "type": "venue",
+      "wiki": "Teledisko",
+      "guess": "htbt",
+      "note": "The world's smallest disco, in a converted phone booth"
+    },
+    {
+      "name": "The Shark Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Toaster",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Treibhaus",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Turbine",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "VEB Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Void Club",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Walfisch",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "White Trash Fast Food",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Why Not?",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "WMF",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt",
+      "note": "A nomadic club that kept moving, 1991–2010"
+    },
+    {
+      "name": "Zig Zag",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Zita",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "ZMF",
+      "type": "venue",
+      "aliases": [
+        "Zur Möbelfabrik",
+        "Zur Moebelfabrik"
+      ],
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Zodiak Free Arts Lab",
+      "type": "venue",
+      "aliases": [
+        "Zodiak",
+        "Zodiak Club"
+      ],
+      "wiki": "Zodiak Free Arts Lab",
+      "guess": "htbt",
+      "note": "Krautrock's 1968 birthplace, co-founded by Conrad Schnitzler"
+    },
+    {
+      "name": "Zufall",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    },
+    {
+      "name": "Zur Klappe",
+      "type": "venue",
+      "aliases": [
+        "Klappe"
+      ],
+      "wiki": null,
+      "guess": "htbt",
+      "note": "A club in a former public toilet"
+    },
+    {
+      "name": "ÆDEN",
+      "type": "venue",
+      "wiki": null,
+      "guess": "htbt"
+    }
+  ],
+  "sources": [
+    "https://de.wikipedia.org/wiki/Liste_von_Clubs_und_Diskotheken_in_Berlin",
+    "https://en.wikipedia.org/wiki/Category:Nightclubs_in_Berlin",
+    "https://de.wikipedia.org/wiki/Kategorie:Diskothek_(Berlin)"
+  ],
+  "notes": "Rarity is guess-only: most Berlin clubs have no English article and Wikipedia fame here tracks history (1920s clubs, the La Belle bombing) rather than what players type. Excluded the one-letter 'K.' (1996–97) and ~40 undated 1960s–80s discos with generic names (Space, Moon, Candy…) that would reward random guessing."
+}

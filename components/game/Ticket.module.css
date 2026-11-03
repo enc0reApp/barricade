@@ -1,0 +1,265 @@
+.wrap {
+  container-type: inline-size;
+  width: 100%;
+  filter: drop-shadow(0 10px 0 rgba(0, 0, 0, 0.35)) drop-shadow(0 0 22px rgba(139, 92, 255, 0.25));
+}
+
+.ticket {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 0 var(--stub-w);
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(255, 255, 255, 0.5), transparent 60%),
+    repeating-linear-gradient(90deg, rgba(11, 13, 23, 0.018) 0 1px, transparent 1px 4px),
+    var(--paper);
+  color: var(--paper-ink);
+  clip-path: var(--clip-l);
+  animation: print 520ms steps(8) both;
+}
+
+.main {
+  position: relative;
+  padding: 18px 20px 14px 22px;
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.brand {
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  text-shadow:
+    -1px 0 rgba(69, 229, 255, 0.85),
+    1px 0 rgba(255, 79, 163, 0.85);
+}
+
+.set {
+  font-size: 14px;
+  letter-spacing: var(--tracking-wide);
+}
+
+.date {
+  margin: 6px 0 0;
+  font-size: 12px;
+  letter-spacing: var(--tracking-wide);
+  color: var(--paper-ink-soft);
+}
+
+.distance {
+  margin: 18px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.metres {
+  font-size: clamp(56px, 19cqi, 84px);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+}
+
+.from {
+  font-size: 13px;
+  letter-spacing: var(--tracking-wider);
+}
+
+.barricade {
+  margin: 18px 0 0;
+  text-align: center;
+  font-size: clamp(30px, 10cqi, 44px);
+  line-height: 1.05;
+  letter-spacing: 0.08em;
+  color: var(--paper-ink);
+  text-shadow:
+    -2px 0 rgba(69, 229, 255, 0.9),
+    2px 0 rgba(255, 79, 163, 0.9);
+}
+
+.squares {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: 18px 0 0;
+}
+
+.sq {
+  width: 22px;
+  height: 22px;
+  background: var(--c, transparent);
+  box-shadow: inset 0 0 0 2px var(--paper-ink);
+}
+
+.sq[data-tier="main"] {
+  --c: #d8d4cc;
+}
+.sq[data-tier="tote"] {
+  --c: var(--tier-tote);
+}
+.sq[data-tier="side"] {
+  --c: var(--tier-side);
+}
+.sq[data-tier="tent"] {
+  --c: var(--tier-tent);
+}
+.sq[data-tier="basement"] {
+  --c: var(--tier-basement);
+}
+.sq[data-tier="htbt"] {
+  --c: var(--tier-htbt);
+}
+.sq[data-tier="miss"] {
+  background: linear-gradient(45deg, transparent 45%, var(--paper-ink) 45% 55%, transparent 55%);
+}
+
+.stats {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+}
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 14px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--paper-ink-soft);
+}
+
+.serial {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.stamp {
+  position: absolute;
+  top: 44px;
+  right: 16px;
+  padding: 3px 6px;
+  border: 2px solid var(--magenta);
+  color: #c41f6c;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  opacity: 0.85;
+}
+
+/* Perforation: a dotted cut between the main ticket and the stub. */
+.perf {
+  position: relative;
+}
+
+.perf::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: -1px;
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, var(--paper-ink-soft) 0 4px, transparent 4px 9px);
+  opacity: 0.6;
+}
+
+.stub {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 16px 14px 18px;
+  background: repeating-linear-gradient(135deg, rgba(11, 13, 23, 0.04) 0 2px, transparent 2px 6px);
+}
+
+.stubTop {
+  display: flex;
+  gap: 12px;
+}
+
+.admit {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.stubSet {
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: 0.12em;
+}
+
+.barcode,
+.barcodeV {
+  display: block;
+  width: 100%;
+  height: 78px;
+  color: var(--paper-ink);
+}
+
+/* Portrait on narrow screens: the stub drops to the bottom. */
+@container (max-width: 480px) {
+  .ticket {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 0 var(--stub-h);
+    clip-path: var(--clip-p);
+  }
+
+  .perf::before {
+    top: -1px;
+    bottom: auto;
+    left: 14px;
+    right: 14px;
+    width: auto;
+    height: 2px;
+    background: repeating-linear-gradient(to right, var(--paper-ink-soft) 0 4px, transparent 4px 9px);
+  }
+
+  .stub {
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 20px 14px 22px;
+  }
+
+  .stubTop {
+    flex-direction: column;
+    gap: 4px;
+    flex: none;
+  }
+
+  .admit {
+    writing-mode: horizontal-tb;
+    font-size: 12px;
+    letter-spacing: var(--tracking-wider);
+  }
+
+  .stubSet {
+    flex-direction: row;
+    gap: 0.5em;
+  }
+
+  .barcode {
+    flex: 1;
+    min-width: 0;
+    height: 52px;
+  }
+}
+
+@keyframes print {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
