@@ -1,0 +1,59 @@
+/*
+ * Design tokens. Shared by every component — extend, don't fork.
+ * Night-time festival field: deep navy sky, stage-light cyan + magenta,
+ * warm amber from the stage wash. Pixel unit is 4px.
+ */
+:root {
+  /* sky → field */
+  --sky-0: #05060d;
+  --sky-1: #0a0e22;
+  --sky-2: #141a3d;
+  --sky-3: #232a5c;
+  --field-0: #090c18;
+  --field-1: #0f1426;
+
+  /* surfaces */
+  --panel: #0c1124;
+  --panel-2: #121936;
+  --panel-edge: #273160;
+  --panel-edge-hi: #3b4a8a;
+
+  /* ink */
+  --ink: #f1eee8;
+  --ink-dim: #9aa1c2;
+  --ink-faint: #5a6290;
+
+  /* stage lights */
+  --cyan: #45e5ff;
+  --magenta: #ff4fa3;
+  --amber: #ffb547;
+  --uv: #8b5cff;
+  --warn: #ff8a5c; /* rejected-answer text; never flashed */
+
+  /* tiers (keep in sync with lib/game/tiers.ts) */
+  --tier-main: #e8e6e3;
+  --tier-tote: #d9a066;
+  --tier-side: #4da3ff;
+  --tier-tent: #3ddc84;
+  --tier-basement: #b26bff;
+  --tier-htbt: #ffd447;
+  --tier-miss: #2a3150;
+
+  /* type — variables are set by next/font in app/layout.tsx */
+  --font-pixel: var(--font-geist-pixel-square), ui-monospace, monospace;
+  --font-pixel-grid: var(--font-geist-pixel-grid), var(--font-pixel);
+  --font-pixel-circle: var(--font-geist-pixel-circle), var(--font-pixel);
+  --font-pixel-line: var(--font-geist-pixel-line), var(--font-pixel);
+  --font-pixel-triangle: var(--font-geist-pixel-triangle), var(--font-pixel);
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* rhythm */
+  --px: 4px;
+  --gutter: 16px;
+  --column: 560px;
+  --radius: 0px; /* pixel world: no rounded corners */
+  --tracking-wide: 0.18em;
+  --tracking-wider: 0.32em;
+
+  color-scheme: dark;
+}

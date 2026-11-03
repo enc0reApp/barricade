@@ -1,0 +1,25 @@
+# deps
+node_modules/
+
+# next
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# env — never commit keys
+.env
+.env*.local
+
+# vercel
+.vercel
+
+# os
+.DS_Store
+
+# CONTENT — the real puzzle sources and compiled pack are spoilers.
+# Only the sealed (encrypted) copies in content/sealed/ are committed.
+# The sample pack in content/sample/ is public on purpose.
+content/source/*
+!content/source/README.md
+content/build/
