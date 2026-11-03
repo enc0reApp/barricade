@@ -10,12 +10,16 @@
  * The resume rules live here as pure functions so they can be tested:
  *   - reload mid-round   → same token if before the deadline, else that round is a miss
  *   - reload mid-reveal  → the reveal's end state (tier card + KEEP PUSHING)
- *   - finished           → the ticket
+ *   - finished           → the ticket (or, once compacted, a ticket built from its summary)
+ *
+ * Several tabs share the key. Reads are cached per tab (dropped when another
+ * tab writes, via the 'storage' event); every write re-reads storage first and
+ * changes only its own piece, and a stale tab can never move a game backwards.
  */
 
 import type { AcceptedAnswer, FinishResult, RoundPrompt } from "../api/contract";
 import { addDays } from "../game/day";
-import type { Outcome } from "../game/tiers";
+import { GRACE_MS, type Outcome } from "../game/tiers";
 
 export const STORAGE_KEY = "barricade:v1";
 export const STORAGE_VERSION = 1;
@@ -57,6 +61,12 @@ export interface StoredGame {
   summary?: { outcomes: Outcome[]; distance: number };
   /** Round indexes already flagged ("should this have counted?"). */
   flagged?: number[];
+  /**
+   * The player id this game's tokens and receipts were issued to. Kept per game
+   * so a top-level id adopted from another tab can never orphan its receipts.
+   * Older games lack it and use the top-level id.
+   */
+  playerId?: string;
 }
 
 export interface Streak {
@@ -114,19 +124,21 @@ export function freshState(playerId: string = generatePlayerId()): StoredState {
   };
 }
 
-/** Parses whatever is in storage. Anything unusable becomes a fresh state (keeping a valid playerId). */
-export function parseState(raw: string | null): StoredState {
-  if (!raw) return freshState();
+/**
+ * Parses whatever is in storage. Anything unusable becomes a fresh state (keeping a valid playerId).
+ * `fallbackId` replaces a missing or invalid playerId instead of minting a new one.
+ */
+export function parseState(raw: string | null, fallbackId?: string): StoredState {
+  const mint = () => fallbackId ?? generatePlayerId();
+  if (!raw) return freshState(mint());
   let data: unknown;
   try {
     data = JSON.parse(raw);
   } catch {
-    return freshState();
+    return freshState(mint());
   }
-  if (!isObject(data)) return freshState();
-  const playerId = typeof data.playerId === "string" && PLAYER_ID_RE.test(data.playerId) && data.playerId.length >= 16
-    ? data.playerId
-    : generatePlayerId();
+  if (!isObject(data)) return freshState(mint());
+  const playerId = isLongPlayerId(data.playerId) ? data.playerId : mint();
   if (data.version !== STORAGE_VERSION) return freshState(playerId);
   const state = freshState(playerId);
   if (isObject(data.games)) {
@@ -150,6 +162,10 @@ function isObject(x: unknown): x is Record<string, unknown> {
   return typeof x === "object" && x !== null && !Array.isArray(x);
 }
 
+function isLongPlayerId(x: unknown): x is string {
+  return typeof x === "string" && PLAYER_ID_RE.test(x) && x.length >= 16;
+}
+
 function isStoredGame(x: unknown): x is StoredGame {
   if (!isObject(x)) return false;
   return (
@@ -158,7 +174,8 @@ function isStoredGame(x: unknown): x is StoredGame {
     (x.mode === "today" || x.mode === "archive") &&
     (x.status === "playing" || x.status === "finished") &&
     typeof x.total === "number" &&
-    Array.isArray(x.rounds)
+    Array.isArray(x.rounds) &&
+    (x.playerId === undefined || isLongPlayerId(x.playerId))
   );
 }
 
@@ -195,7 +212,9 @@ export type ResumePoint =
   | { kind: "round"; index: number }
   | { kind: "reveal"; index: number }
   | { kind: "finishing" }
-  | { kind: "ticket" };
+  | { kind: "ticket" }
+  /** Finished, but compacted: only the summary is left (see summaryFinish). Never the doors. */
+  | { kind: "summary" };
 
 /**
  * Marks the open round as a miss if its clock has run out. `clientNow` is
@@ -211,10 +230,11 @@ export function settleExpired(game: StoredGame, clientNow: number): StoredGame {
   return { ...game, rounds };
 }
 
-/** Where to pick a game back up. Call settleExpired first. */
+/** Where to pick a game back up. Call settleExpired first. A finished game is terminal. */
 export function resumePoint(game: StoredGame | null | undefined): ResumePoint {
-  if (!game || game.rounds.length === 0) return game?.status === "finished" && game.finish ? { kind: "ticket" } : { kind: "doors" };
-  if (game.status === "finished" && game.finish) return { kind: "ticket" };
+  if (!game) return { kind: "doors" };
+  if (game.status === "finished") return game.finish ? { kind: "ticket" } : { kind: "summary" };
+  if (game.rounds.length === 0) return { kind: "doors" };
   const last = game.rounds[game.rounds.length - 1]!;
   if (last.outcome === undefined) return { kind: "round", index: last.index };
   if (last.index >= game.total - 1) return { kind: "finishing" };
@@ -231,6 +251,113 @@ export function receiptsOf(game: StoredGame): (string | null)[] {
   const out: (string | null)[] = new Array<string | null>(game.total).fill(null);
   for (const r of game.rounds) if (r.index >= 0 && r.index < game.total) out[r.index] = r.receipt ?? null;
   return out;
+}
+
+/** The round tokens /api/finish needs as proof of play: one per round ("" for a round never started). */
+export function tokensOf(game: StoredGame): string[] {
+  const out: string[] = new Array<string>(game.total).fill("");
+  for (const r of game.rounds) if (r.index >= 0 && r.index < game.total) out[r.index] = r.token;
+  return out;
+}
+
+/** What /api/round needs to start round `index` (> 0): the previous round's token, plus its receipt (null = missed). */
+export function prevProof(game: StoredGame, index: number): { prevToken?: string; prevReceipt?: string | null } {
+  if (index <= 0) return {};
+  const prev = game.rounds.find((r) => r.index === index - 1);
+  if (!prev) return {};
+  return { prevToken: prev.token, prevReceipt: prev.receipt ?? null };
+}
+
+/** Extra margin on the server-clock waits below (clock jitter; the offset already errs late). */
+export const PROOF_PAD_MS = 250;
+
+/** ms (client clock) until `serverMs` has passed on the server for a round measured with `offset`. */
+function untilServer(serverMs: number, offset: number, clientNow: number): number {
+  return Math.max(0, serverMs - (clientNow + offset));
+}
+
+/**
+ * How long to wait before asking /api/round for round `index`: a round after a
+ * miss may only start once the missed round's answer window (deadline +
+ * GRACE_MS) has closed on the server.
+ */
+export function roundWaitMs(game: StoredGame, index: number, clientNow: number): number {
+  if (index <= 0) return 0;
+  const prev = game.rounds.find((r) => r.index === index - 1);
+  if (!prev || prev.receipt) return 0;
+  return untilServer(prev.deadline + GRACE_MS + PROOF_PAD_MS, prev.offset, clientNow);
+}
+
+/**
+ * How long to wait before /api/finish: the server only reveals a set once every
+ * missed round is past its deadline + GRACE_MS (no answering after seeing the picks).
+ */
+export function finishWaitMs(game: StoredGame, clientNow: number): number {
+  let wait = 0;
+  for (const r of game.rounds) {
+    if (r.receipt) continue;
+    wait = Math.max(wait, untilServer(r.deadline + GRACE_MS + PROOF_PAD_MS, r.offset, clientNow));
+  }
+  return wait;
+}
+
+/**
+ * How far along a game is, for refusing stale writes from another tab:
+ * finished beats playing; otherwise settled rounds count 2 and an open round 1.
+ */
+export function progressOf(game: StoredGame | null | undefined): number {
+  if (!game) return -1;
+  if (game.status === "finished") return Number.MAX_SAFE_INTEGER;
+  let n = 0;
+  for (const r of game.rounds) n += r.outcome !== undefined ? 2 : 1;
+  return n;
+}
+
+/**
+ * What to store when `incoming` is written over `stored` (same date).
+ * Finished is terminal: the first finish is the record of play and only its
+ * flags can grow. A playing game never replaces one that is further along.
+ */
+export function mergeGame(stored: StoredGame | null | undefined, incoming: StoredGame): StoredGame {
+  if (!stored || stored === incoming) return incoming;
+  if (stored.status === "finished") {
+    if (incoming.status !== "finished") return stored;
+    const flagged = [...new Set([...(stored.flagged ?? []), ...(incoming.flagged ?? [])])].sort((a, b) => a - b);
+    // A stored game may already be compacted (no `finish`) while the screen still holds the full
+    // reveal; keep it, or the first flag would swap the ticket to its summary.
+    const finish = stored.finish ?? incoming.finish;
+    if (flagged.length === (stored.flagged ?? []).length && finish === stored.finish) return stored;
+    return { ...stored, flagged, ...(finish ? { finish } : {}) };
+  }
+  if (incoming.status === "finished") return incoming;
+  return progressOf(stored) > progressOf(incoming) ? stored : incoming;
+}
+
+/** A game with round `index` marked as flagged. */
+export function withFlag(game: StoredGame, index: number): StoredGame {
+  const flagged = [...new Set([...(game.flagged ?? []), index])].sort((a, b) => a - b);
+  return { ...game, flagged };
+}
+
+/**
+ * A ticket for a finished game whose full reveal has been compacted away:
+ * outcomes and distance from its summary, no rounds, no crowd numbers.
+ * Never re-fetch these (compacted games keep no receipts).
+ */
+export function summaryFinish(game: StoredGame): FinishResult | null {
+  if (game.status !== "finished") return null;
+  if (game.finish) return game.finish;
+  if (!game.summary) return null;
+  return {
+    ok: true,
+    number: game.number,
+    date: game.date,
+    mode: game.mode,
+    outcomes: game.summary.outcomes,
+    distance: game.summary.distance,
+    rounds: [],
+    crowd: { plays: null, beatPct: null },
+  };
 }
 
 /** Drops bulky detail from old finished games so storage never fills up. */
@@ -251,6 +378,8 @@ export function compactGames(games: Record<string, StoredGame>, keep = KEEP_FULL
       total: g.total,
       rounds: [],
       summary: g.summary ?? (g.finish ? { outcomes: g.finish.outcomes, distance: g.finish.distance } : undefined),
+      ...(g.flagged ? { flagged: g.flagged } : {}),
+      ...(g.playerId ? { playerId: g.playerId } : {}),
     };
   });
   return out;
@@ -262,14 +391,27 @@ export interface Store {
   read(): StoredState;
   playerId(): string;
   game(date: string): StoredGame | null;
+  /**
+   * Saves one game, merged onto what storage holds now (see mergeGame).
+   * Returns what was stored: not `game` itself when another tab got further.
+   */
   putGame(game: StoredGame): StoredGame;
-  /** Records a finished game (summary + streak). Returns the updated streak. */
+  /**
+   * Records a finished game (summary + streak). If that date is already
+   * finished (another tab), keeps the original and returns it unchanged.
+   */
   finishGame(game: StoredGame, finish: FinishResult): { game: StoredGame; streak: Streak };
   streak(): Streak;
   settings(): Settings;
   putSettings(patch: Partial<Settings>): void;
   /** True when writes are reaching real storage. */
   persistent(): boolean;
+  /** Drops the cached copy so the next read comes from storage. */
+  refresh(): void;
+  /** Another tab changed the key: refresh, then tell subscribers. */
+  externalChange(): void;
+  /** Called after another tab changes the key. Returns an unsubscribe. */
+  subscribe(cb: () => void): () => void;
 }
 
 function defaultBackend(): KV | null {
@@ -285,6 +427,7 @@ export function createStore(opts: { key?: string; backend?: KV | null } = {}): S
   const key = opts.key ?? STORAGE_KEY;
   let backend: KV | null = opts.backend === undefined ? defaultBackend() : opts.backend;
   let memory: StoredState | null = null;
+  const listeners = new Set<() => void>();
 
   const load = (): StoredState => {
     if (memory) return memory;
@@ -317,17 +460,37 @@ export function createStore(opts: { key?: string; backend?: KV | null } = {}): S
     }
   };
 
+  /** The state as storage holds it right now (another tab may have written), for read-modify-write. */
+  const fresh = (): StoredState => {
+    if (!backend) return load();
+    let raw: string | null;
+    try {
+      raw = backend.getItem(key);
+    } catch {
+      backend = null;
+      return load();
+    }
+    // Nothing stored (cleared, or never persisted): carry on from what this tab knows.
+    if (raw === null) return load();
+    memory = parseState(raw, memory?.playerId);
+    return memory;
+  };
+
   return {
     read: load,
     playerId: () => load().playerId,
     game: (date) => load().games[date] ?? null,
     putGame(game) {
-      const s = load();
-      write({ ...s, games: compactGames({ ...s.games, [game.date]: game }) });
-      return game;
+      const s = fresh();
+      const stored = s.games[game.date];
+      const next = mergeGame(stored, game);
+      if (next !== stored) write({ ...s, games: compactGames({ ...s.games, [game.date]: next }) });
+      return next;
     },
     finishGame(game, finish) {
-      const s = load();
+      const s = fresh();
+      const stored = s.games[game.date];
+      if (stored?.status === "finished") return { game: stored, streak: s.streak };
       const done: StoredGame = {
         ...game,
         status: "finished",
@@ -341,15 +504,29 @@ export function createStore(opts: { key?: string; backend?: KV | null } = {}): S
     streak: () => load().streak,
     settings: () => load().settings,
     putSettings(patch) {
-      const s = load();
+      const s = fresh();
       write({ ...s, settings: { ...s.settings, ...patch } });
     },
     persistent: () => backend !== null,
+    refresh() {
+      memory = null;
+    },
+    externalChange() {
+      memory = null;
+      for (const cb of [...listeners]) cb();
+    },
+    subscribe(cb) {
+      listeners.add(cb);
+      return () => {
+        listeners.delete(cb);
+      };
+    },
   };
 }
 
 let shared: Store | null = null;
 let sharedKey: string | null = null;
+let listening = false;
 
 /** The page-wide store. Mock mode uses its own key so fake tokens never leak into real play. */
 export function getStore(mock = false): Store {
@@ -357,6 +534,13 @@ export function getStore(mock = false): Store {
   if (!shared || sharedKey !== key) {
     shared = createStore({ key });
     sharedKey = key;
+  }
+  if (!listening && typeof window !== "undefined") {
+    listening = true;
+    // Fires in every OTHER tab of this origin when one writes (key null = storage cleared).
+    window.addEventListener("storage", (e) => {
+      if (shared && (e.key === null || e.key === sharedKey)) shared.externalChange();
+    });
   }
   return shared;
 }

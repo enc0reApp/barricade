@@ -145,10 +145,11 @@
   right: 16px;
   padding: 3px 6px;
   border: 2px solid var(--magenta);
-  color: #c41f6c;
+  /* Full-strength ink: the only "not scored" marker on the ticket, so it has to
+     clear 4.5:1 on the paper (5.8:1 here; the old 0.85 opacity made it 4.0:1). */
+  color: #b0185f;
   font-size: 10px;
   letter-spacing: 0.14em;
-  opacity: 0.85;
 }
 
 /* Perforation: a dotted cut between the main ticket and the stub. */

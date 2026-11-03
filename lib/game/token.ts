@@ -1,10 +1,15 @@
 /**
  * Signed round tokens and answer receipts (server-only, node:crypto).
  *
- *   v1.<base64url(JSON payload)>.<base64url(HMAC-SHA256("v1." + payload))>
+ *   v2.<base64url(JSON payload)>.<base64url(HMAC-SHA256("v2." + payload))>
  *
- *   round token: { k:"r", d:date, i:index, n:number, s:startMs, p:playerId }
- *   receipt:     { k:"c", d:date, i:index, a:answerId, t:tier, p:playerId }
+ *   round token: { k:"r", d:date, i:index, n:number, s:startMs, p:playerId, h:packId }
+ *   receipt:     { k:"c", d:date, i:index, n:number, a:answerId, t:tier, p:playerId, h:packId }
+ *
+ * `h` is the loaded pack's identity (LoadedPack.id: kind + epoch), `n` the
+ * puzzle number. Both are checked against the serving pack, so a token or
+ * receipt minted while a deployment served another pack (the public sample, a
+ * preview) never scores on this one, even with the same BARRICADE_SECRET.
  *
  * Secret: BARRICADE_SECRET. Missing outside production → a fixed dev secret
  * (one warning). Missing in production → SecretMissingError.
@@ -15,11 +20,12 @@ import { isDateString } from "./day";
 import { isPlayerId, isRoundIndex } from "./rules";
 import { TIER_IDS, type TierId } from "./tiers";
 
-const VERSION = "v1";
+const VERSION = "v2";
 const MAX_TOKEN_LENGTH = 1024;
 const B64URL_RE = /^[A-Za-z0-9_-]+$/;
 const DEV_SECRET = "barricade-dev-secret-not-for-production";
 const ANSWER_ID_RE = /^[a-z]+:[^\s]{1,150}$/;
+const PACK_ID_RE = /^[A-Za-z0-9_-]{1,32}$/;
 
 export interface RoundTokenPayload {
   k: "r";
@@ -28,15 +34,21 @@ export interface RoundTokenPayload {
   n: number;
   s: number;
   p: string;
+  /** Pack identity (LoadedPack.id). */
+  h: string;
 }
 
 export interface ReceiptPayload {
   k: "c";
   d: string;
   i: number;
+  /** Puzzle number. */
+  n: number;
   a: string;
   t: TierId;
   p: string;
+  /** Pack identity (LoadedPack.id). */
+  h: string;
 }
 
 export type TokenPayload = RoundTokenPayload | ReceiptPayload;
@@ -79,19 +91,23 @@ function hasExactKeys(o: Record<string, unknown>, keys: readonly string[]): bool
 const isSafeInt = (x: unknown, min: number, max: number): x is number =>
   typeof x === "number" && Number.isSafeInteger(x) && x >= min && x <= max;
 
+const isPackId = (x: unknown): x is string => typeof x === "string" && PACK_ID_RE.test(x);
+
 function asRound(o: Record<string, unknown>): RoundTokenPayload | null {
-  if (!hasExactKeys(o, ["k", "d", "i", "n", "s", "p"])) return null;
+  if (!hasExactKeys(o, ["k", "d", "i", "n", "s", "p", "h"])) return null;
   if (o.k !== "r" || !isDateString(o.d) || !isRoundIndex(o.i) || !isPlayerId(o.p)) return null;
   if (!isSafeInt(o.n, 1, 1_000_000) || !isSafeInt(o.s, 1, Number.MAX_SAFE_INTEGER)) return null;
-  return { k: "r", d: o.d, i: o.i, n: o.n, s: o.s, p: o.p };
+  if (!isPackId(o.h)) return null;
+  return { k: "r", d: o.d, i: o.i, n: o.n, s: o.s, p: o.p, h: o.h };
 }
 
 function asReceipt(o: Record<string, unknown>): ReceiptPayload | null {
-  if (!hasExactKeys(o, ["k", "d", "i", "a", "t", "p"])) return null;
+  if (!hasExactKeys(o, ["k", "d", "i", "n", "a", "t", "p", "h"])) return null;
   if (o.k !== "c" || !isDateString(o.d) || !isRoundIndex(o.i) || !isPlayerId(o.p)) return null;
+  if (!isSafeInt(o.n, 1, 1_000_000) || !isPackId(o.h)) return null;
   if (typeof o.a !== "string" || !ANSWER_ID_RE.test(o.a)) return null;
   if (typeof o.t !== "string" || !(TIER_IDS as readonly string[]).includes(o.t)) return null;
-  return { k: "c", d: o.d, i: o.i, a: o.a, t: o.t as TierId, p: o.p };
+  return { k: "c", d: o.d, i: o.i, n: o.n, a: o.a, t: o.t as TierId, p: o.p, h: o.h };
 }
 
 /** Verifies signature + shape. Returns the raw payload object or null. Throws only SecretMissingError. */
@@ -115,13 +131,13 @@ function open(token: unknown): Record<string, unknown> | null {
 }
 
 export function signRound(p: Omit<RoundTokenPayload, "k">): string {
-  const payload = asRound({ k: "r", d: p.d, i: p.i, n: p.n, s: p.s, p: p.p });
+  const payload = asRound({ k: "r", d: p.d, i: p.i, n: p.n, s: p.s, p: p.p, h: p.h });
   if (!payload) throw new Error("signRound: invalid payload");
   return sign(payload);
 }
 
 export function signReceipt(p: Omit<ReceiptPayload, "k">): string {
-  const payload = asReceipt({ k: "c", d: p.d, i: p.i, a: p.a, t: p.t, p: p.p });
+  const payload = asReceipt({ k: "c", d: p.d, i: p.i, n: p.n, a: p.a, t: p.t, p: p.p, h: p.h });
   if (!payload) throw new Error("signReceipt: invalid payload");
   return sign(payload);
 }

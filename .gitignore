@@ -7,9 +7,10 @@ out/
 next-env.d.ts
 *.tsbuildinfo
 
-# env — never commit keys
-.env
-.env*.local
+# env — never commit keys (.env.production / .env.preview too: BARRICADE_SEAL_KEY
+# would unseal every future set, BARRICADE_SECRET would forge receipts)
+.env*
+!.env.example
 
 # vercel
 .vercel

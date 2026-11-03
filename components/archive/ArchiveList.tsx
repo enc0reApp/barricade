@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { getSet, isMockActive } from "@/lib/client/api";
+import { getSet, isMockActive, noSetMeta } from "@/lib/client/api";
 import { formatSetDate } from "@/lib/client/format";
 import { getStore, liveStreak, type StoredGame } from "@/lib/client/storage";
-import { addDays, dateForNumber, localDateString } from "@/lib/game/day";
+import { addDays, dateForNumber, localDateString, numberForDate } from "@/lib/game/day";
 import { TierSquare } from "@/components/game/TierChip";
 import PixelIcon from "@/components/ui/PixelIcon";
 import styles from "./ArchiveList.module.css";
@@ -33,8 +33,8 @@ export default function ArchiveList() {
   const [shown, setShown] = useState(PAGE);
   const [stats, setStats] = useState({ played: 0, best: null as number | null, streak: 0, bestStreak: 0 });
 
-  const load = useCallback(async () => {
-    setState({ k: "loading" });
+  /** This device's games + stats (re-read when another tab plays). */
+  const readLocal = useCallback(() => {
     const store = getStore(isMockActive());
     const all = store.read().games;
     setGames(all);
@@ -43,6 +43,13 @@ export default function ArchiveList() {
     const dists = finished.map((g) => g.summary?.distance ?? g.finish?.distance).filter((d): d is number => typeof d === "number");
     const st = store.streak();
     setStats({ played: finished.length, best: dists.length ? Math.min(...dists) : null, streak: liveStreak(st, today), bestStreak: st.best });
+    return all;
+  }, []);
+
+  const load = useCallback(async () => {
+    setState({ k: "loading" });
+    const all = readLocal();
+    const today = localDateString();
 
     const res = await getSet(today);
     if (res.ok) {
@@ -55,7 +62,15 @@ export default function ArchiveList() {
       setState({ k: "fail" });
       return;
     }
-    // No set tonight (end of the schedule): fall back to what we've played.
+    // No set tonight (e.g. the schedule ran out). The server still knows the archive's bounds…
+    const meta = noSetMeta(res);
+    if (meta) {
+      // …capped at the player's own night (latestNumber follows UTC+14).
+      const latest = Math.min(meta.latestNumber, numberForDate(meta.epoch, today));
+      setState(latest < 1 ? { k: "empty" } : { k: "ok", latest, epoch: meta.epoch, today, todayNumber: -1 });
+      return;
+    }
+    // …and without them, fall back to what we've played.
     const any = Object.values(all)[0];
     if (!any) {
       setState({ k: "empty" });
@@ -64,11 +79,12 @@ export default function ArchiveList() {
     const epoch = addDays(any.date, 1 - any.number);
     const latest = Math.max(...Object.values(all).map((g) => g.number));
     setState({ k: "ok", latest, epoch, today, todayNumber: -1 });
-  }, []);
+  }, [readLocal]);
 
   useEffect(() => {
     void load();
-  }, [load]);
+    return getStore(isMockActive()).subscribe(readLocal);
+  }, [load, readLocal]);
 
   // Titles for the visible rows, a few requests at a time.
   useEffect(() => {

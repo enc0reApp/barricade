@@ -1,14 +1,19 @@
 import type { FlagResponse } from "@/lib/api/contract";
 import { clampTyped } from "@/lib/game/match";
 import { isPlayerId, isRoundIndex } from "@/lib/game/rules";
-import { fail, guard, json, readJsonObject } from "@/lib/server/http";
+import { clientSource, fail, guard, json, readJsonObject } from "@/lib/server/http";
 import { resolveSet } from "@/lib/server/sets";
 import { getStore } from "@/lib/store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-/** POST /api/flag {date,index,text,playerId} — "this should count". Logged for editors. */
+/**
+ * POST /api/flag {date,index,text,playerId} — "this should count". Logged for editors.
+ * The store keeps one flag per player per round and caps flags per client IP,
+ * so one client can't flood the capped list and push real reports out. The
+ * reply is {ok:true} either way.
+ */
 export async function POST(req: Request): Promise<Response> {
   return guard("flag", async () => {
     const body = await readJsonObject(req);
@@ -24,7 +29,7 @@ export async function POST(req: Request): Promise<Response> {
     if (!set.ok) return fail(set.error);
     if (!set.puzzle.prompts[index]) return fail("bad-request", "index out of range");
 
-    await getStore().logFlag(set.date, { i: index, text: clean, p: playerId, at: now });
+    await getStore(set.loaded.pack.kind).logFlag(set.date, { i: index, text: clean, p: playerId, at: now }, clientSource(req));
     const out: FlagResponse = { ok: true };
     return json(out);
   });

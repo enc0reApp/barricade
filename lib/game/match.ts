@@ -3,19 +3,28 @@
  * unit-tested directly; the loader builds the indexes once per pack.
  *
  * Order of resolution for one typed answer:
- *   1. empty      — nothing usable typed (no keys, or primary key < 2 chars)
- *   2. exact      — any matchKeys(typed) key is a key of an answer on this prompt
+ *   1. empty      — nothing usable typed (no keys). One-character input ("Q",
+ *                  "3") is accepted only as the exact NAME of an answer here
+ *                  (The Q, 3); anything else that short is empty.
+ *   2. exact      — any matchKeys(typed) key is a key of an answer on this prompt.
+ *                  After this, a primary key under 2 chars ("Seven" → "7") stops: empty.
  *   3. catalog ⇒ prompt — an exact catalog hit on an entity that IS an answer
  *                  here (aliases written for the same entity in other prompts)
- *   4. fuzzy      — primaryKey(typed) within typoBudget of an answer key,
- *                  unless the typed text is exactly some OTHER real entity
- *                  (then it's off-prompt, not a typo: "Fabrik" ≠ "Fabric")
- *   5. offprompt  — exact catalog hit, else fuzzy catalog hit (distance ≤ 1, key ≥ 6)
+ *   4. fuzzy      — primaryKey(typed) within typoBudget of an answer key that
+ *                  starts with the same character, unless the typed text is
+ *                  exactly some OTHER real entity (then it's off-prompt, not a
+ *                  typo: "Fabrik" ≠ "Fabric"). BASEMENT / YOU HAD TO BE THERE
+ *                  answers forgive one edit at most, and only on keys of 6+
+ *                  chars: a real non-answer one letter off a deep cut ("Zurich"
+ *                  / Aurich, "Bozen" / Bogen) must not score 100.
+ *   5. offprompt  — exact catalog hit, else fuzzy catalog hit (distance ≤ 1,
+ *                  key ≥ 6, same first character)
  *   6. unknown
  */
 
 import type { PackAnswer, PackCatalogEntry, PackPrompt } from "../content/types";
 import { editDistance, matchKeys, primaryKey, typoBudget } from "./normalize";
+import type { TierId } from "./tiers";
 
 /** Longest typed answer the matcher looks at. */
 export const MAX_TYPED_CHARS = 80;
@@ -23,6 +32,10 @@ export const MAX_TYPED_CHARS = 80;
 const OFFPROMPT_FUZZY_MAX_DISTANCE = 1;
 const OFFPROMPT_FUZZY_MIN_LENGTH = 6;
 const MIN_PRIMARY_KEY_LENGTH = 2;
+/** Deep tiers are worth 85–100 points: a typo onto one must be unambiguous. */
+const RARE_TIERS: ReadonlySet<TierId> = new Set<TierId>(["basement", "htbt"]);
+const RARE_FUZZY_MAX_DISTANCE = 1;
+const RARE_FUZZY_MIN_LENGTH = 6;
 
 interface KeyRef<T> {
   key: string;
@@ -143,9 +156,17 @@ function pickFuzzyAnswer(prompt: PromptIndex, pk: string): PackAnswer | null {
   for (let len = Math.max(1, pk.length - maxBudget); len <= pk.length + maxBudget; len++) {
     const bucket = prompt.byLength.get(len);
     if (!bucket) continue;
-    const budget = typoBudget(Math.min(pk.length, len));
-    if (budget === 0 || Math.abs(len - pk.length) > budget) continue;
+    const lengthBudget = typoBudget(Math.min(pk.length, len));
+    if (lengthBudget === 0 || Math.abs(len - pk.length) > lengthBudget) continue;
     for (const { key, item } of bucket) {
+      // Anchored: a different first letter is a different word far more often than a typo.
+      if (key[0] !== pk[0]) continue;
+      let budget = lengthBudget;
+      if (RARE_TIERS.has(item.tier)) {
+        if (Math.min(pk.length, len) < RARE_FUZZY_MIN_LENGTH) continue;
+        budget = Math.min(budget, RARE_FUZZY_MAX_DISTANCE);
+        if (Math.abs(len - pk.length) > budget) continue;
+      }
       const d = editDistance(pk, key, budget);
       if (d > budget) continue;
       if (!best || d < best.d || (d === best.d && byShareThenId(item, best.answer) < 0)) {
@@ -184,6 +205,7 @@ function pickFuzzyCatalog(catalog: CatalogIndex, pk: string): PackCatalogEntry[]
   let hits: PackCatalogEntry[] = [];
   for (let len = Math.max(OFFPROMPT_FUZZY_MIN_LENGTH, pk.length - max); len <= pk.length + max; len++) {
     for (const { key, item } of catalog.byLength.get(len) ?? []) {
+      if (key[0] !== pk[0]) continue;
       const d = editDistance(pk, key, max);
       if (d > max) continue;
       if (d < bestD) {
@@ -202,28 +224,32 @@ export function clampTyped(typed: string): string {
   return typed.trim().slice(0, MAX_TYPED_CHARS);
 }
 
-/**
- * Lookup keys for typed text. normalize() reads a "!" glued to a letter as an
- * "i" (P!nk → pink), so an excited "Muse!" would become "musei". We also try
- * the text with trailing "!"s dropped; the literal reading keeps priority so
- * names that really end in "!" (compiled the same way) still match exactly.
- */
-function typedKeys(text: string): { keys: string[]; pk: string } {
-  const stripped = text.replace(/!+$/, "").trimEnd();
-  const keys = stripped === text ? matchKeys(text) : [...new Set([...matchKeys(text), ...matchKeys(stripped)])];
-  return { keys, pk: primaryKey(stripped) };
-}
-
 export function matchAnswer(prompt: PackPrompt, typed: string, indexes: MatchIndexes): MatchResult {
   const text = clampTyped(typeof typed === "string" ? typed : "");
-  const { keys, pk } = typedKeys(text);
-  if (keys.length === 0 || pk.length < MIN_PRIMARY_KEY_LENGTH) return { kind: "empty" };
+  // normalize() drops a word-final "!" (NORMALIZE_VERSION 2), so an excited
+  // "Muse!" is "muse" and "Splash" matches the compiled "Splash!".
+  const keys = matchKeys(text);
+  if (keys.length === 0) return { kind: "empty" };
 
   const { prompt: pIndex, catalog } = indexes;
+
+  // 1. One-character input: only the exact NAME of an answer here (The Q, 3) —
+  //    never a derived alias variant ("e" from "e+") and never fuzzy/catalog.
+  if (keys.every((k) => k.length < MIN_PRIMARY_KEY_LENGTH)) {
+    const hit = pickExact(pIndex, keys);
+    if (hit && keys.some((k) => pIndex.nameKeys.get(hit.id)?.has(k))) {
+      return { kind: "accepted", answer: hit, typo: false };
+    }
+    return { kind: "empty" };
+  }
 
   // 2. Exact on this prompt.
   const exact = pickExact(pIndex, keys);
   if (exact) return { kind: "accepted", answer: exact, typo: false };
+
+  // "Seven" folds to "7": past the exact lookup, too short for anything looser.
+  const pk = primaryKey(text);
+  if (pk.length < MIN_PRIMARY_KEY_LENGTH) return { kind: "empty" };
 
   // 3. Exact on the catalog, for an entity that is an answer here.
   const catalogHits = catalogExactHits(catalog, keys);

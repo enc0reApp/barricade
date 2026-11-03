@@ -7,7 +7,10 @@ import {
   getLoadedPack,
   getPack,
   getPuzzle,
+  indexPack,
   latestNumber,
+  PackConfigError,
+  packIdentity,
   resetPackCache,
 } from "../../lib/content/loader";
 import { seal } from "../../lib/content/seal";
@@ -30,6 +33,7 @@ beforeEach(() => {
   vi.spyOn(process, "cwd").mockReturnValue(cwd);
   vi.stubEnv("BARRICADE_PACK_PATH", "");
   vi.stubEnv("BARRICADE_SEAL_KEY", "");
+  vi.stubEnv("BARRICADE_ALLOW_SAMPLE", "");
   resetPackCache();
 });
 
@@ -87,7 +91,7 @@ describe("pack resolution", () => {
 
   it("refuses a pack built with another normalizeVersion", async () => {
     put("content/build/pack.json", JSON.stringify({ ...production, normalizeVersion: 999 }));
-    await expect(getPack()).rejects.toThrow(/normalizeVersion 999.*NORMALIZE_VERSION 1/);
+    await expect(getPack()).rejects.toThrow(/normalizeVersion 999.*NORMALIZE_VERSION 2/);
   });
 
   it("refuses malformed packs", async () => {
@@ -105,6 +109,101 @@ describe("pack resolution", () => {
     expect(await getPack()).toBe(a);
     resetPackCache();
     expect(await getPack()).not.toBe(a);
+  });
+});
+
+describe("production fails closed (C1/C20)", () => {
+  const key = randomBytes(32).toString("base64");
+  const sealedProduction = () => JSON.stringify(seal(JSON.stringify(production), key, "pack"));
+  beforeEach(() => {
+    vi.stubEnv("NODE_ENV", "production");
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+  });
+
+  it("refuses the public sample", async () => {
+    put("content/sample/pack.json", JSON.stringify(sample));
+    await expect(getPack()).rejects.toThrow(PackConfigError);
+    await expect(getPack()).rejects.toThrow(/refusing to serve the public sample/);
+  });
+
+  it("refuses a sample reached through BARRICADE_PACK_PATH too", async () => {
+    vi.stubEnv("BARRICADE_PACK_PATH", FIXTURE_SAMPLE);
+    await expect(getPack()).rejects.toThrow(PackConfigError);
+  });
+
+  it("serves the sample only with BARRICADE_ALLOW_SAMPLE=1", async () => {
+    put("content/sample/pack.json", JSON.stringify(sample));
+    vi.stubEnv("BARRICADE_ALLOW_SAMPLE", "1");
+    const loaded = await getLoadedPack();
+    expect(loaded).toMatchObject({ source: "sample", pack: { kind: "sample" } });
+  });
+
+  it("a sealed pack without the key is a hard error, never a fallback", async () => {
+    put("content/sample/pack.json", JSON.stringify(sample));
+    put("content/build/pack.json", JSON.stringify(production));
+    put("content/sealed/pack.json.enc", sealedProduction());
+    vi.stubEnv("BARRICADE_ALLOW_SAMPLE", "1");
+    await expect(getPack()).rejects.toThrow(/pack\.json\.enc is present but BARRICADE_SEAL_KEY is not set/);
+  });
+
+  it("never reads content/build", async () => {
+    put("content/build/pack.json", JSON.stringify(production));
+    await expect(getPack()).rejects.toThrow(PackConfigError);
+    resetPackCache();
+    put("content/sample/pack.json", JSON.stringify(sample));
+    vi.stubEnv("BARRICADE_ALLOW_SAMPLE", "1");
+    expect((await getLoadedPack()).source).toBe("sample");
+  });
+
+  it("serves the sealed pack with its key", async () => {
+    put("content/sample/pack.json", JSON.stringify(sample));
+    put("content/sealed/pack.json.enc", sealedProduction());
+    vi.stubEnv("BARRICADE_SEAL_KEY", key);
+    const loaded = await getLoadedPack();
+    expect(loaded).toMatchObject({ source: "sealed", pack: { kind: "production" } });
+  });
+
+  it("dev still falls back to build, then sample", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    put("content/sample/pack.json", JSON.stringify(sample));
+    put("content/sealed/pack.json.enc", sealedProduction());
+    expect((await getLoadedPack()).source).toBe("sample");
+  });
+});
+
+describe("pack identity (C2)", () => {
+  it("is stable across rebuilds of a pack and differs between packs", () => {
+    expect(packIdentity(production)).toMatch(/^[A-Za-z0-9_-]{11}$/);
+    expect(packIdentity({ ...production, generatedAt: "later" } as ContentPack)).toBe(packIdentity(production));
+    expect(packIdentity(sample)).not.toBe(packIdentity(production));
+    expect(packIdentity({ kind: "production", epoch: "2027-01-01" })).not.toBe(packIdentity(production));
+    expect(indexPack(production, "env", "x").id).toBe(packIdentity(production));
+  });
+});
+
+describe("released catalog (S0)", () => {
+  it("as of a date: entities from sets dated on or before it, plus entities in no set", () => {
+    const loaded = indexPack(production, "env", FIXTURE_PACK);
+    const on = (date: string, id: string) => loaded.catalogFor(date).byId.has(id);
+    // Jeff Mills is only in #2 (2026-11-10); Berghain only in #1 (2026-11-09); Coachella in no set.
+    expect(on("2026-11-09", "artist:jeff-mills")).toBe(false);
+    expect(on("2026-11-09", "venue:berghain")).toBe(true);
+    expect(on("2026-11-09", "festival:coachella")).toBe(true);
+    expect(on("2026-11-10", "artist:jeff-mills")).toBe(true);
+    expect(on("2026-12-31", "artist:jeff-mills")).toBe(true);
+    // Before the first set: only entities in no set.
+    expect(on("2026-11-01", "venue:berghain")).toBe(false);
+    expect(on("2026-11-01", "festival:coachella")).toBe(true);
+    // From the last set on, it is the full catalog (no copy), and copies are memoised.
+    expect(loaded.catalogFor("2026-11-10")).toBe(loaded.catalog);
+    expect(loaded.catalogFor("2026-11-09")).toBe(loaded.catalogFor("2026-11-09"));
+    // Keys of a released entity stay whole.
+    expect(loaded.catalogFor("2026-11-09").byKey.get("berghain")?.[0]?.id).toBe("venue:berghain");
+  });
+
+  it("sample packs float, so their whole catalog is always released", () => {
+    const loaded = indexPack(sample, "env", FIXTURE_SAMPLE);
+    expect(loaded.catalogFor("2026-11-01")).toBe(loaded.catalog);
   });
 });
 

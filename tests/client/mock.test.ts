@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { noSetMeta } from "../../lib/client/api";
 import { createMockApi } from "../../lib/client/mock";
 import { addDays, localDateString } from "../../lib/game/day";
 
@@ -18,9 +19,25 @@ describe("mock api", () => {
     expect(set.latestNumber).toBe(12);
   });
 
-  it("refuses dates before the epoch", async () => {
+  it("refuses dates before the epoch, but still says where the archive is", async () => {
     const r = await api.getSet(addDays(today, -40));
     expect(r).toMatchObject({ ok: false, error: "no-set" });
+    expect(noSetMeta(r)).toEqual({ epoch: addDays(today, -11), latestNumber: 12 });
+  });
+
+  it("closed flavour: no set tonight, the archive runs to last night", async () => {
+    const closed = createMockApi("closed");
+    const r = await closed.getSet(today);
+    expect(noSetMeta(r)).toEqual({ epoch: addDays(today, -11), latestNumber: 11 });
+  });
+
+  it("accepts (and ignores) proof of play on rounds and finishes", async () => {
+    const r0 = await api.startRound({ date: today, index: 0, playerId: PLAYER });
+    if (!r0.ok) throw new Error("round 0");
+    const r1 = await api.startRound({ date: today, index: 1, playerId: PLAYER, prevToken: r0.token, prevReceipt: null });
+    expect(r1.ok).toBe(true);
+    const fin = await api.finish({ date: today, playerId: PLAYER, receipts: Array(7).fill(null), tokens: Array(7).fill(r0.token) });
+    expect(fin.ok).toBe(true);
   });
 
   it("plays a round: rejects, says off-prompt, accepts with fuzzy matching, then finishes", async () => {
@@ -52,6 +69,7 @@ describe("mock api", () => {
   it("keeps the crowd page shut until the date has closed everywhere", async () => {
     const r = await api.crowd(today);
     expect(r).toMatchObject({ ok: false, error: "not-yet" });
+    expect(typeof (r as { serverNow?: unknown }).serverNow).toBe("number");
     const old = await api.crowd(addDays(today, -3));
     expect(old.ok).toBe(true);
     if (old.ok) expect(old.distribution).toHaveLength(15);

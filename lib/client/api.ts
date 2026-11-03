@@ -22,6 +22,7 @@ import type {
   RoundResponse,
   SetResponse,
 } from "../api/contract";
+import { isDateString } from "../game/day";
 import type { MockFlavour } from "./mock";
 
 export interface BarricadeApi {
@@ -158,6 +159,27 @@ export async function getCrowd(date: string): Promise<CrowdResponse> {
   const m = await mockApi();
   if (m) return m.crowd(date);
   return request<CrowdResponse>(`/api/crowd?date=${encodeURIComponent(date)}`) as Promise<CrowdResponse>;
+}
+
+/* ───────────────────────────── response helpers ───────────────────────────── */
+
+/** Archive bounds a /api/set no-set reply can carry (tonight has no set, but earlier ones exist). */
+export interface NoSetMeta {
+  epoch: string;
+  latestNumber: number;
+}
+
+/**
+ * The archive bounds from a no-set reply, when the server sent them (it knows
+ * the schedule even after it has run out). Null otherwise — callers then fall
+ * back to what this device has played.
+ */
+export function noSetMeta(res: SetResponse): NoSetMeta | null {
+  if (res.ok || res.error !== "no-set") return null;
+  const r = res as { epoch?: unknown; latestNumber?: unknown };
+  if (!isDateString(r.epoch)) return null;
+  if (typeof r.latestNumber !== "number" || !Number.isInteger(r.latestNumber) || r.latestNumber < 0) return null;
+  return { epoch: r.epoch, latestNumber: r.latestNumber };
 }
 
 /** The whole API as one object (handy for injecting a fake in tests). */

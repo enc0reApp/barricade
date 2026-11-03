@@ -167,6 +167,9 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /* If a label ever outgrows its button, overflow at the end only, so the
+     leading glyph never escapes past the left border. */
+  justify-content: safe center;
   gap: 0.9em;
   min-height: 48px;
   padding: 0 20px;
@@ -260,6 +263,18 @@ a {
   min-height: 72px;
   font-size: 18px;
   width: 100%;
+}
+
+/* Narrow phones: full-width CTAs like "▲ PUSH TO THE FRONT ▲" (the /how page)
+   don't fit at 18px with the wide tracking. Module classes that set their own
+   size (Doors, the in-game KEEP button, share) still win. */
+@media (max-width: 419px) {
+  .px-btn--big {
+    font-size: clamp(15px, 4.6vw, 18px);
+    letter-spacing: 0.16em;
+    gap: 0.6em;
+    padding: 0 14px;
+  }
 }
 
 .tri {

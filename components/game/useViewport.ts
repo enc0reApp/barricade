@@ -14,8 +14,11 @@ export function useVisualViewport(active: boolean): boolean {
     const root = document.documentElement;
     const vv = window.visualViewport;
     const update = () => {
-      const h = vv ? vv.height : window.innerHeight;
-      const top = vv ? vv.offsetTop : 0;
+      // Pinch-zoomed: don't shrink or chase the visual viewport, or a zoomed
+      // player could never pan down to the dock. Only the keyboard case tracks it.
+      const zoomed = !!vv && vv.scale > 1.01;
+      const h = vv && !zoomed ? vv.height : window.innerHeight;
+      const top = vv && !zoomed ? vv.offsetTop : 0;
       root.style.setProperty("--vv-h", `${Math.round(h)}px`);
       root.style.setProperty("--vv-top", `${Math.round(top)}px`);
       setKeyboard(window.innerHeight - h > 120);

@@ -43,7 +43,8 @@ export interface SetInfo {
   latestNumber: number;
   epoch: string;
 }
-export type SetResponse = SetInfo | ApiFail;
+/** A no-set reply also carries the archive bounds (tonight has no set, but earlier ones may exist). */
+export type SetResponse = SetInfo | (ApiFail & { epoch?: string; latestNumber?: number });
 
 /* POST /api/round ─────────────────────────────────────────────────── */
 
@@ -52,6 +53,14 @@ export interface RoundRequest {
   /** 0-based round index. */
   index: number;
   playerId: string;
+  /**
+   * Proof that round index-1 is over (required for index > 0 in "today" mode):
+   * its round token, plus its receipt if it was answered. Without a receipt the
+   * previous round's clock must have run out. Stops a script from opening all
+   * seven rounds at once.
+   */
+  prevToken?: string;
+  prevReceipt?: string | null;
 }
 
 export interface RoundPrompt {
@@ -123,6 +132,13 @@ export interface FinishRequest {
   playerId: string;
   /** One per round, in order. null = missed round. */
   receipts: (string | null)[];
+  /**
+   * The round tokens, one per round, in order (required in "today" mode).
+   * Proof of play: every round must have been started by this player, and a
+   * round with a null receipt must have run out of time. Without this, one
+   * request with seven nulls would reveal the set's answers.
+   */
+  tokens?: string[];
 }
 
 export interface RevealPick {
@@ -198,5 +214,5 @@ export type CrowdResponse =
       distribution: number[];
       rounds: CrowdRound[];
     }
-  | { ok: false; error: "not-yet"; opensAt: number }
+  | { ok: false; error: "not-yet"; opensAt: number; /** Server clock, so a skewed device can count down correctly. */ serverNow?: number }
   | ApiFail;

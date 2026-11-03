@@ -84,9 +84,12 @@
 }
 
 /* ───── the plaque, carried ───── */
+/* Spans the track (the JS centres it with translate(-50%, y)), so the plaque
+   has a definite width to shrink into and can never leave the screen. */
 .carry {
   position: absolute;
-  left: 46%;
+  left: 50%;
+  width: 100%;
   bottom: 0;
   display: flex;
   flex-direction: column;
@@ -104,6 +107,8 @@
   --c: var(--ink-dim);
   position: relative;
   isolation: isolate;
+  display: flex;
+  max-width: 100%;
   padding: 10px 16px 9px;
   font-size: 22px;
   line-height: 1;
@@ -113,6 +118,16 @@
   text-shadow: 0 2px 0 rgba(0, 0, 0, 0.7);
   animation: wobble 0.42s steps(2) infinite;
   --step: 4px;
+}
+
+/* Only the name gives way (with an ellipsis); both quotes stay visible. */
+.plaqueName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* room for the 2px text-shadow inside the clip */
+  padding-bottom: 2px;
+  margin-bottom: -2px;
 }
 
 .plaque::before,

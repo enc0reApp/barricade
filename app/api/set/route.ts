@@ -1,5 +1,5 @@
 import type { SetInfo } from "@/lib/api/contract";
-import { latestNumberFor } from "@/lib/content/loader";
+import { getLoadedPack, latestNumberFor } from "@/lib/content/loader";
 import { roundSeconds } from "@/lib/game/rules";
 import { fail, guard, json } from "@/lib/server/http";
 import { resolveSet } from "@/lib/server/sets";
@@ -13,7 +13,12 @@ export async function GET(req: Request): Promise<Response> {
     const date = new URL(req.url).searchParams.get("date");
     const now = Date.now();
     const set = await resolveSet(date, now);
-    if (!set.ok) return fail(set.error);
+    if (!set.ok) {
+      if (set.error !== "no-set") return fail(set.error);
+      // Tonight has no set (e.g. the schedule ended): still tell the archive where it starts and ends.
+      const loaded = await getLoadedPack();
+      return json({ ok: false, error: "no-set", epoch: loaded.pack.epoch, latestNumber: latestNumberFor(loaded, now) }, 404);
+    }
     const { puzzle, loaded } = set;
     const body: SetInfo = {
       ok: true,

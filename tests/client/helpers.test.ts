@@ -131,6 +131,7 @@ describe("formatting", () => {
   it("formats countdowns and percentages", () => {
     expect(formatCountdown(6 * 3600_000 + 12 * 60_000 + 33_000)).toBe("06:12:33");
     expect(formatCountdown(-5)).toBe("00:00:00");
+    expect(formatCountdown(5 * 86400_000 + 11 * 3600_000 + 30 * 60_000 + 39_000)).toBe("5D 11:30:39");
     expect(formatShare(0.003)).toBe("≈0.3%");
     expect(formatShare(0.12)).toBe("≈12%");
     expect(formatShare(0.0004)).toBe("<0.1%");

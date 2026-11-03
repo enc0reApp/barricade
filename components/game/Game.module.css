@@ -20,9 +20,11 @@
   pointer-events: none;
 }
 
+/* 118px = the KEEP button (72px + 18px padding) + a 28px gap. The button
+   also pads by the home-indicator inset, so the slot does too. */
 .frame[data-phase="reveal"],
 .frame[data-phase="finishing"] {
-  --ruler-bottom: 118px;
+  --ruler-bottom: calc(118px + var(--safe-bottom));
 }
 
 .frame[data-kb] {
@@ -52,9 +54,17 @@
   color: var(--amber);
 }
 
+/* The only part of the column that gives up height. With the keyboard up
+   (or pinch-zoomed) the frame can be shorter than its content; the prompt card
+   then scrolls inside this slot and the HUD, feedback line and input dock keep
+   their full size. */
 .cardSlot {
   position: relative;
   z-index: 3;
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   width: 100%;
   max-width: calc(var(--column) + var(--gutter) * 2);
   margin: 0 auto;
@@ -71,7 +81,7 @@
   position: absolute;
   z-index: 3;
   top: calc(var(--safe-top) + 112px);
-  bottom: 118px;
+  bottom: calc(118px + var(--safe-bottom));
   left: 0;
   right: 0;
   width: 100%;
@@ -97,6 +107,7 @@
 .keep {
   position: relative;
   z-index: 5;
+  flex-shrink: 0;
   width: 100%;
   max-width: calc(var(--column) + var(--gutter) * 2);
   margin: 0 auto;

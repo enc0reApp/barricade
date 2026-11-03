@@ -22,10 +22,13 @@ export function formatSetDateLong(date: string): string {
 /** Milliseconds → "06:12:33". Never negative. */
 export function formatCountdown(ms: number): string {
   const total = Math.max(0, Math.floor(ms / 1000));
-  const h = Math.floor(total / 3600);
+  const d = Math.floor(total / 86400);
+  const h = Math.floor((total % 86400) / 3600);
   const m = Math.floor((total % 3600) / 60);
   const s = total % 60;
-  return [h, m, s].map((n) => String(n).padStart(2, "0")).join(":");
+  const clock = [h, m, s].map((n) => String(n).padStart(2, "0")).join(":");
+  // More than a day away (e.g. the pre-launch countdown): "5D 11:30:39".
+  return d > 0 ? `${d}D ${clock}` : clock;
 }
 
 /** Estimated share (0..1) → "≈0.3%". */

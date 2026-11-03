@@ -161,7 +161,15 @@
   transform: translateY(1px);
 }
 
+/* A real tap target (44px tall), not just a line of text. The negative top
+   margin keeps the text where it sat before against the 16px .actions gap. */
 .secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 14px;
+  margin-top: -12px;
   color: var(--ink-dim);
   font-family: var(--font-mono);
   font-weight: 500;

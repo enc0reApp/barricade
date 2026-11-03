@@ -1,6 +1,7 @@
 .dock {
   position: relative;
   z-index: 4;
+  flex-shrink: 0;
   width: 100%;
   max-width: calc(var(--column) + var(--gutter) * 2);
   margin: 0 auto;
@@ -10,10 +11,22 @@
     transform 260ms ease;
 }
 
+/* Hidden (doors, reveal, finishing): out of the flow, so the KEEP button sits
+   at the frame's foot where the reveal slot expects it. Still rendered (not
+   display/visibility), so the input can take focus inside a tap. */
 .dock[data-hidden] {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   opacity: 0;
   transform: translateY(24px);
   pointer-events: none;
+}
+
+/* Keyboard up: the home-indicator inset is under the keyboard. */
+[data-kb] .dock {
+  padding-bottom: 10px;
 }
 
 /* ───── VU-meter timer ───── */
@@ -139,6 +152,7 @@
 .feedback {
   position: relative;
   z-index: 4;
+  flex-shrink: 0;
   margin: 0 auto;
   min-height: 1.5em;
   padding: 0 var(--gutter);

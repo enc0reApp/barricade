@@ -167,7 +167,9 @@ export default function CrowdSurfReveal({ outcome, answer, playing, onDone, redu
             style={{ transform: `translate(-50%, ${playing ? 0 : -Math.round((target / 100) * trackH)}px)` }}
             aria-hidden="true"
           >
-            <div className={`${styles.plaque} ${styles[tierClass] ?? ""}`}>“{plaqueText(answer.name, 22)}”</div>
+            <div className={`${styles.plaque} ${styles[tierClass] ?? ""}`}>
+              “<span className={styles.plaqueName}>{plaqueText(answer.name, 22)}</span>”
+            </div>
             <Hands seed={seed} />
           </div>
         ) : null}

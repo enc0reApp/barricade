@@ -102,7 +102,7 @@ From the back of the field, looking at the stage:
     It autofocuses when the round starts.
   - A **PUSH** button in magenta. Enter submits.
 - **Feedback line** above the dock (`aria-live=polite`):
-  - unknown: `"banana": never heard of 'em. try again`
+  - unknown: `"banana": not on tonight's list. try again`
   - off-prompt: `BERGHAIN is real — just not an answer here.`
   - expired: `time's up`
   - The input does a small 150ms shake on reject (none with reduced motion).

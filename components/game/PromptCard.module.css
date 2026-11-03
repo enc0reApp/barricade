@@ -67,6 +67,27 @@
   animation: none;
 }
 
+/* Keyboard up (the game frame sets data-kb): a tighter card, so the prompt
+   still fits above the input dock. The HUD already says PROMPT n OF 7 and
+   the foot line is decorative; the hint stays (it carries round rules). */
+[data-kb] .card {
+  padding: 12px 16px;
+}
+
+[data-kb] .kicker,
+[data-kb] .foot {
+  display: none;
+}
+
+[data-kb] .text {
+  margin-top: 4px;
+  font-size: clamp(20px, 6vw, 26px);
+}
+
+[data-kb] .hint {
+  margin-top: 6px;
+}
+
 @keyframes drop {
   from {
     opacity: 0;

@@ -19,6 +19,7 @@ import {
   PLAYER_B,
   PLAYER_C,
   post,
+  roundToken,
   setup,
   teardown,
   TODAY,
@@ -27,12 +28,18 @@ import {
 
 type Plan = (string[] | null)[];
 
-/** Plays a whole set: start each round, type each try until one is accepted. */
+/**
+ * Plays a whole set like the client does: start each round with the previous
+ * round's token + receipt, type each try until one is accepted, and after a
+ * missed round let the clock run out (deadline + grace) before moving on.
+ */
 async function play(date: string, playerId: string, plan: Plan) {
   const receipts: (string | null)[] = [];
+  const tokens: string[] = [];
   const answers: AnswerResponse[][] = [];
   for (let index = 0; index < plan.length; index++) {
-    const r = await call<RoundResponse>(roundPOST, post("/api/round", { date, index, playerId }));
+    const prev = index > 0 ? { prevToken: tokens[index - 1], prevReceipt: receipts[index - 1] ?? null } : {};
+    const r = await call<RoundResponse>(roundPOST, post("/api/round", { date, index, playerId, ...prev }));
     expect(r.status).toBe(200);
     if (!r.body.ok) throw new Error(`round ${index} failed: ${r.body.error}`);
     const tries = plan[index] ?? [];
@@ -46,14 +53,16 @@ async function play(date: string, playerId: string, plan: Plan) {
         break;
       }
     }
+    if (receipt === null) at(r.body.deadline + GRACE_MS + 1);
     receipts.push(receipt);
+    tokens.push(r.body.token);
     answers.push(results);
   }
-  return { receipts, answers };
+  return { receipts, tokens, answers };
 }
 
-const finish = (date: string, playerId: string, receipts: unknown) =>
-  call<FinishResponse>(finishPOST, post("/api/finish", { date, playerId, receipts }));
+const finish = (date: string, playerId: string, receipts: unknown, tokens?: unknown, headers?: Record<string, string>) =>
+  call<FinishResponse>(finishPOST, post("/api/finish", { date, playerId, receipts, ...(tokens === undefined ? {} : { tokens }) }, headers));
 
 // Puzzle #2: detroit artists, detroit labels, ibiza clubs, tomorrowland countries,
 // boiler room cities, roland synths, dutch festivals.
@@ -93,8 +102,11 @@ describe("GET /api/set", () => {
       expect(r).toEqual({ status: 400, body: { ok: false, error: "bad-date" } });
     }
     expect(await call(setGET, get("/api/set?date=2026-11-12"))).toEqual({ status: 403, body: { ok: false, error: "future" } });
-    expect(await call(setGET, get("/api/set?date=2026-11-11"))).toEqual({ status: 404, body: { ok: false, error: "no-set" } });
-    expect(await call(setGET, get("/api/set?date=2026-11-08"))).toEqual({ status: 404, body: { ok: false, error: "no-set" } });
+    expect(await call(setGET, get("/api/set?date=2026-11-11"))).toEqual({
+      status: 404,
+      body: { ok: false, error: "no-set", epoch: expect.any(String), latestNumber: expect.any(Number) },
+    });
+    expect(await call(setGET, get("/api/set?date=2026-11-08"))).toMatchObject({ status: 404, body: { ok: false, error: "no-set" } });
   });
 });
 
@@ -144,7 +156,8 @@ describe("POST /api/round", () => {
 
 describe("POST /api/answer", () => {
   async function start(index = 0, date = TODAY, playerId = PLAYER_A) {
-    const r = await call<RoundResponse>(roundPOST, post("/api/round", { date, index, playerId }));
+    const prev = index > 0 ? { prevToken: await roundToken(date, index - 1, playerId), prevReceipt: null } : {};
+    const r = await call<RoundResponse>(roundPOST, post("/api/round", { date, index, playerId, ...prev }));
     if (!r.body.ok) throw new Error(r.body.error);
     return r.body.token;
   }
@@ -158,7 +171,7 @@ describe("POST /api/answer", () => {
       status: "accepted",
       answer: { id: "label:fxhe", name: "FXHE", type: "label", tier: "htbt", points: 100, share: 0.0006, note: "Omar S's own label" },
     });
-    if (body.ok && body.status === "accepted") expect(body.receipt).toMatch(/^v1\./);
+    if (body.ok && body.status === "accepted") expect(body.receipt).toMatch(/^v2\./);
   });
 
   it("rejects unknown, off-prompt (with canonical) and empty — and logs the misses", async () => {
@@ -199,11 +212,11 @@ describe("POST /api/finish", () => {
     const set = await call<SetResponse>(setGET, get(`/api/set?date=${TODAY}`));
     expect(set.body.ok && set.body.mode).toBe("today");
 
-    const { receipts, answers } = await play(TODAY, PLAYER_A, PLAN_A);
+    const { receipts, tokens, answers } = await play(TODAY, PLAYER_A, PLAN_A);
     expect(answers[5]!.map((a) => (a.ok && a.status === "rejected" ? a.reason : a.ok && a.status))).toEqual(["unknown", "accepted"]);
     expect(receipts.filter(Boolean)).toHaveLength(6);
 
-    const { status, body } = await finish(TODAY, PLAYER_A, receipts);
+    const { status, body } = await finish(TODAY, PLAYER_A, receipts, tokens);
     expect(status).toBe(200);
     if (!body.ok) throw new Error(body.error);
     expect(body).toMatchObject({ number: 2, date: TODAY, mode: "today", distance: DIST_A });
@@ -227,15 +240,16 @@ describe("POST /api/finish", () => {
     expect(Object.fromEntries(stats.rounds[6]!)).toEqual({ miss: 1 });
 
     // A repeat finish is answered but not counted again.
-    const again = await finish(TODAY, PLAYER_A, receipts);
+    const again = await finish(TODAY, PLAYER_A, receipts, tokens);
     expect(again.body).toMatchObject({ ok: true, distance: DIST_A, crowd: { plays: 1, beatPct: 0 } });
     expect((await memory.getStats(TODAY, 7)).plays).toBe(1);
 
-    // B misses everything (700m); C matches A (315m) → C beat 1 of 3.
-    const b = await finish(TODAY, PLAYER_B, [null, null, null, null, null, null, null]);
+    // B plays and times out every round (700m); C matches A (315m) → C beat 1 of 3.
+    const bp = await play(TODAY, PLAYER_B, Array(7).fill(null));
+    const b = await finish(TODAY, PLAYER_B, bp.receipts, bp.tokens);
     expect(b.body).toMatchObject({ ok: true, distance: 700, outcomes: Array(7).fill("miss"), crowd: { plays: 2, beatPct: 0 } });
     const c = await play(TODAY, PLAYER_C, PLAN_A);
-    const cf = await finish(TODAY, PLAYER_C, c.receipts);
+    const cf = await finish(TODAY, PLAYER_C, c.receipts, c.tokens);
     expect(cf.body).toMatchObject({ ok: true, distance: DIST_A, crowd: { plays: 3, beatPct: 33.3 } });
   });
 
@@ -246,8 +260,8 @@ describe("POST /api/finish", () => {
         answers: [n < 5 ? "artist:jeff-mills" : "artist:juan-atkins", null, null, null, null, null, null],
       });
     }
-    const { receipts } = await play(TODAY, PLAYER_A, PLAN_A);
-    const { body } = await finish(TODAY, PLAYER_A, receipts);
+    const { receipts, tokens } = await play(TODAY, PLAYER_A, PLAN_A);
+    const { body } = await finish(TODAY, PLAYER_A, receipts, tokens);
     if (!body.ok) throw new Error(body.error);
     expect(body.crowd).toEqual({ plays: 20, beatPct: 95 });
     expect(body.rounds[0]!.yours?.crowdPct).toBe(30); // 6 of 20
@@ -340,9 +354,9 @@ describe("store failures never break gameplay", () => {
     vi.spyOn(MemoryStore.prototype, "recordFinish").mockRejectedValue(down);
     vi.spyOn(MemoryStore.prototype, "getStats").mockRejectedValue(down);
     vi.spyOn(MemoryStore.prototype, "logRejected").mockRejectedValue(down);
-    const { receipts } = await play(TODAY, PLAYER_A, PLAN_A);
+    const { receipts, tokens } = await play(TODAY, PLAYER_A, PLAN_A);
     await flush();
-    const { body } = await finish(TODAY, PLAYER_A, receipts);
+    const { body } = await finish(TODAY, PLAYER_A, receipts, tokens);
     expect(body).toMatchObject({ ok: true, distance: DIST_A, crowd: { plays: 0, beatPct: null } });
     expect(err).toHaveBeenCalled();
   });
@@ -358,14 +372,14 @@ describe("sample pack floats onto any date", () => {
     expect("title" in today.body).toBe(false);
     const fifth = await call<SetResponse>(setGET, get("/api/set?date=2026-11-05"));
     expect(fifth.body).toMatchObject({ ok: true, number: 5, mode: "archive", title: "FIXTURE ONE" });
-    expect((await call(setGET, get("/api/set?date=2026-10-31"))).body).toEqual({ ok: false, error: "no-set" });
+    expect((await call(setGET, get("/api/set?date=2026-10-31"))).body).toMatchObject({ ok: false, error: "no-set" });
     // 2026-11-11 is live somewhere and the sample has no end.
     expect((await call(setGET, get("/api/set?date=2026-11-11"))).body).toMatchObject({ ok: true, number: 11 });
   });
 
   it("plays a floating set end to end", async () => {
-    const { receipts } = await play(TODAY, PLAYER_A, PLAN_A);
-    const { body } = await finish(TODAY, PLAYER_A, receipts);
+    const { receipts, tokens } = await play(TODAY, PLAYER_A, PLAN_A);
+    const { body } = await finish(TODAY, PLAYER_A, receipts, tokens);
     expect(body).toMatchObject({ ok: true, number: 10, date: TODAY, distance: DIST_A, mode: "today" });
   });
 });

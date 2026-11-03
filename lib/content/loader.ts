@@ -5,10 +5,17 @@
  * Resolution order:
  *   0. BARRICADE_PACK_PATH (tests / tooling) — plain or sealed JSON
  *   a. BARRICADE_SEAL_KEY set AND content/sealed/pack.json.enc exists → unseal
- *   b. content/build/pack.json (local dev with real content)
+ *   b. content/build/pack.json (local dev with real content — never in production)
  *   c. content/sample/pack.json (public sample, floats onto any date)
+ *
+ * Production (NODE_ENV=production) fails closed with PackConfigError:
+ *   - a sealed pack without BARRICADE_SEAL_KEY is an error, not a fallback;
+ *   - content/build is never read;
+ *   - the public sample (any pack of kind "sample", from any source) is
+ *     refused unless BARRICADE_ALLOW_SAMPLE=1 (demo / Preview deploys).
  */
 
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { isDateString, liveDateWindow, numberForDate } from "../game/day";
@@ -19,12 +26,33 @@ import type { ContentPack, PackCatalogEntry, PackPrompt, PackPuzzle } from "./ty
 
 export type PackSource = "env" | "sealed" | "build" | "sample";
 
+/** The deployment's content is misconfigured (routes answer `server`, never a silent fallback). */
+export class PackConfigError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "PackConfigError";
+  }
+}
+
 export interface LoadedPack {
   pack: ContentPack;
   source: PackSource;
   /** Absolute path the pack was read from. */
   file: string;
+  /**
+   * Pack identity: kind + epoch, hashed. Stable across content rebuilds of the
+   * same pack, different between the sample and production. Signed into every
+   * round token and receipt (`h`) so they never score on another pack.
+   */
+  id: string;
+  /** Every catalog entity (receipt lookups). Answer matching uses catalogFor(date). */
   catalog: CatalogIndex;
+  /**
+   * The catalog as of a date: entities from puzzles dated on or before it, plus
+   * entities in no puzzle. Off-prompt replies built from it never confirm an
+   * answer from a set that isn't out yet. Sample packs: the whole catalog.
+   */
+  catalogFor(date: string): CatalogIndex;
   /** Production packs: date → puzzle. */
   byDate: Map<string, PackPuzzle>;
   /** Highest scheduled puzzle number (production cap for latestNumber). */
@@ -51,16 +79,32 @@ function parsePackFile(file: string, sealKey: string | undefined): unknown {
   return JSON.parse(unseal(raw, sealKey));
 }
 
+const isProduction = () => process.env.NODE_ENV === "production";
+const sampleAllowed = () => process.env.BARRICADE_ALLOW_SAMPLE === "1";
+
+const SAMPLE_REFUSED =
+  "refusing to serve the public sample pack in production: commit content/sealed/pack.json.enc and set " +
+  "BARRICADE_SEAL_KEY (or set BARRICADE_ALLOW_SAMPLE=1 for a demo deploy)";
+
 function resolvePackFile(): { file: string; source: PackSource } {
   const fromEnv = process.env.BARRICADE_PACK_PATH;
   if (fromEnv) return { file: path.resolve(/*turbopackIgnore: true*/ fromEnv), source: "env" };
   const sealKey = process.env.BARRICADE_SEAL_KEY;
+  const prod = isProduction();
   // Literal paths so the bundler traces exactly these files (next.config.ts
   // outputFileTracingIncludes ships content/sealed + the sample pack).
   const sealed = path.join(process.cwd(), "content", "sealed", "pack.json.enc");
-  if (sealKey && existsSync(sealed)) return { file: sealed, source: "sealed" };
-  const build = path.join(process.cwd(), "content", "build", "pack.json");
-  if (existsSync(build)) return { file: build, source: "build" };
+  const hasSealed = existsSync(sealed);
+  if (sealKey && hasSealed) return { file: sealed, source: "sealed" };
+  if (prod && hasSealed) {
+    throw new PackConfigError("content/sealed/pack.json.enc is present but BARRICADE_SEAL_KEY is not set");
+  }
+  if (!prod) {
+    // Plaintext spoilers: dev only, and kept out of the server bundle's file traces.
+    const build = path.join(/*turbopackIgnore: true*/ process.cwd(), "content", "build", "pack.json");
+    if (existsSync(build)) return { file: build, source: "build" };
+  }
+  if (prod && !sampleAllowed()) throw new PackConfigError(SAMPLE_REFUSED);
   const sample = path.join(process.cwd(), "content", "sample", "pack.json");
   if (existsSync(sample)) return { file: sample, source: "sample" };
   throw new Error(
@@ -100,19 +144,64 @@ export function validatePack(x: unknown, file = "pack"): ContentPack {
   return p as ContentPack;
 }
 
+/** Pack identity for tokens: base64url of the first 8 bytes of sha256("kind:epoch"). */
+export function packIdentity(pack: Pick<ContentPack, "kind" | "epoch">): string {
+  return createHash("sha256").update(`${pack.kind}:${pack.epoch}`).digest().subarray(0, 8).toString("base64url");
+}
+
+/** How many date-filtered catalog indexes to keep (live dates + a few archive ones). */
+const RELEASED_CATALOG_CACHE = 8;
+
 export function indexPack(pack: ContentPack, source: PackSource, file: string): LoadedPack {
   const byDate = new Map<string, PackPuzzle>();
   let maxNumber = 0;
+  // Earliest scheduled date of every entity that is an answer somewhere.
+  const firstDate = new Map<string, string>();
   for (const puzzle of pack.puzzles) {
     if (!byDate.has(puzzle.date)) byDate.set(puzzle.date, puzzle);
     if (puzzle.number > maxNumber) maxNumber = puzzle.number;
+    for (const prompt of puzzle.prompts) {
+      for (const answer of prompt.answers) {
+        const prev = firstDate.get(answer.id);
+        if (prev === undefined || puzzle.date < prev) firstDate.set(answer.id, puzzle.date);
+      }
+    }
   }
+  const catalog = buildCatalogIndex(pack.catalog);
+  // Scheduled dates, ascending: the filtered catalog only changes on these.
+  const dates = [...new Set(pack.puzzles.map((z) => z.date))].sort();
+  const lastDate = dates[dates.length - 1];
+  const released = new Map<string, CatalogIndex>();
+  const catalogFor = (date: string): CatalogIndex => {
+    if (pack.kind !== "production" || lastDate === undefined || date >= lastDate) return catalog;
+    // The latest scheduled date on or before `date` decides what is out.
+    let cutoff: string | null = null;
+    for (const d of dates) {
+      if (d > date) break;
+      cutoff = d;
+    }
+    const cacheKey = cutoff ?? "";
+    let idx = released.get(cacheKey);
+    if (!idx) {
+      idx = buildCatalogIndex(
+        pack.catalog.filter((e) => {
+          const first = firstDate.get(e.id);
+          return first === undefined || (cutoff !== null && first <= cutoff);
+        }),
+      );
+      if (released.size >= RELEASED_CATALOG_CACHE) released.delete(released.keys().next().value as string);
+      released.set(cacheKey, idx);
+    }
+    return idx;
+  };
   const promptIndexes = new WeakMap<PackPrompt, PromptIndex>();
   return {
     pack,
     source,
     file,
-    catalog: buildCatalogIndex(pack.catalog),
+    id: packIdentity(pack),
+    catalog,
+    catalogFor,
     byDate,
     maxNumber,
     promptIndex(prompt) {
@@ -126,9 +215,19 @@ export function indexPack(pack: ContentPack, source: PackSource, file: string): 
   };
 }
 
+let warnedSampleInProd = false;
+
 async function load(): Promise<LoadedPack> {
   const { file, source } = resolvePackFile();
   const pack = validatePack(parsePackFile(file, process.env.BARRICADE_SEAL_KEY), file);
+  if (pack.kind === "sample" && isProduction()) {
+    // Also covers BARRICADE_PACK_PATH (or a sealed file) that turns out to be the sample.
+    if (!sampleAllowed()) throw new PackConfigError(SAMPLE_REFUSED);
+    if (!warnedSampleInProd) {
+      warnedSampleInProd = true;
+      console.warn("[barricade] serving the PUBLIC SAMPLE pack in production (BARRICADE_ALLOW_SAMPLE=1).");
+    }
+  }
   return indexPack(pack, source, file);
 }
 
@@ -175,10 +274,10 @@ export async function latestNumber(nowMs: number): Promise<number> {
   return latestNumberFor(await getLoadedPack(), nowMs);
 }
 
-/** Matcher indexes for one prompt of the loaded pack. */
-export async function getMatchIndexes(prompt: PackPrompt): Promise<MatchIndexes> {
+/** Matcher indexes for one prompt of the loaded pack, as of `date` (see LoadedPack.catalogFor). */
+export async function getMatchIndexes(prompt: PackPrompt, date: string): Promise<MatchIndexes> {
   const loaded = await getLoadedPack();
-  return { prompt: loaded.promptIndex(prompt), catalog: loaded.catalog };
+  return { prompt: loaded.promptIndex(prompt), catalog: loaded.catalogFor(date) };
 }
 
 /** A catalog entity by id (used when a receipt's answer is no longer on its prompt). */

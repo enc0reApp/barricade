@@ -251,15 +251,37 @@ describe("rarity", () => {
   });
 
   it("'blend' (default) is the geometric mean of fame and guess shares", () => {
-    const guesses = ["tent", "main", "tent", "tent", "tent", "tent", "tent", "tent", "tent", "tent", "tent", "tent", "tent"] as const;
+    // J (side, 200 views) and K (basement, 100 views) land inside their own guess bands, so
+    // the guard rails leave their shares untouched (probe: J ≈ 1.95% side, K ≈ 0.34% basement).
+    const guesses = ["tent", "tent", "tent", "tent", "tent", "tent", "tent", "tent", "tent", "side", "basement", "tent", "tent"] as const;
     const { p, fame } = fameFixture(undefined, [...guesses]);
     const r = build([p], { fame });
     const pr = promptOf(r, "r");
-    const A = byName(pr, "City A").share;
-    const B = byName(pr, "City B").share;
-    // fame ratio (2.5^1.1) × guess ratio (0.008/0.12), square-rooted.
-    expect(A / B).toBeCloseTo(Math.sqrt((100000 / 40000) ** 1.1 * (0.008 / 0.12)), 2);
+    const J = byName(pr, "City J");
+    const K = byName(pr, "City K");
+    expect(J.tier).toBe("side");
+    expect(K.tier).toBe("basement");
+    // fame ratio (200/100)^1.1 × guess ratio (0.03/0.002), square-rooted.
+    expect(J.share / K.share).toBeCloseTo(Math.sqrt((200 / 100) ** 1.1 * (0.03 / 0.002)), 1);
     expect(r.report.prompts[0]!.rarity).toBe("blend");
+  });
+
+  it("guard rails: a 'main' guess stays main; other guesses move at most one tier", () => {
+    // M has the fewest pageviews but the editor calls it obvious; A is famous but guessed htbt.
+    const guesses = ["htbt", "tent", "tent", "tent", "tent", "tent", "tent", "tent", "tent", "tent", "tent", "tent", "main"] as const;
+    const { p, fame } = fameFixture(undefined, [...guesses]);
+    const r = build([p], { fame });
+    const pr = promptOf(r, "r");
+    expect(byName(pr, "City M").tier).toBe("main");
+    expect(byName(pr, "City M").share).toBeGreaterThanOrEqual(0.06);
+    // Everything not force-guaranteed stays within one tier of its guess.
+    const forced = new Set(r.report.prompts[0]!.forced.map((f) => f.name));
+    const scale = ["main", "side", "tent", "basement", "htbt"];
+    for (const a of p.answers) {
+      if (forced.has(a.name)) continue;
+      const t = byName(pr, a.name).tier;
+      expect(Math.abs(scale.indexOf(t) - scale.indexOf(a.guess))).toBeLessThanOrEqual(1);
+    }
   });
 
   it("answers without fame fall back to their guess share", () => {
@@ -314,11 +336,11 @@ describe("rarity", () => {
     expect(pr.answers[pr.answers.length - 1]!.tier).toBe("htbt");
     expect(r.report.prompts[0]!.warnings.join()).toMatch(/tiers forced/);
 
-    // Short lists (< 12) don't get a forced htbt.
+    // Short lists (< 12) don't get a forced htbt (only the guaranteed main).
     const short = prompt("short", { rarity: "guess" }, 0);
     short.answers = Array.from({ length: 11 }, (_, i) => answer(`S ${String.fromCharCode(65 + i)}`, "tent"));
     const rs = build([short]);
-    expect(rs.report.prompts[0]!.forced).toEqual([]);
+    expect(rs.report.prompts[0]!.forced.map((f) => f.to)).toEqual(["main"]);
     expect(promptOf(rs, "short").answers.some((a) => a.tier === "htbt")).toBe(false);
   });
 

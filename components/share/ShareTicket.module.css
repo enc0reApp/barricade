@@ -215,10 +215,18 @@
   transform: rotate(180deg);
 }
 
-/* logical size: the gap runs along the text, whichever way the text runs */
+/* Letters and the gap never shrink: the gap has no min-content size, so it
+   would be the first thing squeezed out if the stub ever ran short. */
+.admit > span {
+  flex: none;
+}
+
+/* logical size: the gap runs along the text, whichever way the text runs.
+   It holds a real space (pre, so it isn't collapsed) for copy and text tools. */
 .admitGap {
   display: inline-block;
-  inline-size: 0.7em;
+  inline-size: 0.9em;
+  white-space: pre;
 }
 
 .stubBody {

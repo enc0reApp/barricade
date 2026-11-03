@@ -131,10 +131,13 @@ export function ShareTicket({ number, outcomes, date, beatPct, className }: Shar
           <div className={styles.perf} aria-hidden="true" />
 
           <div className={styles.stub}>
+            {/* One span per letter so landscape can stack them upright. The gap
+                keeps a real space, so the text reads "ADMIT ONE" when copied or
+                extracted, and a fixed size so it can't collapse. */}
             <div className={styles.admit} aria-hidden="true">
               {"ADMIT ONE".split("").map((ch, i) => (
                 <span key={i} className={ch === " " ? styles.admitGap : undefined}>
-                  {ch === " " ? "" : ch}
+                  {ch}
                 </span>
               ))}
             </div>

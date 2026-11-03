@@ -1,25 +1,41 @@
 /**
- * getStore(): Upstash when configured, else the in-memory store.
+ * getStore(kind): Upstash when configured, else the in-memory store, with
+ * every key namespaced by deployment env + pack kind (statsNamespace).
  * Every call goes through a safety wrapper — a store failure is logged and
  * answered with a neutral value; it never breaks gameplay.
  */
 
 import { MemoryStore } from "./memory";
-import { emptyStats, type Store } from "./types";
+import { emptyStats, statsNamespace, type PackKind, type Store } from "./types";
 import { UpstashStore, upstashConfigFromEnv } from "./upstash";
 
-export type { DateStats, FinishRecord, FlagRecord, Store } from "./types";
-export { MISS_FIELD, keys } from "./types";
+export type { DateStats, FinishOutcome, FinishRecord, FlagRecord, PackKind, Store, StoreKeys } from "./types";
+export {
+  FINISHES_PER_SOURCE,
+  FLAGS_PER_SOURCE,
+  MISS_FIELD,
+  REJECTED_FIELDS_CAP,
+  keysFor,
+  statsEnv,
+  statsNamespace,
+} from "./types";
 export { MemoryStore } from "./memory";
 export { UpstashStore, upstashConfigFromEnv } from "./upstash";
 
-let cached: { sig: string; store: Store } | null = null;
+const cached = new Map<string, Store>();
 
 /** Production without Redis: accept writes, remember nothing, report an empty crowd. */
 class NullStore implements Store {
   readonly kind = "none" as const;
+  constructor(readonly ns: string) {}
+  async claimRoundStart(_date: string, _playerId: string, _i: number, startMs: number) {
+    return startMs;
+  }
+  async claimAccepted(_date: string, _playerId: string, _i: number, value: string) {
+    return value;
+  }
   async recordFinish() {
-    return { first: true };
+    return { first: true, counted: false };
   }
   async getPlays() {
     return 0;
@@ -54,33 +70,44 @@ async function guarded<T>(what: string, neutral: T, run: () => Promise<T>): Prom
 export function safeStore(inner: Store): Store {
   return {
     kind: inner.kind,
-    recordFinish: (date, playerId, rec) =>
-      guarded("recordFinish", { first: false }, () => inner.recordFinish(date, playerId, rec)),
+    ns: inner.ns,
+    // A store outage must not block play: the proposed start / our own answer stands.
+    claimRoundStart: (date, playerId, i, startMs) =>
+      guarded("claimRoundStart", startMs, () => inner.claimRoundStart(date, playerId, i, startMs)),
+    claimAccepted: (date, playerId, i, value) =>
+      guarded("claimAccepted", value, () => inner.claimAccepted(date, playerId, i, value)),
+    recordFinish: (date, playerId, rec, source) =>
+      guarded("recordFinish", { first: false, counted: false }, () => inner.recordFinish(date, playerId, rec, source)),
     getPlays: (date) => guarded("getPlays", 0, () => inner.getPlays(date)),
     getDistanceSum: (date) => guarded("getDistanceSum", 0, () => inner.getDistanceSum(date)),
     getDistanceHist: (date) => guarded("getDistanceHist", new Map<number, number>(), () => inner.getDistanceHist(date)),
     getRoundCounts: (date, i) => guarded("getRoundCounts", new Map<string, number>(), () => inner.getRoundCounts(date, i)),
     getStats: (date, rounds) => guarded("getStats", emptyStats(rounds), () => inner.getStats(date, rounds)),
     logRejected: (date, i, key) => guarded("logRejected", undefined, () => inner.logRejected(date, i, key)),
-    logFlag: (date, flag) => guarded("logFlag", undefined, () => inner.logFlag(date, flag)),
+    logFlag: (date, flag, source) => guarded("logFlag", undefined, () => inner.logFlag(date, flag, source)),
   };
 }
 
-export function getStore(): Store {
+/** The store for one pack kind ("sample" plays never share keys with "production" ones). */
+export function getStore(kind: PackKind): Store {
   const config = upstashConfigFromEnv();
+  const ns = statsNamespace(kind);
   const prodWithoutRedis = !config && process.env.NODE_ENV === "production" && process.env.BARRICADE_MEMORY_STORE !== "1";
-  const sig = config ? `upstash:${config.url}` : prodWithoutRedis ? "none" : "memory";
-  if (cached && cached.sig === sig) return cached.store;
+  const backend = config ? `upstash:${config.url}` : prodWithoutRedis ? "none" : "memory";
+  const sig = `${backend}|${ns}`;
+  const hit = cached.get(sig);
+  if (hit) return hit;
   if (!config && process.env.NODE_ENV === "production" && !warnedMemoryInProd) {
     warnedMemoryInProd = true;
     console.warn("[barricade] No Upstash Redis configured — crowd stats are disabled (set KV_REST_API_URL/KV_REST_API_TOKEN).");
   }
-  const store = safeStore(config ? new UpstashStore(config) : prodWithoutRedis ? new NullStore() : new MemoryStore());
-  cached = { sig, store };
+  const store = safeStore(config ? new UpstashStore(config, ns) : prodWithoutRedis ? new NullStore(ns) : new MemoryStore(ns));
+  if (cached.size > 16) cached.clear();
+  cached.set(sig, store);
   return store;
 }
 
-/** Tests: forget the cached store (memory data lives on globalThis; clear it via new MemoryStore().clear()). */
+/** Tests: forget the cached stores (memory data lives on globalThis; clear it via MemoryStore#clear()). */
 export function resetStoreCache(): void {
-  cached = null;
+  cached.clear();
 }

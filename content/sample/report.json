@@ -1,8 +1,8 @@
 {
   "kind": "sample",
-  "generatedAt": "2026-11-03T05:00:11.185Z",
+  "generatedAt": "2026-11-03T20:25:30.437Z",
   "epoch": "2026-01-01",
-  "normalizeVersion": 1,
+  "normalizeVersion": 2,
   "fame": {
     "entries": 2345,
     "fetchedAt": "2026-11-03T04:49:31.265Z"
@@ -14,7 +14,7 @@
     "answers": 2898,
     "entities": 2898,
     "mergedEntities": 0,
-    "catalogKeys": 3981,
+    "catalogKeys": 3982,
     "droppedKeys": 0,
     "forcedTiers": 0,
     "promptsWithWarnings": 2
@@ -35,14 +35,14 @@
       ],
       "answers": 2898,
       "tiers": {
-        "main": 25,
+        "main": 28,
         "tote": 5,
-        "side": 59,
+        "side": 56,
         "tent": 116,
         "basement": 257,
         "htbt": 2436
       },
-      "summary": "#1 2026-01-01 \"SAMPLE SET\" · 7 prompts · d1122334 · gear/city/artist/venue/festival/genre/soundsystem · 2898 answers · M25 T5 S59 N116 B257 H2436 · 2 flagged",
+      "summary": "#1 2026-01-01 \"SAMPLE SET\" · 7 prompts · d1122334 · gear/city/artist/venue/festival/genre/soundsystem · 2898 answers · M28 T5 S56 N116 B257 H2436 · 2 flagged",
       "title": "SAMPLE SET"
     }
   ],
@@ -61,9 +61,9 @@
       "missingWiki": [],
       "disambiguationWiki": [],
       "tiers": {
-        "main": 1,
+        "main": 4,
         "tote": 1,
-        "side": 11,
+        "side": 8,
         "tent": 19,
         "basement": 47,
         "htbt": 271
@@ -75,24 +75,24 @@
           "share": 0.2047
         },
         {
+          "name": "Lowlands",
+          "tier": "main",
+          "share": 0.06
+        },
+        {
           "name": "Pukkelpop",
-          "tier": "side",
-          "share": 0.04339
+          "tier": "main",
+          "share": 0.06
         },
         {
           "name": "Rock Werchter",
-          "tier": "side",
-          "share": 0.03943
+          "tier": "main",
+          "share": 0.06
         },
         {
           "name": "Pinkpop",
           "tier": "side",
           "share": 0.03874
-        },
-        {
-          "name": "Lowlands",
-          "tier": "side",
-          "share": 0.03694
         }
       ],
       "drifts": [],

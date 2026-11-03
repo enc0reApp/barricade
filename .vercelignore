@@ -1,0 +1,7 @@
+# Vercel CLI deploys do not read .gitignore. Keep the plaintext spoilers and
+# local keys out of the uploaded source: production content ships ONLY as
+# content/sealed/*.enc (+ the public content/sample/pack.json).
+content/source
+content/build
+.env*
+!.env.example

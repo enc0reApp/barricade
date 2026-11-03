@@ -16,7 +16,12 @@ export async function GET(req: Request): Promise<Response> {
     const now = Date.now();
     if (!isClosedDate(date, now)) {
       // A normal state ("opens at …"), not an error — 200 with the contract's not-yet shape.
-      const notYet: CrowdResponse = { ok: false, error: "not-yet", opensAt: Date.parse(`${addDays(date, 1)}T12:00:00Z`) };
+      const notYet: CrowdResponse = {
+        ok: false,
+        error: "not-yet",
+        opensAt: Date.parse(`${addDays(date, 1)}T12:00:00Z`),
+        serverNow: Date.now(),
+      };
       return json(notYet);
     }
 
@@ -24,7 +29,7 @@ export async function GET(req: Request): Promise<Response> {
     const puzzle = puzzleForDate(loaded, date);
     if (!puzzle) return fail("no-set");
 
-    const stats = await getStore().getStats(date, puzzle.prompts.length);
+    const stats = await getStore(loaded.pack.kind).getStats(date, puzzle.prompts.length);
     const out: Extract<CrowdResponse, { ok: true }> = {
       ok: true,
       number: puzzle.number,

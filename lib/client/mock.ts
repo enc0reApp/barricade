@@ -8,11 +8,17 @@
  *
  * Two fake sets of 7 prompts alternate by set number; today is always #12.
  * The answer lists are small and illustrative, not the real content.
+ *
+ * Proof of play (RoundRequest.prevToken/prevReceipt, FinishRequest.tokens) is
+ * accepted and ignored: the mock never refuses a round or a finish for it.
+ * A no-set reply carries the archive bounds (epoch, latestNumber) and a
+ * not-yet crowd reply carries serverNow, which the client uses when present.
  */
 
 import type {
   AnswerRequest,
   AnswerResponse,
+  ApiFail,
   CrowdResponse,
   CrowdRound,
   FinishRequest,
@@ -29,7 +35,7 @@ import type { EntityType } from "../content/types";
 import { addDays, isClosedDate, isDateString, isLiveDate, liveDateWindow, localDateString, numberForDate } from "../game/day";
 import { editDistance, matchKeys, primaryKey, typoBudget } from "../game/normalize";
 import { DEFAULT_SECONDS, GRACE_MS, TIERS, distanceFor, type Outcome, type TierId } from "../game/tiers";
-import type { BarricadeApi } from "./api";
+import type { BarricadeApi, NoSetMeta } from "./api";
 
 /* ───────────────────────────── fake content ───────────────────────────── */
 
@@ -565,12 +571,23 @@ export function createMockApi(flavour: MockFlavour = "on"): BarricadeApi {
     return { ok: true, number };
   };
 
+  /** Latest set number playable on this device's night (closed flavour: tonight has none). */
+  const latestPlayable = (): number => {
+    const tonight = numberForDate(epoch(), localDateString());
+    if (flavour === "closed") return tonight - 1;
+    return Math.min(Math.max(1, numberForDate(epoch(), liveDateWindow(serverNow()).latest)), tonight);
+  };
+
   return {
     async getSet(date): Promise<SetResponse> {
       await latency();
       if (flavour === "error") return fail;
       const c = checkDate(date);
-      if (!c.ok) return c;
+      if (!c.ok) {
+        if (c.error !== "no-set") return c;
+        const noSet: ApiFail & NoSetMeta = { ok: false, error: "no-set", epoch: epoch(), latestNumber: latestPlayable() };
+        return noSet;
+      }
       const set = setFor(c.number);
       const latest = Math.max(1, numberForDate(epoch(), liveDateWindow(serverNow()).latest));
       return {
@@ -587,6 +604,7 @@ export function createMockApi(flavour: MockFlavour = "on"): BarricadeApi {
       };
     },
 
+    // req.prevToken / req.prevReceipt are accepted and ignored.
     async startRound(req: RoundRequest): Promise<RoundResponse> {
       await latency();
       if (flavour === "error") return fail;
@@ -642,6 +660,7 @@ export function createMockApi(flavour: MockFlavour = "on"): BarricadeApi {
       return { ok: true, status: "rejected", reason: "unknown" };
     },
 
+    // req.tokens is accepted and ignored.
     async finish(req: FinishRequest): Promise<FinishResponse> {
       await latency();
       if (flavour === "error") return fail;
@@ -709,7 +728,13 @@ export function createMockApi(flavour: MockFlavour = "on"): BarricadeApi {
       const c = checkDate(date);
       if (!c.ok) return c;
       if (!isClosedDate(date, serverNow())) {
-        return { ok: false, error: "not-yet", opensAt: Date.parse(`${addDays(date, 1)}T12:00:00Z`) };
+        const notYet: Extract<CrowdResponse, { error: "not-yet" }> & { serverNow: number } = {
+          ok: false,
+          error: "not-yet",
+          opensAt: Date.parse(`${addDays(date, 1)}T12:00:00Z`),
+          serverNow: serverNow(),
+        };
+        return notYet;
       }
       const set = setFor(c.number);
       const index = indexFor(c.number);

@@ -49,7 +49,7 @@ describe("matchAnswer — exact", () => {
   });
 
   it("an excited trailing '!' doesn't break short names", () => {
-    // normalize() reads "m!" as "mi" (P!nk rule); the matcher also tries the text without it.
+    // normalize() drops a word-final "!" (NORMALIZE_VERSION 2).
     expect(o("detroit-labels", "KMS!")).toBe("accepted:label:kms");
     expect(o("berlin-clubs", "OHM!!!")).toBe("accepted:venue:ohm");
     // An interior "!" keeps the P!nk rule.
@@ -58,6 +58,32 @@ describe("matchAnswer — exact", () => {
     const idx = { prompt: buildPromptIndex(p), catalog: buildCatalogIndex([]) };
     expect(outcome(matchAnswer(p, "P!nk", idx))).toBe("accepted:artist:pink");
     expect(outcome(matchAnswer(p, "pink", idx))).toBe("accepted:artist:pink");
+  });
+
+  it("a name that ends in '!' matches with or without it, even when the bare word is another entity", () => {
+    const mk = (id: string, name: string, type: PackAnswer["type"], tier: PackAnswer["tier"] = "side"): PackAnswer => ({
+      id,
+      name,
+      type,
+      tier,
+      share: 0.03,
+      keys: matchKeys(name),
+    });
+    const splash = mk("festival:splash", "Splash!", "festival");
+    const wham = mk("artist:wham", "Wham!", "artist");
+    const panic = mk("artist:panic-at-the-disco", "Panic! at the Disco", "artist");
+    const p: PackPrompt = { id: "x", text: "Name a thing", types: ["festival", "artist"], difficulty: 1, seconds: 25, answers: [splash, wham, panic] };
+    // "Splash" the venue is a different real entity in the catalog: the bare word must still hit Splash!.
+    const catalog: PackCatalogEntry[] = [
+      { id: "venue:splash", name: "Splash", type: "venue", keys: matchKeys("Splash") },
+      { id: splash.id, name: splash.name, type: splash.type, keys: splash.keys },
+    ];
+    const idx = { prompt: buildPromptIndex(p), catalog: buildCatalogIndex(catalog) };
+    for (const typed of ["Splash", "splash!", "SPLASH!!"]) expect(outcome(matchAnswer(p, typed, idx))).toBe("accepted:festival:splash");
+    for (const typed of ["Wham", "Wham!"]) expect(outcome(matchAnswer(p, typed, idx))).toBe("accepted:artist:wham");
+    for (const typed of ["Panic at the Disco", "Panic! at the Disco", "panic! at the disco!"]) {
+      expect(outcome(matchAnswer(p, typed, idx))).toBe("accepted:artist:panic-at-the-disco");
+    }
   });
 
   it("accepts aliases", () => {
@@ -98,14 +124,42 @@ describe("matchAnswer — typos", () => {
     expect(o("uk-festivals", "Creamfeilds")).toBe("typo:festival:creamfields");
     expect(o("uk-festivals", "Glastonbery")).toBe("typo:festival:glastonbury");
     expect(o("berlin-clubs", "Tresorr")).toBe("typo:venue:tresor"); // min len 6 → budget 1
-    expect(o("boiler-room-cities", "Lagso")).toBe("typo:city:lagos"); // len 5 → budget 1
+    expect(o("boiler-room-cities", "Tokoy")).toBe("typo:city:tokyo"); // len 5 → budget 1
     expect(o("dutch-festivals", "Strange Sounds From Beyonde")).toBe("typo:festival:strange-sounds-from-beyond");
   });
 
   it("refuses typos over the budget", () => {
     expect(o("berlin-clubs", "Bergxxxn")).toBe("unknown"); // 3 edits on 8 chars
     expect(o("berlin-clubs", "Tresssor")).toBe("unknown"); // 2 edits, budget 1
-    expect(o("boiler-room-cities", "Lgaso")).toBe("unknown"); // 2 edits on 5 chars
+    expect(o("boiler-room-cities", "Takyu")).toBe("unknown"); // 2 edits on 5 chars
+  });
+
+  it("a typo must keep the first character", () => {
+    // "Zurich" is one edit from "Aurich" — a real non-answer, not a typo of it.
+    expect(o("berlin-clubs", "Merghain")).toBe("unknown");
+    expect(o("uk-festivals", "Klastonbury")).toBe("unknown");
+    expect(o("uk-festivals", "Glastonbery")).toBe("typo:festival:glastonbury");
+  });
+
+  it("deep tiers (BASEMENT / HTBT) forgive one edit at most, on keys of 6+ chars", () => {
+    // Lagos is BASEMENT: a 5-char deep cut is exact-only ("Bozen" must not score as "Bogen").
+    expect(o("boiler-room-cities", "Lagso")).toBe("unknown");
+    expect(o("boiler-room-cities", "Lagos")).toBe("accepted:city:lagos");
+    // Strange Sounds from Beyond is HTBT: 1 edit is fine, 2 is not (budget would be 3 by length).
+    expect(o("dutch-festivals", "Strange Sounds From Beyonde")).toBe("typo:festival:strange-sounds-from-beyond");
+    expect(o("dutch-festivals", "Strange Sounds From Beyondee")).toBe("unknown");
+    // A synthetic deep cut: "krecords" is 1 edit from "vrecords" but starts differently.
+    const v: PackAnswer = { id: "label:v-recordings", name: "V Recordings", type: "label", tier: "htbt", share: 0.0004, keys: [...matchKeys("V Recordings"), ...matchKeys("V Records")] };
+    const sulz: PackAnswer = { id: "city:sulzburg", name: "Sulzburg", type: "city", tier: "htbt", share: 0.0004, keys: matchKeys("Sulzburg") };
+    const main: PackAnswer = { id: "city:salzgitter", name: "Salzgitter", type: "city", tier: "main", share: 0.2, keys: matchKeys("Salzgitter") };
+    const p: PackPrompt = { id: "x", text: "Name a thing", types: ["label", "city"], difficulty: 1, seconds: 25, answers: [v, sulz, main] };
+    const idx = { prompt: buildPromptIndex(p), catalog: buildCatalogIndex([]) };
+    expect(outcome(matchAnswer(p, "K Records", idx))).toBe("unknown");
+    expect(outcome(matchAnswer(p, "V Recrods", idx))).toBe("typo:label:v-recordings");
+    // Two edits onto an HTBT answer are refused even though the length budget allows 2…
+    expect(outcome(matchAnswer(p, "Salzbur", idx))).toBe("unknown");
+    // …and a common answer within budget is still found.
+    expect(outcome(matchAnswer(p, "Salzgiter", idx))).toBe("typo:city:salzgitter");
   });
 
   it("keeps short names exact-only", () => {
@@ -193,6 +247,38 @@ describe("matchAnswer — unknown / empty / caps", () => {
     expect(o("uk-festivals", "!!!")).toBe("empty");
     expect(o("uk-festivals", "a")).toBe("empty");
     expect(o("uk-festivals", "é")).toBe("empty");
+  });
+
+  it("one-character answers match only their exact NAME", () => {
+    const mk = (id: string, name: string, aliases: string[] = []): PackAnswer => ({
+      id,
+      name,
+      type: "other",
+      tier: "htbt",
+      share: 0.0004,
+      keys: [...new Set([name, ...aliases].flatMap((x) => matchKeys(x)))],
+    });
+    const club: PackPrompt = { id: "c", text: "Name a club", types: ["venue"], difficulty: 1, seconds: 25, answers: [mk("venue:the-q", "The Q")] };
+    const clubIdx = { prompt: buildPromptIndex(club), catalog: buildCatalogIndex([]) };
+    expect(outcome(matchAnswer(club, "The Q", clubIdx))).toBe("accepted:venue:the-q");
+    expect(outcome(matchAnswer(club, "Q", clubIdx))).toBe("accepted:venue:the-q");
+    const answers = [
+      mk("other:q", "Q", ["Q Magazine"]),
+      mk("other:3", "3"),
+      mk("venue:club-seven", "Club Seven", ["Seven"]),
+      mk("other:eplus", "eplus", ["e+"]),
+    ];
+    const p: PackPrompt = { id: "x", text: "Name a thing", types: ["other", "venue"], difficulty: 1, seconds: 25, answers };
+    const idx = { prompt: buildPromptIndex(p), catalog: buildCatalogIndex([]) };
+    const r = (typed: string) => outcome(matchAnswer(p, typed, idx));
+    expect(r("Q")).toBe("accepted:other:q");
+    expect(r("Q Magazine")).toBe("accepted:other:q");
+    expect(r("3")).toBe("accepted:other:3");
+    expect(r("Three")).toBe("accepted:other:3");
+    expect(r("Seven")).toBe("accepted:venue:club-seven"); // folds to "7" but the "seven" key is exact
+    expect(r("7")).toBe("empty"); // "7" is only a derived variant of the alias
+    expect(r("e")).toBe("empty"); // "e" is only the and-dropped variant of "e+"
+    expect(r("x")).toBe("empty");
   });
 
   it(`looks at ${MAX_TYPED_CHARS} characters at most (after trimming)`, () => {

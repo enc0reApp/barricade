@@ -1,21 +1,31 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import type { FinishResult, RoundPrompt } from "../../lib/api/contract";
 import {
+  PROOF_PAD_MS,
   STORAGE_KEY,
   applyStreak,
   createStore,
   compactGames,
+  finishWaitMs,
   liveStreak,
+  mergeGame,
   parseState,
+  prevProof,
+  progressOf,
   pushTry,
   receiptsOf,
   resumePoint,
+  roundWaitMs,
   settleExpired,
+  summaryFinish,
+  tokensOf,
+  withFlag,
   type KV,
   type StoredGame,
   type StoredRound,
   type Streak,
 } from "../../lib/client/storage";
+import { GRACE_MS } from "../../lib/game/tiers";
 
 const prompt = (index: number): RoundPrompt => ({ index, total: 7, text: `Prompt ${index}`, types: ["festival"], seconds: 25 });
 
@@ -97,6 +107,23 @@ describe("resume", () => {
     const rounds = Array.from({ length: 7 }, (_, i) => round(i, { outcome: "side", receipt: `r${i}` }));
     expect(resumePoint(game(rounds))).toEqual({ kind: "finishing" });
     expect(resumePoint(game(rounds, { status: "finished", finish: finish(["side"]) }))).toEqual({ kind: "ticket" });
+  });
+
+  it("a compacted finished game never resumes at the doors (no replay over the record)", () => {
+    const games: Record<string, StoredGame> = {};
+    for (let d = 1; d <= 22; d++) {
+      const date = `2026-10-${String(d).padStart(2, "0")}`;
+      games[date] = game([round(0, { outcome: "miss", receipt: null })], { date, number: d, status: "finished", finish: finish(["miss"]) });
+    }
+    const oldest = compactGames(games)["2026-10-01"]!;
+    expect(oldest.finish).toBeUndefined();
+    expect(oldest.rounds).toEqual([]);
+    expect(resumePoint(oldest)).toEqual({ kind: "summary" });
+    // Its ticket is rebuilt from the summary, with no crowd numbers and no reveal.
+    const t = summaryFinish(oldest)!;
+    expect(t).toMatchObject({ ok: true, number: 1, date: "2026-10-01", mode: "today", outcomes: ["miss"], distance: 690, rounds: [] });
+    expect(t.crowd).toEqual({ plays: null, beatPct: null });
+    expect(summaryFinish(game([]))).toBeNull();
   });
 
   it("builds one receipt per round with nulls for misses", () => {
@@ -196,6 +223,32 @@ describe("parse + store", () => {
     expect(r.streak.current).toBe(0);
   });
 
+  it("finishGame never overwrites a date that is already finished (the first finish is the record)", () => {
+    const store = createStore({ backend: new MemKV() });
+    const first = store.finishGame(game([round(0, { outcome: "miss", receipt: null })]), finish(["miss"]));
+    const again = store.finishGame({ ...first.game, mode: "archive", status: "playing" }, finish(["main", "main"], "archive"));
+    expect(again.game.summary).toEqual(first.game.summary);
+    expect(again.game.mode).toBe("today");
+    expect(store.game("2026-11-09")?.summary).toEqual({ outcomes: ["miss"], distance: 690 });
+  });
+
+  it("keeps per-game player ids and drops invalid ones", () => {
+    const raw = JSON.stringify({
+      version: 1,
+      playerId: "abcdefghijklmnop_-12",
+      games: {
+        a: game([], { date: "2026-11-01", playerId: "game_player_0000000001" }),
+        b: game([], { date: "2026-11-02", playerId: "bad id!" }),
+      },
+    });
+    const st = parseState(raw);
+    expect(st.games.a?.playerId).toBe("game_player_0000000001");
+    expect(st.games.b).toBeUndefined();
+    // A fallback id replaces a missing one instead of minting a new one.
+    expect(parseState(null, "fallback_player_00001").playerId).toBe("fallback_player_00001");
+    expect(parseState("{nope", "fallback_player_00001").playerId).toBe("fallback_player_00001");
+  });
+
   it("compacts old finished games down to their summaries", () => {
     const games: Record<string, StoredGame> = {};
     for (let d = 1; d <= 25; d++) {
@@ -207,5 +260,163 @@ describe("parse + store", () => {
     expect(out["2026-10-01"]!.finish).toBeUndefined();
     expect(out["2026-10-01"]!.summary).toEqual({ outcomes: ["main"], distance: 690 });
     expect(out["2026-10-01"]!.rounds).toEqual([]);
+  });
+});
+
+describe("several tabs on one key", () => {
+  const today = "2026-11-03";
+  const archiveDate = "2026-10-27";
+
+  it("a stale tab's write keeps the other tab's finished game and streak", () => {
+    const kv = new MemKV();
+    const a = createStore({ backend: kv });
+    const b = createStore({ backend: kv });
+    // Tab A boots on the archive and reads its (empty) state.
+    a.streak();
+    expect(a.game(archiveDate)).toBeNull();
+    // Tab B finishes tonight's set.
+    b.finishGame(game([round(0, { outcome: "main", receipt: "r" })], { date: today }), { ...finish(["main"]), date: today });
+    // Tab A then plays a round of the archive set.
+    a.putGame(game([round(0)], { date: archiveDate, mode: "archive", number: 5 }));
+
+    const reload = createStore({ backend: kv });
+    expect(reload.game(today)?.status).toBe("finished");
+    expect(reload.game(archiveDate)?.rounds).toHaveLength(1);
+    expect(reload.streak()).toEqual({ current: 1, best: 1, lastDate: today });
+    expect(resumePoint(reload.game(today))).toEqual({ kind: "ticket" });
+  });
+
+  it("a stale playing copy never replaces a finished game, and the caller gets the stored one back", () => {
+    const kv = new MemKV();
+    const a = createStore({ backend: kv });
+    const b = createStore({ backend: kv });
+    a.read();
+    const done = b.finishGame(game([round(0, { outcome: "main", receipt: "r" })], { date: today }), { ...finish(["main"]), date: today }).game;
+    const back = a.putGame(game([round(0)], { date: today }));
+    expect(back.status).toBe("finished");
+    expect(back.summary).toEqual(done.summary);
+    expect(createStore({ backend: kv }).game(today)?.status).toBe("finished");
+  });
+
+  it("a playing copy that is behind does not replace one that is further along", () => {
+    const kv = new MemKV();
+    const a = createStore({ backend: kv });
+    const b = createStore({ backend: kv });
+    b.putGame(game([round(0, { outcome: "main", receipt: "r0" }), round(1)], { date: today }));
+    const back = a.putGame(game([], { date: today }));
+    expect(back.rounds).toHaveLength(2);
+    // Moving forward (or a same-progress edit like a rejected try) is fine.
+    const tried = a.putGame(game([round(0, { outcome: "main", receipt: "r0" }), round(1, { tries: ["x"] })], { date: today }));
+    expect(tried.rounds[1]?.tries).toEqual(["x"]);
+  });
+
+  it("adopts the id another tab stored, while each game keeps the id its receipts were issued to", () => {
+    const kv = new MemKV();
+    const a = createStore({ backend: kv });
+    const idA = a.playerId();
+    const g = a.putGame(game([round(0)], { date: today, playerId: idA }));
+    // Another tab (in a race on an empty store) wrote a different top-level id.
+    const raw = JSON.parse(kv.getItem(STORAGE_KEY)!);
+    kv.setItem(STORAGE_KEY, JSON.stringify({ ...raw, playerId: "other_tab_player_00001" }));
+    a.putGame({ ...g, rounds: [round(0, { outcome: "main", receipt: "r" })] });
+    expect(a.playerId()).toBe("other_tab_player_00001");
+    expect(a.game(today)?.playerId).toBe(idA);
+  });
+
+  it("drops its cache and tells subscribers when another tab writes", () => {
+    const kv = new MemKV();
+    const a = createStore({ backend: kv });
+    const b = createStore({ backend: kv });
+    expect(a.game(today)).toBeNull();
+    b.putGame(game([round(0)], { date: today }));
+    expect(a.game(today)).toBeNull(); // cached until told
+    const cb = vi.fn();
+    const off = a.subscribe(cb);
+    a.externalChange();
+    expect(cb).toHaveBeenCalledTimes(1);
+    expect(a.game(today)?.rounds).toHaveLength(1);
+    off();
+    a.externalChange();
+    expect(cb).toHaveBeenCalledTimes(1);
+  });
+
+  it("settings writes merge onto what storage holds now", () => {
+    const kv = new MemKV();
+    const a = createStore({ backend: kv });
+    const b = createStore({ backend: kv });
+    a.read();
+    b.finishGame(game([], { date: today }), { ...finish([]), date: today });
+    a.putSettings({ seenHow: true });
+    const reload = createStore({ backend: kv });
+    expect(reload.settings().seenHow).toBe(true);
+    expect(reload.game(today)?.status).toBe("finished");
+  });
+});
+
+describe("merging and flags", () => {
+  it("orders progress: nothing < started < settled rounds < finished", () => {
+    expect(progressOf(null)).toBe(-1);
+    expect(progressOf(game([]))).toBe(0);
+    expect(progressOf(game([round(0)]))).toBe(1);
+    expect(progressOf(game([round(0, { outcome: "miss" })]))).toBe(2);
+    expect(progressOf(game([round(0, { outcome: "miss" }), round(1)]))).toBe(3);
+    expect(progressOf(game([], { status: "finished" }))).toBeGreaterThan(1000);
+  });
+
+  it("finished is terminal: only flags can grow", () => {
+    const fin = game([round(0, { outcome: "main", receipt: "r" })], { status: "finished", finish: finish(["main"]), flagged: [1] });
+    expect(mergeGame(fin, game([round(0)]))).toBe(fin);
+    expect(mergeGame(fin, { ...fin, flagged: [1] })).toBe(fin);
+    expect(mergeGame(fin, { ...fin, flagged: [4] }).flagged).toEqual([1, 4]);
+    expect(mergeGame(game([round(0)]), fin)).toBe(fin);
+  });
+
+  it("two flags sent from the same snapshot both stick", () => {
+    const kv = new MemKV();
+    const store = createStore({ backend: kv });
+    const g = game([round(2, { outcome: "miss", receipt: null })], { status: "finished", finish: finish(["miss"]) });
+    store.putGame(g);
+    // Both requests captured `g` (flagged: []) before either returned.
+    store.putGame(withFlag(g, 2));
+    store.putGame(withFlag(g, 5));
+    expect(createStore({ backend: kv }).game(g.date)?.flagged).toEqual([2, 5]);
+  });
+});
+
+describe("proof of play", () => {
+  const T = 1_000_000;
+  // Round clocks: deadline in server time, offset = server − client.
+  const missed = (index: number, deadline: number, offset = 0) => round(index, { deadline, offset, outcome: "miss", receipt: null });
+  const answered = (index: number, deadline: number) => round(index, { deadline, outcome: "main", receipt: `rc${index}` });
+
+  it("sends one token per round, in order", () => {
+    const g = game([answered(0, T), missed(1, T), answered(2, T)]);
+    expect(tokensOf(g)).toEqual(["tok0", "tok1", "tok2", "", "", "", ""]);
+  });
+
+  it("starts each later round with the previous round's token and receipt", () => {
+    const g = game([answered(0, T), missed(1, T)]);
+    expect(prevProof(g, 0)).toEqual({});
+    expect(prevProof(g, 1)).toEqual({ prevToken: "tok0", prevReceipt: "rc0" });
+    expect(prevProof(g, 2)).toEqual({ prevToken: "tok1", prevReceipt: null });
+  });
+
+  it("after a miss, waits out the missed round's deadline + grace on the server clock", () => {
+    const g = game([answered(0, T), missed(1, T + 25_000, 2_000)]);
+    expect(roundWaitMs(g, 0, T)).toBe(0);
+    expect(roundWaitMs(g, 1, T)).toBe(0); // round 0 was answered
+    // Server is 2s ahead: its deadline T+25s is client T+23s.
+    expect(roundWaitMs(g, 2, T + 23_000)).toBe(GRACE_MS + PROOF_PAD_MS);
+    expect(roundWaitMs(g, 2, T + 23_000 + GRACE_MS)).toBe(PROOF_PAD_MS);
+    expect(roundWaitMs(g, 2, T + 60_000)).toBe(0);
+  });
+
+  it("finishes only after every missed round is past its deadline + grace", () => {
+    const allAnswered = game(Array.from({ length: 7 }, (_, i) => answered(i, T + i)));
+    expect(finishWaitMs(allAnswered, T)).toBe(0);
+    const lastMissed = game([...Array.from({ length: 6 }, (_, i) => answered(i, T)), missed(6, T + 50_000, -1_000)]);
+    // Server 1s behind: its T+50s is client T+51s.
+    expect(finishWaitMs(lastMissed, T + 51_000)).toBe(GRACE_MS + PROOF_PAD_MS);
+    expect(finishWaitMs(lastMissed, T + 51_000 + GRACE_MS + PROOF_PAD_MS)).toBe(0);
   });
 });

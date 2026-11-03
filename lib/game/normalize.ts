@@ -7,7 +7,11 @@
  * a compiled pack records NORMALIZE_VERSION and the loader refuses a mismatch.
  */
 
-export const NORMALIZE_VERSION = 1;
+/**
+ * v2: a "!" that ends a word is punctuation, not an "i" (Wham! → wham,
+ * Panic! at the Disco → panic at the disco). P!nk → pink is unchanged.
+ */
+export const NORMALIZE_VERSION = 2;
 
 const NUMBER_WORDS: Record<string, string> = {
   zero: "0",
@@ -31,7 +35,8 @@ const LEET: Record<string, string> = { $: "s", "!": "i", "@": "a" };
  *  - Unicode NFKD, diacritics stripped (Björk → bjork, Sigur Rós → sigur ros)
  *  - lowercase
  *  - curly quotes/dashes folded, "&" and "+" → " and "
- *  - $ ! @ inside words → s i a (A$AP → asap)
+ *  - a "!" that ends a word is dropped (Wham! → wham, Splash! → splash)
+ *  - $ ! @ inside words → s i a (A$AP → asap, P!nk → pink)
  *  - every other non-alphanumeric → space, collapsed
  *  - leading "the " dropped ("The Warehouse Project" ≡ "Warehouse Project")
  */
@@ -41,6 +46,8 @@ export function normalize(input: string): string {
   s = s.replace(/[‘’ʼ`´]/g, "'").replace(/[“”]/g, '"');
   s = s.replace(/ß/g, "ss").replace(/æ/g, "ae").replace(/ø/g, "o").replace(/đ/g, "d").replace(/ł/g, "l");
   s = s.replace(/\s*[&+]\s*/g, " and ");
+  // A "!" run with no letter/digit after it ends a word: punctuation, never an "i".
+  s = s.replace(/!+(?![!a-z0-9])/g, " ");
   // Leet characters only when glued to letters on at least one side.
   s = s.replace(/([a-z0-9])([$!@])|([$!@])([a-z0-9])/g, (_m, a, b, c, d) =>
     a !== undefined ? a + LEET[b as string] : LEET[c as string] + d,

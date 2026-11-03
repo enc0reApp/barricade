@@ -50,10 +50,21 @@
 }
 
 .answer {
+  max-width: 100%;
   font-size: 24px;
   letter-spacing: 0.06em;
   color: var(--ink);
   text-shadow: 0 2px 0 #000;
+  /* "anywhere" (not break-word): this centred flex item is sized by its
+     min-content, and only "anywhere" lets a long single word lower it. */
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+/* A long single word ("Audunbakkenfestivalen") steps down so it fits whole. */
+.answer[data-long] {
+  font-size: 18px;
+  letter-spacing: 0.04em;
 }
 
 .moved {

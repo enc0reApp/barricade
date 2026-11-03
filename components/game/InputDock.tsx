@@ -64,7 +64,7 @@ const InputDock = forwardRef<HTMLInputElement, InputDockProps>(function InputDoc
             value={value}
             onChange={(e) => onChange(e.target.value)}
             tabIndex={hidden ? -1 : 0}
-            aria-describedby="feedback"
+            aria-describedby="prompt-text prompt-hint feedback"
           />
         </div>
         <button type="submit" className={`px-btn px-btn--hot ${styles.push}`} disabled={busy || hidden} tabIndex={hidden ? -1 : 0}>

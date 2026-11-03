@@ -95,6 +95,17 @@
   --fill: rgba(14, 22, 49, 0.94);
 }
 
+/* Narrow phones: "▲ PUSH TO THE FRONT ▲" is ~350px at full size, so the ▲s
+   would sit outside the border below ~390px. */
+@media (max-width: 419px) {
+  .cta {
+    font-size: clamp(15px, 4.6vw, 19px);
+    letter-spacing: 0.16em;
+    gap: 0.6em;
+    padding: 0 14px;
+  }
+}
+
 .meta {
   display: flex;
   justify-content: space-between;

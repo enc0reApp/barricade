@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { CrowdResponse } from "@/lib/api/contract";
 import { getCrowd, isMockActive } from "@/lib/client/api";
 import { formatCount, formatPercentNumber, formatSetDate } from "@/lib/client/format";
 import { getStore } from "@/lib/client/storage";
+import { crowdOpensAtLocal, crowdRetryDelay } from "@/lib/client/timer";
 import { addDays, localDateString } from "@/lib/game/day";
 import { START_DISTANCE, TIERS } from "@/lib/game/tiers";
 import Countdown from "@/components/ui/Countdown";
@@ -13,25 +14,54 @@ import PixelIcon from "@/components/ui/PixelIcon";
 import TierChip from "@/components/game/TierChip";
 import styles from "./CrowdView.module.css";
 
-type View = { k: "loading" } | { k: "done"; res: CrowdResponse };
+/** `opensAt` is the not-yet reply's opening time on THIS device's clock (null otherwise). */
+type View = { k: "loading" } | { k: "done"; res: CrowdResponse; opensAt: number | null };
 
 export default function CrowdView({ date }: { date: string }) {
   const [view, setView] = useState<View>({ k: "loading" });
   const [mine, setMine] = useState<number | null>(null);
   const [yesterday, setYesterday] = useState<string | null>(null);
+  /** Not-yet replies in a row that came back after opensAt had already passed here. */
+  const retries = useRef(0);
+  const seq = useRef(0);
 
-  const load = useCallback(async () => {
-    setView({ k: "loading" });
-    const g = getStore(isMockActive()).game(date);
-    const d = g?.summary?.distance ?? g?.finish?.distance;
-    setMine(typeof d === "number" ? d : null);
-    setYesterday(addDays(localDateString(), -1));
-    setView({ k: "done", res: await getCrowd(date) });
-  }, [date]);
+  /** `quiet` re-checks in place: the current screen stays up while the request runs. */
+  const load = useCallback(
+    async (quiet = false) => {
+      const mySeq = ++seq.current;
+      if (!quiet) {
+        retries.current = 0;
+        setView({ k: "loading" });
+      }
+      const g = getStore(isMockActive()).game(date);
+      const d = g?.summary?.distance ?? g?.finish?.distance;
+      setMine(typeof d === "number" ? d : null);
+      setYesterday(addDays(localDateString(), -1));
+      const res = await getCrowd(date);
+      if (mySeq !== seq.current) return; // a newer load (other date, retry) owns the view
+      const notYet = !res.ok && res.error === "not-yet";
+      if (!notYet) retries.current = 0;
+      setView({ k: "done", res, opensAt: notYet ? crowdOpensAtLocal(res, Date.now()) : null });
+    },
+    [date],
+  );
 
   useEffect(() => {
     void load();
   }, [load]);
+
+  // Not open yet: re-check when it should open. If the server still says not-yet
+  // after that (device clock ahead of the server's), back off — never a tight loop.
+  useEffect(() => {
+    if (view.k !== "done" || view.opensAt === null) return;
+    const now = Date.now();
+    const late = view.opensAt <= now;
+    const id = window.setTimeout(() => {
+      if (late) retries.current += 1;
+      void load(true);
+    }, crowdRetryDelay(view.opensAt, now, retries.current));
+    return () => window.clearTimeout(id);
+  }, [view, load]);
 
   const prev = addDays(date, -1);
   const next = addDays(date, 1);
@@ -58,7 +88,7 @@ export default function CrowdView({ date }: { date: string }) {
         <>
           <p className={styles.big}>the crowd&apos;s still in the field.</p>
           <p>
-            opens in <Countdown target={res.opensAt} className={styles.count} onDone={() => void load()} />
+            opens in <Countdown target={view.opensAt ?? res.opensAt} className={styles.count} />
           </p>
           <p className={styles.small}>the morning after opens once that night has ended everywhere on earth.</p>
         </>
@@ -147,7 +177,7 @@ export default function CrowdView({ date }: { date: string }) {
                     <span style={{ width: `${(t.pct / top) * 100}%` }} />
                   </span>
                   <span className={styles.ansPct}>{formatPercentNumber(t.pct)}%</span>
-                  <span className="sr-only">{TIERS[t.tier].label}</span>
+                  <span className={styles.ansTier}>{TIERS[t.tier].label}</span>
                 </li>
               ))}
             </ol>

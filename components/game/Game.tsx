@@ -9,22 +9,35 @@
  * Side branches: closed (no set / not yet), fail (server down → retry).
  * Every transition that matters is persisted (lib/client/storage) so a reload
  * resumes: mid-round keeps the token until its deadline, then counts a miss;
- * mid-reveal shows the reveal's end state; finished shows the ticket.
+ * mid-reveal shows the reveal's end state; finished shows the ticket. A
+ * finished game is never played again over its record.
+ *
+ * Proof of play: each round after the first is started with the previous
+ * round's token (+ receipt), and /api/finish gets every round's token. After a
+ * missed round the client waits for the server's clock before asking.
  */
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { SetInfo } from "@/lib/api/contract";
-import { finishSet, getSet, isMockActive, sendAnswer, sendFlag, startRound as startRoundApi } from "@/lib/client/api";
-import { remainingMs } from "@/lib/client/timer";
+import { finishSet, getSet, isMockActive, noSetMeta, sendAnswer, sendFlag, startRound as startRoundApi } from "@/lib/client/api";
+import { isStaleActivation } from "@/lib/client/keys";
+import { localMidnightAfter, remainingMs } from "@/lib/client/timer";
 import {
+  finishWaitMs,
   getStore,
   liveStreak,
+  prevProof,
+  progressOf,
   pushTry,
   receiptsOf,
   resumePoint,
+  roundWaitMs,
   settleExpired,
+  summaryFinish,
+  tokensOf,
+  withFlag,
   type Store,
   type StoredGame,
   type StoredRound,
@@ -34,6 +47,8 @@ import { DEFAULT_SECONDS, ROUNDS_PER_SET, START_DISTANCE, TIERS, outcomePoints, 
 import Scene from "@/components/scene/Scene";
 import Ruler from "@/components/scene/Ruler";
 import PixelIcon from "@/components/ui/PixelIcon";
+import Countdown from "@/components/ui/Countdown";
+import { ticketDate } from "@/lib/share/lore";
 import CrowdSurfReveal from "./CrowdSurfReveal";
 import Doors from "./Doors";
 import Hud from "./Hud";
@@ -41,7 +56,7 @@ import InputDock, { Feedback } from "./InputDock";
 import PromptCard from "./PromptCard";
 import Results from "./Results";
 import StatusScreen from "./StatusScreen";
-import TierCard from "./TierCard";
+import TierCard, { TIER_CARD_ID } from "./TierCard";
 import { useMediaQuery, useReducedMotion, useScrollLock, useVisualViewport } from "./useViewport";
 import styles from "./Game.module.css";
 
@@ -50,7 +65,7 @@ export type GameRoute = { kind: "today" } | { kind: "archive"; number: number };
 type Phase =
   | { k: "boot" }
   | { k: "fail" }
-  | { k: "closed"; reason: "no-set" | "future" }
+  | { k: "closed"; reason: "no-set" | "future" | "prelaunch" }
   | { k: "doors" }
   | { k: "starting"; index: number; failed: boolean }
   | { k: "round"; index: number }
@@ -65,6 +80,19 @@ function replaceRound(g: StoredGame, r: StoredRound): StoredGame {
   rounds.push(r);
   rounds.sort((a, b) => a.index - b.index);
   return { ...g, rounds };
+}
+
+const sleep = (ms: number) => (ms > 0 ? new Promise<void>((r) => setTimeout(r, ms)) : Promise.resolve());
+
+/** /api/finish refusals that aren't the network get this many quiet retries (e.g. a clock a hair early). */
+const FINISH_RETRIES = 2;
+const FINISH_RETRY_MS = 1500;
+/** One quiet retry for a round refused right after a miss (our clock a hair early). */
+const ROUND_RETRY_MS = 1000;
+
+/** The id a game's tokens and receipts are bound to (older games: the device's id). */
+function playerFor(g: StoredGame, store: Store): string {
+  return g.playerId ?? store.playerId();
 }
 
 /** Puzzle #1's date, worked out from any game we've stored (date − (number − 1) days). */
@@ -93,6 +121,8 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
   const [shake, setShake] = useState(0);
   const [now, setNow] = useState(0);
   const [closedDate, setClosedDate] = useState<string | null>(null);
+  /** Before set #1: the date the first doors open (from the no-set reply). */
+  const [opensOn, setOpensOn] = useState<string | null>(null);
 
   const storeRef = useRef<Store | null>(null);
   const gameRef = useRef<StoredGame | null>(null);
@@ -105,16 +135,30 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
   const todayRef = useRef("");
   const inputValue = useRef("");
   inputValue.current = input;
+  const finishingRef = useRef(false);
+  const revealAtRef = useRef(0);
+  /** Re-boots from storage (set once init exists). */
+  const resyncRef = useRef<() => void>(() => {});
 
   const go = useCallback((p: Phase) => {
     phaseRef.current = p;
     setPhaseState(p);
   }, []);
 
-  const commit = useCallback((g: StoredGame) => {
-    gameRef.current = g;
-    storeRef.current?.putGame(g);
-    setGame(g);
+  /**
+   * Saves `g` and makes it the game on screen. Returns false when storage
+   * already held a further-along copy (another tab): that copy is adopted, the
+   * game re-boots from it, and the caller must stop.
+   */
+  const commit = useCallback((g: StoredGame): boolean => {
+    const saved = storeRef.current ? storeRef.current.putGame(g) : g;
+    gameRef.current = saved;
+    setGame(saved);
+    if (saved !== g && (saved.status !== g.status || progressOf(saved) > progressOf(g))) {
+      resyncRef.current();
+      return false;
+    }
+    return true;
   }, []);
 
   const getRound = (index: number): StoredRound | undefined => gameRef.current?.rounds.find((r) => r.index === index);
@@ -124,19 +168,36 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
   const finish = useCallback(async () => {
     const g = gameRef.current;
     const store = storeRef.current;
-    if (!g || !store) return;
-    go({ k: "finishing", failed: false });
-    const res = await finishSet({ date: g.date, playerId: store.playerId(), receipts: receiptsOf(g) });
-    if (!res.ok) {
-      go({ k: "finishing", failed: true });
+    if (!g || !store || finishingRef.current) return;
+    if (g.status === "finished") {
+      go({ k: "ticket" });
       return;
     }
-    const forStore: StoredGame = route.kind === "archive" ? { ...g, mode: "archive" } : g;
-    const { game: done, streak: st } = store.finishGame(forStore, res);
-    gameRef.current = done;
-    setGame(done);
-    setStreak(liveStreak(st, todayRef.current));
-    go({ k: "ticket" });
+    finishingRef.current = true;
+    try {
+      go({ k: "finishing", failed: false });
+      const req = { date: g.date, playerId: playerFor(g, store), receipts: receiptsOf(g), tokens: tokensOf(g) };
+      // The server reveals only once every missed round is past its deadline + grace.
+      await sleep(finishWaitMs(g, Date.now()));
+      let res = await finishSet(req);
+      for (let i = 0; i < FINISH_RETRIES && !res.ok && res.error !== "server"; i++) {
+        await sleep(FINISH_RETRY_MS);
+        res = await finishSet(req);
+      }
+      if (gameRef.current?.date !== g.date) return; // the page moved on meanwhile
+      if (!res.ok) {
+        go({ k: "finishing", failed: true });
+        return;
+      }
+      const forStore: StoredGame = route.kind === "archive" ? { ...g, mode: "archive" } : g;
+      const { game: done, streak: st } = store.finishGame(forStore, res);
+      gameRef.current = done;
+      setGame(done);
+      setStreak(liveStreak(st, todayRef.current));
+      go({ k: "ticket" });
+    } finally {
+      finishingRef.current = false;
+    }
   }, [go, route.kind]);
 
   /* ───────────── boot ───────────── */
@@ -145,6 +206,7 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
     go({ k: "boot" });
     setFeedback(null);
     const store = getStore(isMockActive());
+    store.refresh();
     storeRef.current = store;
     const today = localDateString();
     todayRef.current = today;
@@ -162,7 +224,14 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
         go({ k: "fail" });
         return;
       } else {
-        epoch = epochFromStore(store);
+        // No set tonight (e.g. the schedule ran out): the server still knows the archive's bounds.
+        const meta = noSetMeta(base);
+        if (meta) {
+          epoch = meta.epoch;
+          latest = meta.latestNumber;
+        } else {
+          epoch = epochFromStore(store);
+        }
       }
       if (!epoch) {
         go({ k: "closed", reason: "no-set" });
@@ -183,6 +252,13 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
     const res = await getSet(date);
     if (!res.ok) {
       setClosedDate(date);
+      const meta = res.error === "no-set" && route.kind !== "archive" ? noSetMeta(res) : null;
+      if (meta && meta.epoch > date) {
+        // Pre-launch: set #1 hasn't happened yet anywhere near this player's tonight.
+        setOpensOn(meta.epoch);
+        go({ k: "closed", reason: "prelaunch" });
+        return;
+      }
       if (res.error === "server") go({ k: "fail" });
       else go({ k: "closed", reason: res.error === "future" ? "future" : "no-set" });
       return;
@@ -193,8 +269,7 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
     let g = store.game(date);
     if (g) {
       const settled = settleExpired(g, Date.now());
-      if (settled !== g) store.putGame(settled);
-      g = settled;
+      g = settled !== g ? store.putGame(settled) : g;
     }
     gameRef.current = g;
     setGame(g);
@@ -213,14 +288,48 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
         void finish();
         break;
       case "ticket":
+      case "summary":
         go({ k: "ticket" });
         break;
     }
   }, [go, route, router, finish]);
 
   useEffect(() => {
+    resyncRef.current = () => void init();
     void init();
   }, [init]);
+
+  // Another tab moved this date's game on (played a round, finished it): pick that up.
+  useEffect(() => {
+    const store = getStore(isMockActive());
+    return store.subscribe(() => {
+      const date = gameRef.current?.date ?? setRef.current?.date;
+      if (!date) return;
+      const stored = store.game(date);
+      if (stored && progressOf(stored) > progressOf(gameRef.current)) void init();
+    });
+  }, [init]);
+
+  /** Tonight's route only: once the local date has moved on, boot the night that is open now. */
+  const rollover = useCallback(() => {
+    if (route.kind !== "today" || !todayRef.current) return;
+    if (localDateString() !== todayRef.current) void init();
+  }, [init, route.kind]);
+
+  // Belt and braces for the doors / closed screens: the midnight countdown fires
+  // at midnight, but a stale mount, a time-zone change or a sleeping tab can miss it.
+  useEffect(() => {
+    if (route.kind !== "today" || (phase.k !== "doors" && phase.k !== "closed")) return;
+    const id = window.setInterval(rollover, 30_000);
+    const onVisible = () => {
+      if (document.visibilityState === "visible") rollover();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      window.clearInterval(id);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [phase.k, rollover, route.kind]);
 
   /* ───────────── rounds ───────────── */
 
@@ -230,6 +339,11 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
       const store = storeRef.current;
       if (!s || !store) return;
       let g = gameRef.current;
+      if (g?.status === "finished") {
+        // Never replay a finished game over its record (e.g. an old, compacted one).
+        go({ k: "ticket" });
+        return;
+      }
       if (!g) {
         g = {
           number: s.number,
@@ -238,8 +352,9 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
           status: "playing",
           total: s.rounds,
           rounds: [],
+          playerId: store.playerId(),
         };
-        commit(g);
+        if (!commit(g)) return;
       }
       const existing = g.rounds.find((r) => r.index === index);
       if (existing && existing.outcome !== undefined) {
@@ -250,10 +365,27 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
         go({ k: "round", index });
         return;
       }
+      if (existing) {
+        // Its clock ran out unanswered: that's a miss. The server owns the clock — never restart a round.
+        if (!commit(replaceRound(g, { ...existing, outcome: "miss", receipt: null }))) return;
+        go({ k: "reveal", index, travel: false });
+        return;
+      }
       setFeedback(null);
       setInput("");
       go({ k: "starting", index, failed: false });
-      const res = await startRoundApi({ date: g.date, index, playerId: store.playerId() });
+      const base = g;
+      const req = { date: base.date, index, playerId: playerFor(base, store), ...prevProof(base, index) };
+      // After a miss, the next round opens only once the missed round's answer window
+      // (deadline + grace) has closed on the server. Retry once in case our clock was a hair early.
+      await sleep(roundWaitMs(base, index, Date.now()));
+      let res = await startRoundApi(req);
+      if (!res.ok && res.error !== "server" && req.prevReceipt === null) {
+        await sleep(ROUND_RETRY_MS);
+        res = await startRoundApi(req);
+      }
+      const still = phaseRef.current.k === "starting" && phaseRef.current.index === index;
+      if (!still || gameRef.current?.date !== base.date) return; // the page moved on meanwhile
       if (!res.ok) {
         go({ k: "starting", index, failed: true });
         return;
@@ -266,7 +398,9 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
         offset: res.serverNow - Date.now(),
         tries: [],
       };
-      commit(replaceRound(gameRef.current ?? g, round));
+      if (!commit(replaceRound(gameRef.current ?? base, round))) return;
+      // Keys typed while the prompt loaded belong to no round.
+      setInput("");
       setNow(Date.now());
       go({ k: "round", index });
     },
@@ -278,7 +412,7 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
       const g = gameRef.current;
       const r = getRound(index);
       if (!g || !r || r.outcome !== undefined) return;
-      commit(replaceRound(g, { ...r, outcome: "miss", receipt: null }));
+      if (!commit(replaceRound(g, { ...r, outcome: "miss", receipt: null }))) return;
       inputRef.current?.blur();
       setFeedback({ text: "time's up", tone: "warn" });
       go({ k: "reveal", index, travel: false });
@@ -320,7 +454,7 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
       return;
     }
     if (res.status === "accepted") {
-      commit(replaceRound(g, { ...cur, outcome: res.answer.tier, answer: res.answer, receipt: res.receipt }));
+      if (!commit(replaceRound(g, { ...cur, outcome: res.answer.tier, answer: res.answer, receipt: res.receipt }))) return;
       setInput("");
       setFeedback(null);
       inputRef.current?.blur();
@@ -331,13 +465,13 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
       timeUp(ph.index);
       return;
     }
-    commit(replaceRound(g, { ...cur, tries: pushTry(cur.tries, text) }));
+    if (!commit(replaceRound(g, { ...cur, tries: pushTry(cur.tries, text) }))) return;
     const msg =
       res.reason === "offprompt" && res.canonical
         ? `${res.canonical.name.toUpperCase()} is real — just not an answer here.`
         : res.reason === "empty"
           ? "type something first"
-          : `"${text}": never heard of 'em. try again`;
+          : `"${text}": not on tonight's list. try again`;
     setFeedback({ text: msg, tone: "warn" });
     setShake((n) => n + 1);
     inputRef.current?.select();
@@ -382,6 +516,12 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
 
   useEffect(() => {
     if (phase.k !== "reveal" || phase.travel) return;
+    // Capture phase, before the focused KEEP PUSHING button sees it: an Enter or
+    // Space left over from typing at the buzzer (or a held key) must not advance.
+    // Blocking the keydown stops the button's click for both keys.
+    const guard = (e: KeyboardEvent) => {
+      if (isStaleActivation(e, performance.now() - revealAtRef.current)) e.preventDefault();
+    };
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Enter" || e.defaultPrevented) return;
       const t = e.target as HTMLElement | null;
@@ -389,16 +529,22 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
       e.preventDefault();
       advance();
     };
+    window.addEventListener("keydown", guard, true);
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", guard, true);
+      window.removeEventListener("keydown", onKey);
+    };
   }, [phase, advance]);
 
   /* ───────────── focus management ───────────── */
 
   useEffect(() => {
     if (phase.k === "round") inputRef.current?.focus({ preventScroll: true });
-    else if (phase.k === "reveal" && !phase.travel) keepRef.current?.focus({ preventScroll: true });
-    else if (phase.k === "ticket") resultsRef.current?.focus({ preventScroll: false });
+    else if (phase.k === "reveal" && !phase.travel) {
+      revealAtRef.current = performance.now();
+      keepRef.current?.focus({ preventScroll: true });
+    } else if (phase.k === "ticket") resultsRef.current?.focus({ preventScroll: false });
   }, [phase]);
 
   /* ───────────── flags ───────────── */
@@ -408,9 +554,13 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
       const g = gameRef.current;
       const store = storeRef.current;
       if (!g || !store) return false;
-      const res = await sendFlag({ date: g.date, index, text, playerId: store.playerId() });
+      const res = await sendFlag({ date: g.date, index, text, playerId: playerFor(g, store) });
       if (!res.ok) return false;
-      commit({ ...g, flagged: [...new Set([...(g.flagged ?? []), index])] });
+      // Merge onto the newest copy of that date's game, not the one read before the request:
+      // two flags in flight at once must both stick.
+      const cur = gameRef.current;
+      if (cur && cur.date === g.date) commit(withFlag(cur, index));
+      else store.putGame(withFlag(store.game(g.date) ?? g, index)); // the page moved on: persist only
       return true;
     },
     [commit],
@@ -430,7 +580,8 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
     [game, total, travelling],
   );
   const points = shown.reduce((sum, o) => sum + (o ? outcomePoints(o) : 0), 0);
-  const finished = phase.k === "ticket" && game?.finish ? game.finish : null;
+  // A compacted (old) finished game keeps only its summary: build its ticket from that.
+  const finished = phase.k === "ticket" && game ? summaryFinish(game) : null;
   const distance = finished ? finished.distance : Math.max(0, START_DISTANCE - points);
 
   const inFrame = phase.k === "starting" || phase.k === "round" || phase.k === "reveal" || phase.k === "finishing";
@@ -480,6 +631,27 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
         }
       />
     );
+  } else if (phase.k === "closed" && phase.reason === "prelaunch" && opensOn) {
+    const [y, m, d] = opensOn.split("-").map(Number) as [number, number, number];
+    content = (
+      <StatusScreen
+        kicker="SET #1"
+        title="FIRST DOORS OPEN"
+        body={
+          <>
+            <p>{ticketDate(opensOn)}. 7 prompts, 25 seconds each — rarer answers get you closer to the stage.</p>
+            <p>
+              doors in <Countdown target={new Date(y, m - 1, d).getTime()} onDone={() => void init()} />
+            </p>
+          </>
+        }
+        actions={
+          <Link className="px-btn" href="/how">
+            HOW TO PLAY
+          </Link>
+        }
+      />
+    );
   } else if (phase.k === "closed") {
     content = (
       <StatusScreen
@@ -524,24 +696,39 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
             inputRef.current?.focus({ preventScroll: true });
             void startRound(game?.rounds.length ?? 0);
           }}
-          onMidnight={route.kind === "today" ? () => void init() : undefined}
+          onMidnight={route.kind === "today" ? rollover : undefined}
         />
       </>
     );
-  } else if (phase.k === "ticket" && game?.finish) {
+  } else if (phase.k === "ticket" && game && finished) {
     const tries: Record<number, string[]> = {};
     for (const r of game.rounds) tries[r.index] = r.tries;
     content = (
       <Results
         ref={resultsRef}
-        finish={game.finish}
+        finish={finished}
         title={set?.title}
         archive={archive || game.mode === "archive"}
         streak={streak}
         tries={tries}
         flagged={game.flagged ?? []}
         onFlag={onFlag}
+        detail={game.finish !== undefined}
+        nextOpen={localMidnightAfter(game.date)}
         onMidnight={route.kind === "today" ? () => void init() : undefined}
+      />
+    );
+  } else if (phase.k === "ticket" && game) {
+    content = (
+      <StatusScreen
+        kicker={`SET #${game.number}`}
+        title="ALREADY PLAYED."
+        body={<p>you played this night. its details are no longer on this device.</p>}
+        actions={
+          <Link className="px-btn" href="/archive">
+            THE ARCHIVE <PixelIcon name="archive" size={2} />
+          </Link>
+        }
       />
     );
   }
@@ -616,7 +803,7 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
 
       {phase.k === "reveal" && !phase.travel ? (
         <div className={styles.keep}>
-          <button ref={keepRef} type="button" className="px-btn px-btn--big" data-long={phase.index >= lastIndex || undefined} onClick={advance}>
+          <button ref={keepRef} type="button" aria-describedby={TIER_CARD_ID} className="px-btn px-btn--big" data-long={phase.index >= lastIndex || undefined} onClick={advance}>
             <span className="tri" aria-hidden="true">▲</span>
             {phase.index >= lastIndex ? "SEE WHERE YOU ENDED UP" : "KEEP PUSHING"}
             <span className="tri" aria-hidden="true">▲</span>

@@ -10,12 +10,12 @@ import {
 } from "../../lib/game/token";
 
 const SECRET = "test-secret-0123456789";
-const round = { d: "2026-11-10", i: 3, n: 2, s: 1_794_312_000_000, p: "player_ABC-123" };
-const receipt = { d: "2026-11-10", i: 3, a: "venue:berghain", t: "htbt" as const, p: "player_ABC-123" };
+const round = { d: "2026-11-10", i: 3, n: 2, s: 1_794_312_000_000, p: "player_ABC-123", h: "packId_0123" };
+const receipt = { d: "2026-11-10", i: 3, n: 2, a: "venue:berghain", t: "htbt" as const, p: "player_ABC-123", h: "packId_0123" };
 
 /** Signs an arbitrary payload with a valid MAC, to prove shape checks don't rely on the signature. */
 function forge(payload: unknown, secret = SECRET): string {
-  const body = `v1.${Buffer.from(JSON.stringify(payload)).toString("base64url")}`;
+  const body = `v2.${Buffer.from(JSON.stringify(payload)).toString("base64url")}`;
   return `${body}.${createHmac("sha256", secret).update(body).digest("base64url")}`;
 }
 
@@ -30,7 +30,7 @@ afterEach(() => {
 describe("tokens", () => {
   it("round-trips a round token", () => {
     const t = signRound(round);
-    expect(t).toMatch(/^v1\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/);
+    expect(t).toMatch(/^v2\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/);
     expect(verifyRound(t)).toEqual({ k: "r", ...round });
   });
 
@@ -52,7 +52,8 @@ describe("tokens", () => {
     const flipped = `${sig.slice(0, 5)}${sig[5] === "A" ? "B" : "A"}${sig.slice(6)}`;
     expect(verifyReceipt(`${v}.${payload}.${flipped}`)).toBeNull();
     expect(verifyReceipt(`${v}.${payload}.${sig.slice(0, -4)}`)).toBeNull();
-    expect(verifyReceipt(`v2.${payload}.${sig}`)).toBeNull();
+    expect(verifyReceipt(`v1.${payload}.${sig}`)).toBeNull();
+    expect(verifyReceipt(`v3.${payload}.${sig}`)).toBeNull();
   });
 
   it("rejects a token signed with another secret", () => {
@@ -80,6 +81,15 @@ describe("tokens", () => {
     expect(verifyReceipt(forge({ k: "c", ...receipt, t: "legend" }))).toBeNull();
     expect(verifyReceipt(forge({ k: "c", ...receipt, a: "no spaces allowed" }))).toBeNull();
     expect(verifyReceipt(forge(["k", "c"]))).toBeNull();
+    // Pack identity and puzzle number are part of both shapes (C2: no cross-pack replay).
+    const { h: _h, ...roundNoPack } = round;
+    const { n: _n, ...receiptNoNumber } = receipt;
+    const { h: _rh, ...receiptNoPack } = receipt;
+    expect(verifyRound(forge({ k: "r", ...roundNoPack }))).toBeNull();
+    expect(verifyReceipt(forge({ k: "c", ...receiptNoNumber }))).toBeNull();
+    expect(verifyReceipt(forge({ k: "c", ...receiptNoPack }))).toBeNull();
+    expect(verifyRound(forge({ k: "r", ...round, h: "has spaces" }))).toBeNull();
+    expect(verifyReceipt(forge({ k: "c", ...receipt, n: 0 }))).toBeNull();
     expect(verifyReceipt(forge("c"))).toBeNull();
   });
 
@@ -104,6 +114,6 @@ describe("secret handling", () => {
     vi.stubEnv("NODE_ENV", "production");
     expect(() => signRound(round)).toThrow(SecretMissingError);
     expect(() => assertSecret()).toThrow("BARRICADE_SECRET not set");
-    expect(() => verifyRound("v1.abc.def")).toThrow(SecretMissingError);
+    expect(() => verifyRound("v2.abc.def")).toThrow(SecretMissingError);
   });
 });

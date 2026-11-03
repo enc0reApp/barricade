@@ -116,9 +116,11 @@
 }
 
 .answer {
+  min-width: 0;
   font-size: 17px;
   letter-spacing: 0.03em;
   color: var(--ink);
+  overflow-wrap: anywhere;
 }
 
 .missed {
@@ -219,6 +221,21 @@
 
 .flagBtn:hover {
   color: var(--ink);
+}
+
+.flagBtn[aria-disabled="true"] {
+  cursor: progress;
+  color: var(--ink-quiet);
+}
+
+.flagSent {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.flagSent:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .flagErr {

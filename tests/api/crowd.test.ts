@@ -12,7 +12,7 @@ describe("GET /api/crowd", () => {
   it("is not open while the date is still live somewhere", async () => {
     expect(await crowd(TODAY)).toEqual({
       status: 200,
-      body: { ok: false, error: "not-yet", opensAt: Date.parse("2026-11-11T12:00:00Z") },
+      body: { ok: false, error: "not-yet", opensAt: Date.parse("2026-11-11T12:00:00Z"), serverNow: expect.any(Number) },
     });
     expect((await crowd("2026-11-12")).body).toMatchObject({ error: "not-yet" });
   });

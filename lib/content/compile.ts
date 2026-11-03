@@ -338,14 +338,27 @@ function compilePrompt(
   const rawSum = raw.reduce((s, x) => s + x, 0);
   const share = raw.map((x) => (rawSum > 0 ? (x / rawSum) * SHARE_TOTAL : 0));
 
+  // Editorial guard rails. On long lists the share model dilutes the obvious
+  // answers (Hendrix at Woodstock came out SIDE STAGE), so the editor's guess
+  // anchors the tier and fame only nudges it:
+  //  - "guess" mode: the guess, exactly.
+  //  - a "main" guess stays MAIN (the obvious answers are what editors judge best).
+  //  - "blend": at most one tier away from the guess.
+  //  - "fame": pure fame (broad prompts), apart from the main rule.
   const tier: TierId[] = p.answers.map((a, i) => {
     if (a.flag === "tote") return "tote";
     if (a.flag === "htbt") return "htbt";
-    if (a.flag === "lock") return guessOf(a);
-    return tierForShare(share[i]!);
+    const g = guessOf(a);
+    if (a.flag === "lock" || mode === "guess") return g;
+    if (g === "main") return "main";
+    const t = tierForShare(share[i]!);
+    if (mode === "fame") return t;
+    const gr = RARITY_SCALE.indexOf(g);
+    const tr = RARITY_SCALE.indexOf(t as SourceGuess);
+    return RARITY_SCALE[Math.min(gr + 1, Math.max(gr - 1, tr))]!;
   });
   p.answers.forEach((a, i) => {
-    if (a.flag === "htbt" || a.flag === "lock") share[i] = clampShareToTier(share[i]!, tier[i]!);
+    if (tier[i] !== "tote" && tier[i] !== tierForShare(share[i]!)) share[i] = clampShareToTier(share[i]!, tier[i]!);
   });
 
   // Guarantees: ≥1 main; ≥1 htbt on long lists. Unflagged answers first, then locked.
