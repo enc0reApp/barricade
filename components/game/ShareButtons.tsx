@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { shareSiteUrl } from "@/lib/share/site-url";
 import { encodeShareCode, shareText } from "@/lib/share/code";
 import type { Outcome } from "@/lib/game/tiers";
 import PixelIcon from "@/components/ui/PixelIcon";
@@ -34,10 +35,12 @@ async function copy(text: string): Promise<boolean> {
 }
 
 export default function ShareButtons({ number, outcomes }: { number: number; outcomes: Outcome[] }) {
+  const [base, setBase] = useState(SITE_URL);
+  useEffect(() => setBase(shareSiteUrl(window.location.origin)), []);
   const [status, setStatus] = useState<null | "copied" | "shared" | "failed">(null);
   const timer = useRef(0);
-  const text = shareText(number, outcomes, SITE_URL);
-  const url = `${SITE_URL}/s/${encodeShareCode(number, outcomes)}`;
+  const text = shareText(number, outcomes, base);
+  const url = `${base}/s/${encodeShareCode(number, outcomes)}`;
 
   useEffect(() => () => window.clearTimeout(timer.current), []);
 

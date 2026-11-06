@@ -160,8 +160,8 @@ describe("safeStore", () => {
     expect(stats).toMatchObject({ plays: 0, distSum: 0 });
     expect(stats.rounds).toHaveLength(7);
     await expect(s.logRejected(DATE, 0, "k")).resolves.toBeUndefined();
-    await expect(s.logFlag(DATE, { i: 0, text: "t", p: "player0001", at: 0 })).resolves.toBeUndefined();
-    expect(err).toHaveBeenCalledTimes(10);
+    await expect(s.logFlag(DATE, { i: 0, text: "t", p: "player0001", at: 0 })).rejects.toThrow("down");
+    expect(err).toHaveBeenCalledTimes(9);
   });
 });
 

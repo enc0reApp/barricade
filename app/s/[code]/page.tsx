@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { headers } from "next/headers";
+import { shareSiteUrl } from "@/lib/share/site-url";
 import { notFound, permanentRedirect } from "next/navigation";
 import { ShareTicket } from "@/components/share/ShareTicket";
 import { decodeShareCode, encodeShareCode } from "@/lib/share/code";
@@ -22,6 +24,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params;
   const s = decodeShareCode(code);
   if (!s) return { title: "Ticket not found", robots: { index: false } };
+  const requestHeaders = await headers();
+  const protocol = requestHeaders.get("x-forwarded-proto") === "http" ? "http" : "https";
+  const base = shareSiteUrl(`${protocol}://${requestHeaders.get("host")}`);
   const canonical = encodeShareCode(s.number, s.outcomes);
   const title = titleFor(s.number, s.distance);
   const description =
@@ -29,6 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? `Someone made it to the barricade on set #${s.number}. 7 prompts about live music — the rarer your answer, the closer you get. Can you get closer?`
       : `Someone got ${s.distance}m from the stage on set #${s.number}. 7 prompts about live music — the rarer your answer, the closer you get. Can you get closer?`;
   return {
+    metadataBase: new URL(base),
     title: { absolute: title },
     description,
     alternates: { canonical: `/s/${canonical}` },
@@ -40,8 +46,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: `/s/${canonical}`,
+      images: [{ url: `${base}/s/${canonical}/opengraph-image`, width: 1200, height: 630, alt: title }],
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: { card: "summary_large_image", title, description, images: [`${base}/s/${canonical}/twitter-image`] },
   };
 }
 

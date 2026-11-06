@@ -17,8 +17,8 @@
  *   {ns}:{date}:flsrc:{ipHash}      counter EX 3d      flags per client IP
  *   {ns}:{date}:flags               list (capped 1000) "this should count" reports
  *
- * Implementations may throw; getStore() wraps them so failures never break
- * gameplay (errors are logged and neutral values returned).
+ * Gameplay calls fall back on neutral values when the store throws. Report
+ * submissions propagate errors so a failed write never looks delivered.
  */
 
 export type PackKind = "sample" | "production";
@@ -93,6 +93,8 @@ export interface FlagRecord {
 
 /** Everything the finish + crowd endpoints need for one date, read in one go. */
 export interface DateStats {
+  /** False for a failed read; an empty successful crowd is still available. */
+  available?: boolean;
   plays: number;
   distSum: number;
   /** distance (metres) → players. */

@@ -32,20 +32,20 @@ export default function HowPage() {
           <li>
             <span className={styles.n}>01</span>
             <span>
-              A new set every night: <b>{ROUNDS_PER_SET} prompts</b>, <b>{DEFAULT_SECONDS} seconds</b> each. Everyone plays the same set on
+              Each scheduled night: <b>{ROUNDS_PER_SET} prompts</b>, <b>{DEFAULT_SECONDS} seconds</b> each. Everyone plays the same set on
               their own local date.
             </span>
           </li>
           <li>
             <span className={styles.n}>02</span>
             <span>
-              Type <b>one answer</b> per prompt. Answers can be {EXAMPLES.join(", ")}. Whatever the prompt asks for.
+              Type <b>one answer</b> per prompt. Your first accepted answer locks in. Answers can be {EXAMPLES.join(", ")}. Whatever the prompt asks for.
             </span>
           </li>
           <li>
             <span className={styles.n}>03</span>
             <span>
-              Not on the list? Try again. No penalty, just the clock. Typos, accents and a missing &ldquo;the&rdquo; are forgiven.
+              Not on the list? Try again. No penalty, just the clock. Common typos, accents and a missing &ldquo;the&rdquo; are forgiven.
             </span>
           </li>
           <li>

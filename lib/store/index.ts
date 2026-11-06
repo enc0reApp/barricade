@@ -1,8 +1,8 @@
 /**
  * getStore(kind): Upstash when configured, else the in-memory store, with
  * every key namespaced by deployment env + pack kind (statsNamespace).
- * Every call goes through a safety wrapper — a store failure is logged and
- * answered with a neutral value; it never breaks gameplay.
+ * Gameplay calls use neutral values on failure. Answer reports propagate
+ * failures so the player never receives a false delivery confirmation.
  */
 
 import { MemoryStore } from "./memory";
@@ -66,7 +66,7 @@ async function guarded<T>(what: string, neutral: T, run: () => Promise<T>): Prom
   }
 }
 
-/** Wraps a store so every method catches, logs and returns a neutral value. */
+/** Gameplay survives store outages; explicit report submissions must confirm delivery. */
 export function safeStore(inner: Store): Store {
   return {
     kind: inner.kind,
@@ -82,9 +82,9 @@ export function safeStore(inner: Store): Store {
     getDistanceSum: (date) => guarded("getDistanceSum", 0, () => inner.getDistanceSum(date)),
     getDistanceHist: (date) => guarded("getDistanceHist", new Map<number, number>(), () => inner.getDistanceHist(date)),
     getRoundCounts: (date, i) => guarded("getRoundCounts", new Map<string, number>(), () => inner.getRoundCounts(date, i)),
-    getStats: (date, rounds) => guarded("getStats", emptyStats(rounds), () => inner.getStats(date, rounds)),
+    getStats: (date, rounds) => guarded("getStats", { ...emptyStats(rounds), available: false }, () => inner.getStats(date, rounds)),
     logRejected: (date, i, key) => guarded("logRejected", undefined, () => inner.logRejected(date, i, key)),
-    logFlag: (date, flag, source) => guarded("logFlag", undefined, () => inner.logFlag(date, flag, source)),
+    logFlag: (date, flag, source) => inner.logFlag(date, flag, source),
   };
 }
 

@@ -124,7 +124,7 @@ export async function POST(req: Request): Promise<Response> {
         clientSource(req),
       );
       const stats = await store.getStats(set.date, puzzle.prompts.length);
-      crowd = { plays: stats.plays, beatPct: beatPct(stats, distance) };
+      if (stats.available !== false) crowd = { plays: stats.plays, beatPct: beatPct(stats, distance) };
       yours = accepted.map((a, i) => (a ? { answer: a, crowdPct: roundCrowdPct(stats, i, a.id) } : null));
     }
 
@@ -136,6 +136,7 @@ export async function POST(req: Request): Promise<Response> {
       outcomes,
       distance,
       rounds: buildReveal(puzzle.prompts, yours),
+      reportsAvailable: store.kind !== "none",
       crowd,
     };
     return json(out);

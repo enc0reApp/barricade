@@ -18,7 +18,7 @@
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { isDateString, liveDateWindow, numberForDate } from "../game/day";
+import { addDays, isDateString, liveDateWindow, numberForDate } from "../game/day";
 import { buildCatalogIndex, buildPromptIndex, type CatalogIndex, type MatchIndexes, type PromptIndex } from "../game/match";
 import { NORMALIZE_VERSION } from "../game/normalize";
 import { isSealedFile, unseal } from "./seal";
@@ -264,6 +264,12 @@ export function latestNumberFor(loaded: LoadedPack, nowMs: number): number {
   const n = numberForDate(loaded.pack.epoch, liveDateWindow(nowMs).latest);
   if (n < 1) return 0;
   return loaded.pack.kind === "production" ? Math.min(n, loaded.maxNumber) : n;
+}
+
+/** The next scheduled night, without exposing its prompts or answers. */
+export function nextDateFor(loaded: LoadedPack, date: string): string | null {
+  if (loaded.pack.kind === "sample") return addDays(date, 1);
+  return [...loaded.byDate.keys()].filter((d) => d > date).sort()[0] ?? null;
 }
 
 export async function getPuzzle(date: string): Promise<PackPuzzle | null> {

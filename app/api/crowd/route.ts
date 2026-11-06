@@ -29,7 +29,10 @@ export async function GET(req: Request): Promise<Response> {
     const puzzle = puzzleForDate(loaded, date);
     if (!puzzle) return fail("no-set");
 
-    const stats = await getStore(loaded.pack.kind).getStats(date, puzzle.prompts.length);
+    const store = getStore(loaded.pack.kind);
+    if (store.kind === "none") return fail("unavailable");
+    const stats = await store.getStats(date, puzzle.prompts.length);
+    if (stats.available === false) return fail("unavailable");
     const out: Extract<CrowdResponse, { ok: true }> = {
       ok: true,
       number: puzzle.number,

@@ -14,6 +14,7 @@ export interface YourSetProps {
   tries: Record<number, string[]>;
   flagged: number[];
   onFlag(index: number, text: string): Promise<boolean>;
+  reportsAvailable?: boolean;
 }
 
 function groupPicks(picks: RevealPick[]): [TierId, RevealPick[]][] {
@@ -68,7 +69,7 @@ export function Flag({
   );
 }
 
-function Row({ round, tries, flagged, onFlag }: { round: RevealRound; tries: string[]; flagged: boolean; onFlag: YourSetProps["onFlag"] }) {
+function Row({ round, tries, flagged, onFlag, reportsAvailable }: { round: RevealRound; tries: string[]; flagged: boolean; onFlag: YourSetProps["onFlag"]; reportsAvailable: boolean }) {
   const [open, setOpen] = useState(false);
   const [flag, setFlag] = useState<FlagState>(flagged ? "sent" : "idle");
   const yours = round.yours;
@@ -139,12 +140,14 @@ function Row({ round, tries, flagged, onFlag }: { round: RevealRound; tries: str
         </ul>
         <p className={styles.total}>{round.total} answers counted on this prompt.</p>
       </div>
-      {!yours && lastTry ? <Flag text={lastTry} flag={flag} ack={ack} onSend={sendFlag} buttonRef={flagBtn} sentRef={flagSent} /> : null}
+      {!yours && lastTry ? reportsAvailable || flagged ? (
+        <Flag text={lastTry} flag={flag} ack={ack} onSend={sendFlag} buttonRef={flagBtn} sentRef={flagSent} />
+      ) : <p className={styles.flag}>answer reports are unavailable right now.</p> : null}
     </li>
   );
 }
 
-export default function YourSet({ rounds, tries, flagged, onFlag }: YourSetProps) {
+export default function YourSet({ rounds, tries, flagged, onFlag, reportsAvailable = true }: YourSetProps) {
   return (
     <section className={styles.set} aria-labelledby="your-set">
       <h2 id="your-set" className={styles.title}>
@@ -152,7 +155,7 @@ export default function YourSet({ rounds, tries, flagged, onFlag }: YourSetProps
       </h2>
       <ol className={styles.list}>
         {rounds.map((r) => (
-          <Row key={r.index} round={r} tries={tries[r.index] ?? []} flagged={flagged.includes(r.index)} onFlag={onFlag} />
+          <Row key={r.index} round={r} tries={tries[r.index] ?? []} flagged={flagged.includes(r.index)} onFlag={onFlag} reportsAvailable={reportsAvailable} />
         ))}
       </ol>
       <p className={styles.legend}>

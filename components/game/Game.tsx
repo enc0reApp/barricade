@@ -23,7 +23,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { SetInfo } from "@/lib/api/contract";
 import { finishSet, getSet, isMockActive, noSetMeta, sendAnswer, sendFlag, startRound as startRoundApi } from "@/lib/client/api";
 import { isStaleActivation } from "@/lib/client/keys";
-import { localMidnightAfter, remainingMs } from "@/lib/client/timer";
+import { nextSetOpensAt, remainingMs } from "@/lib/client/timer";
 import {
   finishWaitMs,
   getStore,
@@ -714,7 +714,7 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
         flagged={game.flagged ?? []}
         onFlag={onFlag}
         detail={game.finish !== undefined}
-        nextOpen={localMidnightAfter(game.date)}
+        nextOpen={nextSetOpensAt(game.date, set?.nextDate)}
         onMidnight={route.kind === "today" ? () => void init() : undefined}
       />
     );

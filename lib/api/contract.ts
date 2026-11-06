@@ -16,7 +16,8 @@ export type ApiError =
   | "no-set" // no puzzle scheduled for this date
   | "bad-token" // signature / shape invalid
   | "bad-receipt"
-  | "server";
+  | "server"
+  | "unavailable"; // optional reports / crowd service is unavailable
 
 export interface ApiFail {
   ok: false;
@@ -42,6 +43,8 @@ export interface SetInfo {
   /** Latest playable set number right now (for archive lists). */
   latestNumber: number;
   epoch: string;
+  /** Next scheduled set after this date; null when the current schedule ends. */
+  nextDate?: string | null;
 }
 /** A no-set reply also carries the archive bounds (tonight has no set, but earlier ones may exist). */
 export type SetResponse = SetInfo | (ApiFail & { epoch?: string; latestNumber?: number });
@@ -168,6 +171,8 @@ export interface FinishResult {
   outcomes: Outcome[];
   distance: number;
   rounds: RevealRound[];
+  /** False when this deployment cannot retain answer reports. */
+  reportsAvailable?: boolean;
   crowd: {
     /** Players who have finished this set so far (today mode), else null. */
     plays: number | null;

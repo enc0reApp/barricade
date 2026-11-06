@@ -87,7 +87,7 @@ export async function POST(req: Request): Promise<Response> {
       seconds,
     };
     if (prompt.hint) shown.hint = prompt.hint;
-    const out: RoundStarted = { ok: true, prompt: shown, token, deadline: start + seconds * 1000, serverNow: now };
+    const out: RoundStarted = { ok: true, prompt: shown, token, deadline: start + seconds * 1000, serverNow: Date.now() };
     return json(out);
   });
 }

@@ -86,6 +86,16 @@ Vercel environment its own secret.
 `lib/store/` uses Upstash Redis over REST when `KV_REST_API_URL` and
 `KV_REST_API_TOKEN` (or the `UPSTASH_*` equivalents) are set. Otherwise it
 uses an in-memory store (dev only; production without Redis records nothing).
+Without a production store, `/api/crowd` and `/api/flag` return `unavailable`
+(503); finished tickets hide report actions and retain scores and sharing.
+A failed stats read hides crowd numbers rather than reporting zero players.
+Report writes propagate failures so the UI never confirms a discarded report.
+
+`/api/set` also returns `nextDate`: the next scheduled calendar date, or `null`
+at the end of the bill. Tickets count down to that date rather than promising
+another set when the schedule has ended. Sample sets continue daily.
+Share links and ticket-image metadata follow the active Vercel host before
+custom-domain DNS is connected; the configured custom domain still works.
 
 Every key starts with a namespace `{ns}` = `b:{env}:{kind}`: `env` is
 `VERCEL_ENV` (production / preview / development), else `NODE_ENV`; `kind` is

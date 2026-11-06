@@ -96,6 +96,14 @@
   gap: 10px;
 }
 
+.next p {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+
 .next > * {
   flex: 1 1 auto;
 }

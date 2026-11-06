@@ -64,9 +64,9 @@ Wikipedia pageviews ── fame ──────┼─ compile ──┐     /
   AES-256-GCM files in `content/sealed/`. The public sample pack in
   `content/sample/` "floats" across dates, so `pnpm dev` always has a set to
   play.
-- **Crowd stats** use Upstash Redis (Vercel Marketplace): one pipelined write
+- **Crowd stats and answer reports** use Upstash Redis (Vercel Marketplace): one pipelined write
   per finished set. Without Redis, dev keeps stats in memory and production
-  hides them.
+  hides crowd numbers and marks answer reports unavailable.
 
 Docs: [architecture](docs/ARCHITECTURE.md) · [design](docs/DESIGN.md) · [writing content](docs/CONTENT.md)
 
@@ -87,7 +87,7 @@ Environment variables (see `.env.example`):
 | `BARRICADE_SECRET` | HMAC key for round tokens and receipts (required in production) |
 | `BARRICADE_SEAL_KEY` | 32-byte base64 key that unseals `content/sealed/*` (`pnpm content:keygen`) |
 | `BARRICADE_EPOCH` | date of set #1, used when compiling content |
-| `KV_REST_API_URL` / `KV_REST_API_TOKEN` | Upstash Redis for crowd stats (optional) |
+| `KV_REST_API_URL` / `KV_REST_API_TOKEN` | Upstash Redis for crowd stats and answer reports (optional) |
 | `NEXT_PUBLIC_SITE_URL` | canonical URL for share links and OG tags |
 
 ## Writing content

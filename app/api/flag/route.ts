@@ -29,7 +29,9 @@ export async function POST(req: Request): Promise<Response> {
     if (!set.ok) return fail(set.error);
     if (!set.puzzle.prompts[index]) return fail("bad-request", "index out of range");
 
-    await getStore(set.loaded.pack.kind).logFlag(set.date, { i: index, text: clean, p: playerId, at: now }, clientSource(req));
+    const store = getStore(set.loaded.pack.kind);
+    if (store.kind === "none") return fail("unavailable", "answer reports are unavailable right now");
+    await store.logFlag(set.date, { i: index, text: clean, p: playerId, at: now }, clientSource(req));
     const out: FlagResponse = { ok: true };
     return json(out);
   });

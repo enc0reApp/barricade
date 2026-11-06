@@ -1,5 +1,5 @@
 import type { SetInfo } from "@/lib/api/contract";
-import { getLoadedPack, latestNumberFor } from "@/lib/content/loader";
+import { getLoadedPack, latestNumberFor, nextDateFor } from "@/lib/content/loader";
 import { roundSeconds } from "@/lib/game/rules";
 import { fail, guard, json } from "@/lib/server/http";
 import { resolveSet } from "@/lib/server/sets";
@@ -30,6 +30,7 @@ export async function GET(req: Request): Promise<Response> {
       pack: loaded.pack.kind,
       latestNumber: latestNumberFor(loaded, now),
       epoch: loaded.pack.epoch,
+      nextDate: nextDateFor(loaded, set.date),
     };
     if (puzzle.title) body.title = puzzle.title;
     return json(body);

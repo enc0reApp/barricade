@@ -87,6 +87,7 @@ describe("GET /api/set", () => {
       pack: "production",
       latestNumber: 2,
       epoch: "2026-11-09",
+      nextDate: null,
     });
   });
 
@@ -357,7 +358,7 @@ describe("store failures never break gameplay", () => {
     const { receipts, tokens } = await play(TODAY, PLAYER_A, PLAN_A);
     await flush();
     const { body } = await finish(TODAY, PLAYER_A, receipts, tokens);
-    expect(body).toMatchObject({ ok: true, distance: DIST_A, crowd: { plays: 0, beatPct: null } });
+    expect(body).toMatchObject({ ok: true, distance: DIST_A, crowd: { plays: null, beatPct: null } });
     expect(err).toHaveBeenCalled();
   });
 });

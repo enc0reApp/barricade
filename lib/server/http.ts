@@ -24,6 +24,7 @@ const STATUS: Record<ApiError, number> = {
   "bad-token": 400,
   "bad-receipt": 400,
   server: 500,
+  unavailable: 503,
 };
 
 const HEADERS = { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" };

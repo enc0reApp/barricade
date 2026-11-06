@@ -47,6 +47,14 @@ export function localMidnightAfter(date: string): number {
   return new Date(y, m - 1, d + 1, 0, 0, 0, 0).getTime();
 }
 
+/** The next scheduled local midnight; null means the current bill has ended. */
+export function nextSetOpensAt(date: string, nextDate?: string | null): number | null {
+  if (nextDate === null) return null;
+  if (nextDate === undefined) return localMidnightAfter(date); // older server / saved games
+  const [y = 1970, m = 1, d = 1] = nextDate.split("-").map(Number);
+  return new Date(y, m - 1, d).getTime();
+}
+
 /** Epoch ms of the next local midnight after `nowMs`. */
 export function nextLocalMidnight(nowMs: number): number {
   const d = new Date(nowMs);

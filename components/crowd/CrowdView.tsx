@@ -93,6 +93,14 @@ export default function CrowdView({ date }: { date: string }) {
           <p className={styles.small}>the morning after opens once that night has ended everywhere on earth.</p>
         </>
       );
+    } else if (res.error === "unavailable") {
+      body = (
+        <>
+          <p className={styles.big}>crowd numbers are unavailable for this night.</p>
+          <p className={styles.small}>you can still play and share your ticket.</p>
+          <Link className="px-btn" href="/archive">PLAY THE ARCHIVE</Link>
+        </>
+      );
     } else if (res.error === "no-set") {
       body = <p className={styles.big}>no set that night.</p>;
     } else if (res.error === "future") {

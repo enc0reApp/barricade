@@ -24,11 +24,10 @@ export interface ResultsProps {
   flagged: number[];
   onFlag(index: number, text: string): Promise<boolean>;
   /**
-   * Epoch ms when the next night's doors open: the local midnight that ends
-   * this set's date (not "the next midnight from now" — a set finished after
-   * midnight must not hide the night that is already open).
+   * Local midnight for the next scheduled set, or null at the end of the bill.
+   * A past target offers the new set without interrupting this ticket.
    */
-  nextOpen?: number;
+  nextOpen?: number | null;
   /** Today mode: re-boot onto the night that is open now. */
   onMidnight?(): void;
   /**
@@ -45,7 +44,7 @@ const Results = forwardRef<HTMLHeadingElement, ResultsProps>(function Results(
   const { crowd } = finish;
   // Already past (finished after midnight), or the countdown just ran out: offer the open night.
   // Never jump there by itself — the player may still be reading or sharing this ticket.
-  const [open, setOpen] = useState(() => nextOpen !== undefined && Date.now() >= nextOpen);
+  const [open, setOpen] = useState(() => nextOpen != null && Date.now() >= nextOpen);
   // "You beat 0% of the crowd" is a bad way to greet the first person through the gates.
   const beatPct = crowd.plays !== null && crowd.plays >= 2 ? crowd.beatPct : null;
   return (
@@ -129,6 +128,11 @@ const Results = forwardRef<HTMLHeadingElement, ResultsProps>(function Results(
             TONIGHT&apos;S SET
           </Link>
         </div>
+      ) : nextOpen === null ? (
+        <div className={styles.next}>
+          <p>you reached the end of the current bill. past sets are open in the archive.</p>
+          <Link className="px-btn" href="/archive">PLAY THE ARCHIVE</Link>
+        </div>
       ) : open && onMidnight ? (
         <div className={styles.next}>
           <button type="button" className="px-btn" onClick={onMidnight}>
@@ -139,11 +143,11 @@ const Results = forwardRef<HTMLHeadingElement, ResultsProps>(function Results(
         </div>
       ) : (
         <p className={styles.doors}>
-          DOORS OPEN IN <Countdown className={styles.count} target={nextOpen} onDone={() => setOpen(true)} />
+          NEXT DOORS OPEN IN <Countdown className={styles.count} target={nextOpen} onDone={() => setOpen(true)} />
         </p>
       )}
 
-      {detail ? <YourSet rounds={finish.rounds} tries={tries} flagged={flagged} onFlag={onFlag} /> : null}
+      {detail ? <YourSet rounds={finish.rounds} tries={tries} flagged={flagged} onFlag={onFlag} reportsAvailable={finish.reportsAvailable} /> : null}
 
       <SecondaryNav archive={archive} />
       <Footer />
