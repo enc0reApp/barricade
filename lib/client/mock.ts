@@ -31,7 +31,9 @@ import type {
   RoundResponse,
   SetResponse,
 } from "../api/contract";
-import type { EntityType } from "../content/types";
+import type { EntityType, SourcePrompt } from "../content/types";
+import woodstockSample from "../../content/sample/source/prompts/sample-woodstock-1969.json";
+import countriesSample from "../../content/sample/source/prompts/sample-lollapalooza-countries.json";
 import { addDays, isClosedDate, isDateString, isLiveDate, liveDateWindow, localDateString, numberForDate } from "../game/day";
 import { editDistance, matchKeys, primaryKey, typoBudget } from "../game/normalize";
 import { DEFAULT_SECONDS, GRACE_MS, TIERS, distanceFor, type Outcome, type TierId } from "../game/tiers";
@@ -51,6 +53,15 @@ interface MockPrompt {
 interface MockSet {
   title: string;
   prompts: MockPrompt[];
+}
+
+function liveExample(source: SourcePrompt): MockPrompt {
+  return {
+    text: source.text,
+    hint: source.hint,
+    type: source.types[0]!,
+    answers: source.answers.map((a): A => [a.name, a.flag === "tote" ? "tote" : a.flag === "htbt" ? "htbt" : a.guess, a.aliases, a.note]),
+  };
 }
 
 const SET_A: MockSet = {
@@ -132,29 +143,7 @@ const SET_A: MockSet = {
         ["WMF", "htbt"],
       ],
     },
-    {
-      text: "Name a drum machine",
-      hint: "Make and model, or just the model.",
-      type: "gear",
-      answers: [
-        ["Roland TR-808", "main", ["808", "TR808", "TR 808"]],
-        ["Roland TR-909", "main", ["909", "TR909", "TR 909"]],
-        ["Akai MPC", "side", ["MPC"]],
-        ["Roland TR-707", "side", ["707", "TR707"]],
-        ["LinnDrum", "side", ["Linn Drum", "LM-2"]],
-        ["Elektron Digitakt", "tote", ["Digitakt"]],
-        ["Roland TR-606", "tent", ["606", "TR606"]],
-        ["Roland CR-78", "tent", ["CR78", "CR 78"]],
-        ["Oberheim DMX", "tent", ["DMX"]],
-        ["Korg Volca Beats", "tent", ["Volca Beats"]],
-        ["E-mu SP-1200", "tent", ["SP1200", "SP-1200"]],
-        ["Elektron Machinedrum", "basement", ["Machinedrum"]],
-        ["Linn LM-1", "basement", ["LM-1", "LM1"]],
-        ["Arturia DrumBrute", "basement", ["DrumBrute"]],
-        ["Wurlitzer Sideman", "htbt", ["Sideman"], "1959. The first commercial drum machine."],
-        ["Maestro Rhythm King", "htbt", ["Rhythm King"], "The box behind Sly Stone's There's a Riot Goin' On"],
-      ],
-    },
+    liveExample(woodstockSample as SourcePrompt),
     {
       text: "Name a festival held in a desert",
       type: "festival",
@@ -195,25 +184,7 @@ const SET_A: MockSet = {
         ["Croissant Neuf", "htbt", [], "Solar-powered big top in the Green Fields"],
       ],
     },
-    {
-      text: "Name a pro-audio sound system brand",
-      hint: "The speakers, not the crews.",
-      type: "soundsystem",
-      answers: [
-        ["JBL", "main"],
-        ["Bose", "main"],
-        ["Funktion-One", "tote", ["Funktion One", "Funktion 1"], "The festival nerd's default answer"],
-        ["L-Acoustics", "side", ["L Acoustics"]],
-        ["d&b audiotechnik", "side", ["d and b", "db audiotechnik"]],
-        ["Void Acoustics", "tent", ["Void"]],
-        ["Martin Audio", "tent"],
-        ["Meyer Sound", "tent", ["Meyer"]],
-        ["Pioneer Pro Audio", "tent"],
-        ["Turbosound", "basement"],
-        ["Danley Sound Labs", "basement", ["Danley"]],
-        ["KV2 Audio", "htbt", ["KV2"]],
-      ],
-    },
+    liveExample(countriesSample as SourcePrompt),
   ],
 };
 
@@ -330,30 +301,7 @@ const SET_B: MockSet = {
         ["Pikes", "htbt", ["Pikes Hotel"], "Wham!'s Club Tropicana video was shot here"],
       ],
     },
-    {
-      text: "Name a synthesizer",
-      hint: "Make and model, or just the model.",
-      type: "gear",
-      answers: [
-        ["Minimoog", "main", ["Mini Moog", "Moog"]],
-        ["Roland TB-303", "main", ["303", "TB303", "TB 303"]],
-        ["Roland Juno-106", "side", ["Juno 106", "Juno"]],
-        ["Yamaha DX7", "side", ["DX7"]],
-        ["Korg MS-20", "side", ["MS20", "MS 20"]],
-        ["Sequential Prophet-5", "side", ["Prophet 5", "Prophet"]],
-        ["Roland Jupiter-8", "tote", ["Jupiter 8", "Jupiter"]],
-        ["ARP 2600", "tent", ["2600"]],
-        ["Oberheim OB-Xa", "tent", ["OBXa", "OB Xa"]],
-        ["Roland SH-101", "tent", ["SH101", "SH 101"]],
-        ["Korg Polysix", "tent"],
-        ["Korg M1", "tent", ["M1"]],
-        ["EMS VCS3", "basement", ["VCS3", "Putney"]],
-        ["Buchla 200", "basement", ["Buchla"]],
-        ["Yamaha CS-80", "basement", ["CS80", "CS 80"]],
-        ["Elektron Monomachine", "htbt", ["Monomachine"], "Elektron's cult synth, discontinued in 2015"],
-        ["Roland JX-3P", "htbt", ["JX3P"]],
-      ],
-    },
+    liveExample(woodstockSample as SourcePrompt),
     {
       text: "Name a music genre that came out of the UK",
       type: "genre",

@@ -1,0 +1,274 @@
+{
+  "slug": "sample-woodstock-1969",
+  "text": "Name an act that played Woodstock in 1969",
+  "hint": "The original 1969 festival. Later Woodstock editions do not count.",
+  "types": [
+    "artist"
+  ],
+  "difficulty": 1,
+  "boundary": "The 32 billed musical acts that performed at the original Woodstock festival in Bethel, New York, 15–18 August 1969. Individual billed artists and their band names accepted. Later Woodstock editions and invited acts who did not play are excluded.",
+  "rarity": "guess",
+  "answers": [
+    {
+      "name": "Richie Havens",
+      "type": "artist",
+      "wiki": "Richie Havens",
+      "guess": "side"
+    },
+    {
+      "name": "Sweetwater",
+      "type": "artist",
+      "wiki": "Sweetwater (band)",
+      "guess": "htbt"
+    },
+    {
+      "name": "Bert Sommer",
+      "type": "artist",
+      "wiki": "Bert Sommer",
+      "guess": "htbt"
+    },
+    {
+      "name": "Tim Hardin",
+      "type": "artist",
+      "wiki": "Tim Hardin",
+      "guess": "tent"
+    },
+    {
+      "name": "Ravi Shankar",
+      "type": "artist",
+      "wiki": "Ravi Shankar",
+      "guess": "tent"
+    },
+    {
+      "name": "Melanie",
+      "type": "artist",
+      "wiki": "Melanie (singer)",
+      "guess": "tent",
+      "aliases": [
+        "Melanie Safka"
+      ]
+    },
+    {
+      "name": "Arlo Guthrie",
+      "type": "artist",
+      "wiki": "Arlo Guthrie",
+      "guess": "tent"
+    },
+    {
+      "name": "Joan Baez",
+      "type": "artist",
+      "wiki": "Joan Baez",
+      "guess": "side"
+    },
+    {
+      "name": "Quill",
+      "type": "artist",
+      "wiki": "Quill (band)",
+      "guess": "htbt"
+    },
+    {
+      "name": "Country Joe McDonald",
+      "type": "artist",
+      "wiki": "Country Joe McDonald",
+      "guess": "tent",
+      "aliases": [
+        "Country Joe"
+      ]
+    },
+    {
+      "name": "Santana",
+      "type": "artist",
+      "wiki": "Santana (band)",
+      "guess": "main",
+      "aliases": [
+        "Carlos Santana"
+      ]
+    },
+    {
+      "name": "John Sebastian",
+      "type": "artist",
+      "wiki": "John Sebastian",
+      "guess": "tent"
+    },
+    {
+      "name": "Keef Hartley Band",
+      "type": "artist",
+      "wiki": "Keef Hartley",
+      "guess": "htbt",
+      "aliases": [
+        "Keef Hartley"
+      ]
+    },
+    {
+      "name": "The Incredible String Band",
+      "type": "artist",
+      "wiki": "The Incredible String Band",
+      "guess": "htbt",
+      "aliases": [
+        "Incredible String Band"
+      ]
+    },
+    {
+      "name": "Canned Heat",
+      "type": "artist",
+      "wiki": "Canned Heat",
+      "guess": "tent"
+    },
+    {
+      "name": "Mountain",
+      "type": "artist",
+      "wiki": "Mountain (band)",
+      "guess": "tent",
+      "aliases": [
+        "Leslie West"
+      ]
+    },
+    {
+      "name": "Grateful Dead",
+      "type": "artist",
+      "wiki": "Grateful Dead",
+      "guess": "side",
+      "aliases": [
+        "Jerry Garcia"
+      ]
+    },
+    {
+      "name": "Creedence Clearwater Revival",
+      "type": "artist",
+      "wiki": "Creedence Clearwater Revival",
+      "guess": "side",
+      "aliases": [
+        "CCR",
+        "Creedence",
+        "John Fogerty"
+      ]
+    },
+    {
+      "name": "Janis Joplin",
+      "type": "artist",
+      "wiki": "Janis Joplin",
+      "guess": "main",
+      "aliases": [
+        "Janis Joplin and the Kozmic Blues Band",
+        "Kozmic Blues Band"
+      ]
+    },
+    {
+      "name": "Sly and the Family Stone",
+      "type": "artist",
+      "wiki": "Sly and the Family Stone",
+      "guess": "tent",
+      "aliases": [
+        "Sly Stone"
+      ]
+    },
+    {
+      "name": "The Who",
+      "type": "artist",
+      "wiki": "The Who",
+      "guess": "main"
+    },
+    {
+      "name": "Jefferson Airplane",
+      "type": "artist",
+      "wiki": "Jefferson Airplane",
+      "guess": "side",
+      "aliases": [
+        "Grace Slick"
+      ]
+    },
+    {
+      "name": "Joe Cocker",
+      "type": "artist",
+      "wiki": "Joe Cocker",
+      "guess": "main",
+      "aliases": [
+        "Joe Cocker and the Grease Band",
+        "The Grease Band"
+      ]
+    },
+    {
+      "name": "Country Joe and the Fish",
+      "type": "artist",
+      "wiki": "Country Joe and the Fish",
+      "guess": "tent"
+    },
+    {
+      "name": "Ten Years After",
+      "type": "artist",
+      "wiki": "Ten Years After",
+      "guess": "tent",
+      "aliases": [
+        "Alvin Lee"
+      ]
+    },
+    {
+      "name": "The Band",
+      "type": "artist",
+      "wiki": "The Band",
+      "guess": "side",
+      "aliases": [
+        "Levon Helm",
+        "Robbie Robertson"
+      ]
+    },
+    {
+      "name": "Johnny Winter",
+      "type": "artist",
+      "wiki": "Johnny Winter",
+      "guess": "tent"
+    },
+    {
+      "name": "Blood, Sweat & Tears",
+      "type": "artist",
+      "wiki": "Blood, Sweat & Tears",
+      "guess": "tent",
+      "aliases": [
+        "BS&T",
+        "David Clayton-Thomas"
+      ]
+    },
+    {
+      "name": "Crosby, Stills, Nash & Young",
+      "type": "artist",
+      "wiki": "Crosby, Stills, Nash & Young",
+      "guess": "side",
+      "aliases": [
+        "CSNY",
+        "Crosby Stills Nash",
+        "CSN"
+      ]
+    },
+    {
+      "name": "Paul Butterfield Blues Band",
+      "type": "artist",
+      "wiki": "Paul Butterfield",
+      "guess": "tent",
+      "aliases": [
+        "Paul Butterfield",
+        "Butterfield Blues Band"
+      ]
+    },
+    {
+      "name": "Sha Na Na",
+      "type": "artist",
+      "wiki": "Sha Na Na",
+      "guess": "tent"
+    },
+    {
+      "name": "Jimi Hendrix",
+      "type": "artist",
+      "wiki": "Jimi Hendrix",
+      "guess": "main",
+      "aliases": [
+        "Hendrix",
+        "Jimi Hendrix Experience",
+        "Gypsy Sun and Rainbows"
+      ]
+    }
+  ],
+  "sources": [
+    "https://www.bethelwoodscenter.org/museum/woodstock-history",
+    "https://www.woodstock.com/lineup/"
+  ]
+}

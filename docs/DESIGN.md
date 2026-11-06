@@ -11,6 +11,9 @@ for long small text. Tokens are in `app/tokens.css`.
 
 ## Principles
 
+- **For the crowd.** Questions reward going to gigs, following tours, knowing
+  festival lineups, venues and scenes. Studio tools and production gear are
+  outside the game's subject matter.
 - **Authentic pixels.** Draw the scene on a low-resolution canvas (for example
   180×320 logical pixels) and scale it up with `image-rendering: pixelated`. No
   rounded corners. Give panels stepped (notched) corners with `clip-path`.

@@ -14,6 +14,7 @@ import { existsSync } from "node:fs";
 import { compile } from "../lib/content/compile";
 import { envValue } from "../lib/content/env";
 import type { ContentPack } from "../lib/content/types";
+import { audienceIssues } from "../lib/content/audience";
 import { validateSource } from "../lib/content/validate";
 import { isDateString } from "../lib/game/day";
 import { REPO_ROOT, c, contentPaths, flagValue, hasFlag, printIssues, readFameCache, readJson, readSources, rel, writeJson } from "./lib/io";
@@ -24,7 +25,7 @@ const paths = contentPaths(sample);
 const src = readSources(paths);
 
 const validation = validateSource({ prompts: src.prompts, schedule: src.schedule });
-const errors = [...src.parseIssues, ...validation.errors];
+const errors = [...src.parseIssues, ...validation.errors, ...audienceIssues(validation.prompts, validation.schedule)];
 if (errors.length || !validation.schedule) {
   printIssues(errors, { warnings: false });
   console.error(c.red(`\nAborting: ${errors.length} validation errors. Run pnpm content:check${sample ? " --sample" : ""} for details.`));

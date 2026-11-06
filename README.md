@@ -18,8 +18,10 @@ Play at **[fstvl.xyz](https://fstvl.xyz)** · made by [enc0re](https://enc0re.co
 You start at the back of the field, **700m** from the stage. Each prompt
 ("Name a nightclub in Berlin", "Name a sound system crew at Notting Hill
 Carnival", "Name a city on the Eras Tour") has a closed list of accepted
-answers. Answers include artists, festivals, venues, cities, genres, sound
-systems, labels, gear and stages. Every accepted answer has a rarity tier:
+answers. Answers include artists, festivals, venues, cities, genres,
+sound-system crews and stages. Questions focus on going to shows: lineups, tours, venues,
+festivals and the scenes around them. Studio software and equipment trivia
+are outside the game's scope. Every accepted answer has a rarity tier:
 
 | Tier | Points | |
 |---|---|---|

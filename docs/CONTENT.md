@@ -47,10 +47,14 @@ Types are in `lib/content/types.ts` (`SourcePrompt`, `SourceAnswer`, `SourceSche
    A few small-list novelty prompts (8–20 answers) are fine, one per set at most.
 2. **Unambiguous.** Two fair-minded people must agree whether an answer counts.
    Write that rule into `boundary`, and say the important parts in `hint`.
-3. **About live music and its culture.** Artists, festivals, venues, clubs,
-   cities, scenes and genres, sound systems (brands *and* crews), labels,
-   stages, gear. Mix types across the set: at least 4 different `types` in
-   every set, at most 2 prompts whose answers are artists.
+3. **Written for people who go to shows.** Focus on festival lineups, memorable
+   performances, touring routes, venues, clubs, stages, genres and local scenes.
+   Sound-system *crews* and the culture around a night out fit. Drum machines,
+   synthesizers, studio software, recording studios and equipment-brand quizzes
+   do not. A prompt should reward being in the crowd, following a tour or knowing
+   a scene. Mix types across the set: at least 4 different `types` in every set,
+   at most 2 prompts whose answers are artists. `content:check` and the compiler
+   reject scheduled gear and studio prompts in both the main and sample packs.
 4. **Answerable in 25 seconds** by someone who goes to shows. Difficulty 1–5
    orders the set: start easy, end deep.
 5. Prompt text starts with **"Name"**. Keep it under ~70 characters.

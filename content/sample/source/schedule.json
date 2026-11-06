@@ -5,13 +5,13 @@
       "number": 1,
       "title": "SAMPLE SET",
       "prompts": [
-        "sample-drum-machines",
-        "sample-german-cities",
+        "sample-woodstock-1969",
+        "sample-eurovision-host-countries",
         "sample-coachella-headliners",
         "sample-berlin-clubs",
         "sample-benelux-festivals",
         "sample-techno-subgenres",
-        "sample-pro-audio-brands"
+        "sample-lollapalooza-countries"
       ]
     }
   ]

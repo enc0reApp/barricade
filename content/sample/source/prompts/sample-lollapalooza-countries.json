@@ -1,0 +1,84 @@
+{
+  "slug": "sample-lollapalooza-countries",
+  "text": "Name a country that has hosted Lollapalooza",
+  "hint": "Past editions and the original touring festival count.",
+  "types": [
+    "country"
+  ],
+  "difficulty": 3,
+  "boundary": "Countries hosting an official Lollapalooza festival or a stop on its original North American touring editions through 2026. Past editions count, including Canada. Excludes satellite livestreams.",
+  "rarity": "guess",
+  "answers": [
+    {
+      "name": "United States",
+      "type": "country",
+      "wiki": "United_States",
+      "guess": "main",
+      "aliases": [
+        "USA",
+        "US",
+        "America",
+        "United States of America"
+      ]
+    },
+    {
+      "name": "Brazil",
+      "type": "country",
+      "wiki": "Brazil",
+      "guess": "main",
+      "aliases": [
+        "Brasil"
+      ]
+    },
+    {
+      "name": "Argentina",
+      "type": "country",
+      "wiki": "Argentina",
+      "guess": "side"
+    },
+    {
+      "name": "Chile",
+      "type": "country",
+      "wiki": "Chile",
+      "guess": "side"
+    },
+    {
+      "name": "Germany",
+      "type": "country",
+      "wiki": "Germany",
+      "guess": "side",
+      "aliases": [
+        "Deutschland"
+      ]
+    },
+    {
+      "name": "France",
+      "type": "country",
+      "wiki": "France",
+      "guess": "tent"
+    },
+    {
+      "name": "India",
+      "type": "country",
+      "wiki": "India",
+      "guess": "tent"
+    },
+    {
+      "name": "Sweden",
+      "type": "country",
+      "wiki": "Sweden",
+      "guess": "basement"
+    },
+    {
+      "name": "Canada",
+      "type": "country",
+      "wiki": "Canada",
+      "guess": "htbt"
+    }
+  ],
+  "sources": [
+    "https://www.lollapalooza.com/",
+    "https://www.linkedin.com/posts/live-nation_lollapalooza-is-officially-in-eight-countries-activity-6958147905056624641-xpFU",
+    "https://www.metallica.com/tour/past/?year=1996"
+  ]
+}

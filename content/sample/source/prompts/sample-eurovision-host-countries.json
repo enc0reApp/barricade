@@ -1,0 +1,215 @@
+{
+  "slug": "sample-eurovision-host-countries",
+  "text": "Name a country that has hosted Eurovision",
+  "hint": "The main contest. Past and present country names count.",
+  "types": [
+    "country"
+  ],
+  "difficulty": 1,
+  "boundary": "Countries that hosted a completed main Eurovision Song Contest through 2026. Both the historical host country and its present-day successor containing the host city count, so Yugoslavia and Croatia are both accepted for Zagreb 1990. Junior Eurovision and winning without hosting do not count.",
+  "rarity": "guess",
+  "answers": [
+    {
+      "name": "Switzerland",
+      "type": "country",
+      "wiki": "Switzerland",
+      "guess": "side"
+    },
+    {
+      "name": "Germany",
+      "type": "country",
+      "wiki": "Germany",
+      "guess": "main",
+      "aliases": [
+        "Deutschland",
+        "West Germany",
+        "Federal Republic of Germany"
+      ]
+    },
+    {
+      "name": "Netherlands",
+      "type": "country",
+      "wiki": "Netherlands",
+      "guess": "side",
+      "aliases": [
+        "Holland"
+      ]
+    },
+    {
+      "name": "France",
+      "type": "country",
+      "wiki": "France",
+      "guess": "main"
+    },
+    {
+      "name": "United Kingdom",
+      "type": "country",
+      "wiki": "United_Kingdom",
+      "guess": "main",
+      "aliases": [
+        "UK",
+        "England",
+        "Great Britain",
+        "Britain",
+        "GB",
+        "Scotland"
+      ]
+    },
+    {
+      "name": "Luxembourg",
+      "type": "country",
+      "wiki": "Luxembourg (band)",
+      "guess": "side"
+    },
+    {
+      "name": "Denmark",
+      "type": "country",
+      "wiki": "Denmark",
+      "guess": "side"
+    },
+    {
+      "name": "Italy",
+      "type": "country",
+      "wiki": "Italy",
+      "guess": "main",
+      "aliases": [
+        "Italia"
+      ]
+    },
+    {
+      "name": "Austria",
+      "type": "country",
+      "wiki": "Austria",
+      "guess": "side"
+    },
+    {
+      "name": "Spain",
+      "type": "country",
+      "wiki": "Spain",
+      "guess": "side",
+      "aliases": [
+        "España"
+      ]
+    },
+    {
+      "name": "Ireland",
+      "type": "country",
+      "wiki": "Republic_of_Ireland",
+      "guess": "main",
+      "aliases": [
+        "Republic of Ireland",
+        "Eire"
+      ]
+    },
+    {
+      "name": "Sweden",
+      "type": "country",
+      "wiki": "Sweden",
+      "guess": "main"
+    },
+    {
+      "name": "Israel",
+      "type": "country",
+      "wiki": "Israel",
+      "guess": "side"
+    },
+    {
+      "name": "Norway",
+      "type": "country",
+      "wiki": "Norway",
+      "guess": "side"
+    },
+    {
+      "name": "Belgium",
+      "type": "country",
+      "wiki": "Belgium",
+      "guess": "side"
+    },
+    {
+      "name": "Yugoslavia",
+      "type": "country",
+      "wiki": "Yugoslavia",
+      "guess": "htbt",
+      "aliases": [
+        "SFR Yugoslavia"
+      ]
+    },
+    {
+      "name": "Croatia",
+      "type": "country",
+      "wiki": null,
+      "guess": "side"
+    },
+    {
+      "name": "Estonia",
+      "type": "country",
+      "wiki": "Estonia",
+      "guess": "htbt"
+    },
+    {
+      "name": "Latvia",
+      "type": "country",
+      "wiki": "Latvia",
+      "guess": "htbt"
+    },
+    {
+      "name": "Turkey",
+      "type": "country",
+      "wiki": "Turkey",
+      "guess": "side",
+      "aliases": [
+        "Türkiye",
+        "Turkiye"
+      ]
+    },
+    {
+      "name": "Ukraine",
+      "type": "country",
+      "wiki": "Ukraine",
+      "guess": "side"
+    },
+    {
+      "name": "Greece",
+      "type": "country",
+      "wiki": "Greece",
+      "guess": "side"
+    },
+    {
+      "name": "Finland",
+      "type": "country",
+      "wiki": "Finland",
+      "guess": "side"
+    },
+    {
+      "name": "Serbia",
+      "type": "country",
+      "wiki": "Serbia",
+      "guess": "side"
+    },
+    {
+      "name": "Russia",
+      "type": "country",
+      "wiki": "Russia",
+      "guess": "side",
+      "aliases": [
+        "Russian Federation"
+      ]
+    },
+    {
+      "name": "Azerbaijan",
+      "type": "country",
+      "wiki": "Azerbaijan",
+      "guess": "side"
+    },
+    {
+      "name": "Portugal",
+      "type": "country",
+      "wiki": "Portugal",
+      "guess": "side"
+    }
+  ],
+  "sources": [
+    "https://www.eurovision.com/eurovision-song-contest/history/",
+    "https://en.wikipedia.org/wiki/List_of_Eurovision_Song_Contest_host_cities"
+  ]
+}

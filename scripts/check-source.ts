@@ -8,6 +8,7 @@
  * Exit 1 when there are errors.
  */
 
+import { audienceIssues } from "../lib/content/audience";
 import { validateSource } from "../lib/content/validate";
 import { c, contentPaths, hasFlag, printIssues, readSources, rel } from "./lib/io";
 
@@ -20,7 +21,7 @@ if (!src.prompts.length && !src.parseIssues.length) {
 }
 
 const result = validateSource({ prompts: src.prompts, schedule: src.schedule });
-const issues = [...src.parseIssues, ...result.issues];
+const issues = [...src.parseIssues, ...result.issues, ...audienceIssues(result.prompts, result.schedule)];
 const [errors, warnings] = printIssues(issues, { warnings: !hasFlag(args, "errors") });
 
 const scheduled = new Set(result.schedule?.days.flatMap((d) => d.prompts) ?? []);

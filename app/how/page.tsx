@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Seven prompts, 25 seconds each. The rarer your answer, the closer the crowd carries you to the stage.",
 };
 
-const EXAMPLES = ["artists", "festivals", "venues", "cities", "countries", "genres", "sound systems", "labels", "gear", "stages"];
+const EXAMPLES = ["artists", "festivals", "venues", "tour cities", "countries", "genres", "sound-system crews", "stages"];
 
 export default function HowPage() {
   return (

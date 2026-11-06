@@ -66,6 +66,17 @@ describe("mock api", () => {
     expect(fin.rounds[0]!.picks.some((p) => p.name === "Glastonbury")).toBe(false);
   }, 10_000);
 
+  it("keeps studio and gear trivia out of both demo sets", async () => {
+    for (const date of [today, addDays(today, -1)]) {
+      for (let index = 0; index < 7; index++) {
+        const round = await api.startRound({ date, index, playerId: PLAYER });
+        if (!round.ok) throw new Error(round.error);
+        expect(round.prompt.types).not.toContain("gear");
+        expect(round.prompt.text).not.toMatch(/drum machine|synthesizer|recording studio|pro-audio/i);
+      }
+    }
+  });
+
   it("keeps the crowd page shut until the date has closed everywhere", async () => {
     const r = await api.crowd(today);
     expect(r).toMatchObject({ ok: false, error: "not-yet" });
