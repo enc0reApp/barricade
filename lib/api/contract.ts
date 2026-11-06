@@ -32,7 +32,7 @@ export interface SetInfo {
   number: number;
   date: string;
   title?: string;
-  /** Always 7 today, but read it rather than assuming. */
+  /** Always 5 today, but read it rather than assuming. */
   rounds: number;
   /** Seconds on the clock for each round. */
   seconds: number[];
@@ -60,7 +60,7 @@ export interface RoundRequest {
    * Proof that round index-1 is over (required for index > 0 in "today" mode):
    * its round token, plus its receipt if it was answered. Without a receipt the
    * previous round's clock must have run out. Stops a script from opening all
-   * seven rounds at once.
+   * five rounds at once.
    */
   prevToken?: string;
   prevReceipt?: string | null;
@@ -139,7 +139,7 @@ export interface FinishRequest {
    * The round tokens, one per round, in order (required in "today" mode).
    * Proof of play: every round must have been started by this player, and a
    * round with a null receipt must have run out of time. Without this, one
-   * request with seven nulls would reveal the set's answers.
+   * request with five nulls would reveal the set's answers.
    */
   tokens?: string[];
 }
@@ -215,7 +215,7 @@ export type CrowdResponse =
       title?: string;
       plays: number;
       avgDistance: number | null;
-      /** Players per 50m bucket: [0–49, 50–99, …, 650–700]. Length 15. */
+      /** Players per 50m bucket: [0–49, 50–99, …, 450–499, 500] for five rounds (length 11). */
       distribution: number[];
       rounds: CrowdRound[];
     }

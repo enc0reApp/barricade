@@ -92,10 +92,10 @@ export async function POST(req: Request): Promise<Response> {
       outcomes.push(receipt.t);
       accepted.push(answerFor(receipt, packAnswer ? toAccepted(packAnswer) : null, fromCatalog));
     }
-    const distance = distanceFor(outcomes);
+    const distance = distanceFor(outcomes, puzzle.prompts.length);
 
     if (mode === "today") {
-      // Proof of play. Without it, one request with seven nulls reveals today's answers.
+      // Proof of play. Without it, one request with five nulls reveals today's answers.
       if (!Array.isArray(tokens) || tokens.length !== puzzle.prompts.length) {
         return fail("bad-request", "round tokens required");
       }

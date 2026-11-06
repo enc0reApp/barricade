@@ -2,7 +2,7 @@ import { barcode } from "@/lib/share/barcode";
 import { encodeShareCode } from "@/lib/share/code";
 import { ticketClipPathCss } from "@/lib/share/ticket-shape";
 import { formatSetDateLong, formatPercentNumber } from "@/lib/client/format";
-import { MISS, START_DISTANCE, TIERS, type Outcome } from "@/lib/game/tiers";
+import { MISS, outcomePoints, TIERS, type Outcome } from "@/lib/game/tiers";
 import styles from "./Ticket.module.css";
 
 export interface TicketProps {
@@ -40,7 +40,7 @@ function Barcode({ code, vertical = false }: { code: string; vertical?: boolean 
 
 export default function Ticket({ number, date, outcomes, distance, beatPct, mode }: TicketProps) {
   const code = encodeShareCode(number, outcomes);
-  const points = START_DISTANCE - distance;
+  const points = outcomes.reduce((sum, outcome) => sum + outcomePoints(outcome), 0);
   const label = outcomes.map((o, i) => `${i + 1}: ${o === "miss" ? MISS.label : TIERS[o].label}`).join(", ");
   return (
     <div className={styles.wrap}>

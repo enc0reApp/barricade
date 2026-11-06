@@ -131,7 +131,7 @@ describe("validateSchedule", () => {
   const slugs = seven.map((p) => p.slug);
 
   it("accepts a good schedule", () => {
-    const r = validateSchedule(schedule([slugs]), "schedule.json", map);
+    const r = validateSchedule(schedule([slugs.slice(0, 5)]), "schedule.json", map);
     expect(r.issues).toEqual([]);
     expect(r.schedule?.days).toHaveLength(1);
   });

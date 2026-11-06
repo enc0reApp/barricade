@@ -639,7 +639,7 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
         title="FIRST DOORS OPEN"
         body={
           <>
-            <p>{ticketDate(opensOn)}. 7 prompts, 25 seconds each — rarer answers get you closer to the stage.</p>
+            <p>{ticketDate(opensOn)}. {ROUNDS_PER_SET} prompts, {DEFAULT_SECONDS} seconds each — rarer answers get you closer to the stage.</p>
             <p>
               doors in <Countdown target={new Date(y, m - 1, d).getTime()} onDone={() => void init()} />
             </p>

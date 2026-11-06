@@ -15,7 +15,7 @@ describe("mock api", () => {
     if (!set.ok) return;
     expect(set.number).toBe(12);
     expect(set.mode).toBe("today");
-    expect(set.rounds).toBe(7);
+    expect(set.rounds).toBe(5);
     expect(set.latestNumber).toBe(12);
   });
 
@@ -36,7 +36,7 @@ describe("mock api", () => {
     if (!r0.ok) throw new Error("round 0");
     const r1 = await api.startRound({ date: today, index: 1, playerId: PLAYER, prevToken: r0.token, prevReceipt: null });
     expect(r1.ok).toBe(true);
-    const fin = await api.finish({ date: today, playerId: PLAYER, receipts: Array(7).fill(null), tokens: Array(7).fill(r0.token) });
+    const fin = await api.finish({ date: today, playerId: PLAYER, receipts: Array(5).fill(null), tokens: Array(5).fill(r0.token) });
     expect(fin.ok).toBe(true);
   });
 
@@ -60,15 +60,15 @@ describe("mock api", () => {
     const fin = await api.finish({ date: today, playerId: PLAYER, receipts: [yes.receipt, null, null, null, null, null, null] });
     expect(fin.ok).toBe(true);
     if (!fin.ok) return;
-    expect(fin.outcomes).toEqual(["main", "miss", "miss", "miss", "miss", "miss", "miss"]);
-    expect(fin.distance).toBe(690);
+    expect(fin.outcomes).toEqual(["main", "miss", "miss", "miss", "miss"]);
+    expect(fin.distance).toBe(490);
     expect(fin.rounds[0]!.yours?.name).toBe("Glastonbury");
     expect(fin.rounds[0]!.picks.some((p) => p.name === "Glastonbury")).toBe(false);
   }, 10_000);
 
   it("keeps studio and gear trivia out of both demo sets", async () => {
     for (const date of [today, addDays(today, -1)]) {
-      for (let index = 0; index < 7; index++) {
+      for (let index = 0; index < 5; index++) {
         const round = await api.startRound({ date, index, playerId: PLAYER });
         if (!round.ok) throw new Error(round.error);
         expect(round.prompt.types).not.toContain("gear");
@@ -83,6 +83,6 @@ describe("mock api", () => {
     expect(typeof (r as { serverNow?: unknown }).serverNow).toBe("number");
     const old = await api.crowd(addDays(today, -3));
     expect(old.ok).toBe(true);
-    if (old.ok) expect(old.distribution).toHaveLength(15);
+    if (old.ok) expect(old.distribution).toHaveLength(11);
   });
 });

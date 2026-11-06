@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "BARRICADE",
     short_name: "BARRICADE",
-    description: "The daily push to the front. 7 prompts about live music — rarer answers get you closer to the stage.",
+    description: "The daily push to the front. 5 prompts about live music — rarer answers get you closer to the stage.",
     start_url: "/",
     scope: "/",
     display: "standalone",

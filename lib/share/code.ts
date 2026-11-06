@@ -37,8 +37,9 @@ export function decodeShareCode(code: string): ShareSummary | null {
     if (!o) return null;
     outcomes.push(o);
   }
-  if (outcomes.length !== ROUNDS_PER_SET) return null;
-  return { number, outcomes, distance: distanceFor(outcomes) };
+  // Preserve tickets shared before the five-question format.
+  if (outcomes.length !== ROUNDS_PER_SET && outcomes.length !== 7) return null;
+  return { number, outcomes, distance: distanceFor(outcomes, outcomes.length) };
 }
 
 export function distanceLine(distance: number): string {
@@ -54,7 +55,7 @@ export function distanceLine(distance: number): string {
  *   fstvl.xyz/s/12-hbxnbbs
  */
 export function shareText(number: number, outcomes: readonly Outcome[], siteUrl: string): string {
-  const distance = distanceFor(outcomes);
+  const distance = distanceFor(outcomes, outcomes.length);
   const host = siteUrl.replace(/^https?:\/\//, "").replace(/\/$/, "");
   return [
     `BARRICADE #${number} 🎟️`,

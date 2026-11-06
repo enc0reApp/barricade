@@ -11,7 +11,7 @@ import { MISS_FIELD, type DateStats } from "../store/types";
 /** Per-round crowd % is only shown once this many players have finished. */
 export const MIN_PLAYS_FOR_ROUND_PCT = 20;
 export const BUCKET_METRES = 50;
-export const BUCKETS = 15;
+export const BUCKETS = START_DISTANCE / BUCKET_METRES + 1;
 export const TOP_PER_ROUND = 8;
 export const SINGLE_NAMES = 5;
 
@@ -28,12 +28,13 @@ export function roundCrowdPct(stats: DateStats, round: number, answerId: string)
   return Math.min(100, pct(stats.rounds[round]?.get(answerId) ?? 0, stats.plays));
 }
 
-/** Players per 50m bucket: [0–49, 50–99, …, 650–700]. 700 lands in the last bucket. */
-export function distribution(hist: Map<number, number>): number[] {
-  const out = new Array<number>(BUCKETS).fill(0);
+/** Players per 50m bucket: [0–49, 50–99, …, 450–499, 500]. All misses stand alone. */
+export function distribution(hist: Map<number, number>, maxDistance = START_DISTANCE): number[] {
+  const buckets = maxDistance / BUCKET_METRES + 1;
+  const out = new Array<number>(buckets).fill(0);
   for (const [d, count] of hist) {
     if (!Number.isFinite(d) || count <= 0) continue;
-    const b = Math.min(BUCKETS - 1, Math.max(0, Math.floor(Math.min(d, START_DISTANCE) / BUCKET_METRES)));
+    const b = Math.min(buckets - 1, Math.max(0, Math.floor(Math.min(d, maxDistance) / BUCKET_METRES)));
     out[b] = (out[b] ?? 0) + count;
   }
   return out;

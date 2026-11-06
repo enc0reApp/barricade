@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { forwardRef } from "react";
+import { START_DISTANCE } from "@/lib/game/tiers";
 import { formatSetDate } from "@/lib/client/format";
 import Countdown from "@/components/ui/Countdown";
 import Logo from "@/components/ui/Logo";
@@ -61,7 +62,7 @@ const Doors = forwardRef<HTMLButtonElement, DoorsProps>(function Doors(
       </div>
       <figure className={styles.window}>
         <FieldPoster />
-        <figcaption><span>YOU START HERE</span><span>700m → 0m</span></figcaption>
+        <figcaption><span>YOU START HERE</span><span>{START_DISTANCE}m → 0m</span></figcaption>
       </figure>
       <div className={styles.bottom}>
         <p className={styles.rules}>{rounds} questions · {seconds} seconds each</p>

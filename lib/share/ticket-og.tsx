@@ -104,7 +104,7 @@ function TierSquare({ outcome, size }: { outcome: Outcome; size: number }): Reac
 
 /** The paper ticket itself, T.w × T.h, cut to its notched silhouette. */
 export function TicketOg({ number, outcomes, date, beatPct }: TicketOgProps): ReactElement {
-  const distance = distanceFor(outcomes);
+  const distance = distanceFor(outcomes, outcomes.length);
   const points = outcomes.reduce((s, o) => s + outcomePoints(o), 0);
   const code = encodeShareCode(number, outcomes);
   const dateLabel = date ? ticketDate(date) : "";

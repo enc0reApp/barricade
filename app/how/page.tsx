@@ -7,7 +7,7 @@ import styles from "./how.module.css";
 
 export const metadata: Metadata = {
   title: "How to play",
-  description: "Seven prompts, 25 seconds each. The rarer your answer, the closer the crowd carries you to the stage.",
+  description: "Five prompts, 25 seconds each. The rarer your answer, the closer the crowd carries you to the stage.",
 };
 
 const EXAMPLES = ["artists", "festivals", "venues", "tour cities", "countries", "genres", "sound-system crews", "stages"];
@@ -51,7 +51,7 @@ export default function HowPage() {
           <li>
             <span className={styles.n}>04</span>
             <span>
-              Each answer carries you forward by its tier&apos;s points, in metres. Seven perfect answers put you{" "}
+              Each answer carries you forward by its tier&apos;s points, in metres. Five perfect answers put you{" "}
               <b className={styles.hot}>ON THE BARRICADE</b>.
             </span>
           </li>

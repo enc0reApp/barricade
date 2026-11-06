@@ -4,6 +4,7 @@
  */
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { resolve, join } from "node:path";
+import { START_DISTANCE } from "../lib/game/tiers";
 import { compile } from "../lib/content/compile";
 import { validateSource } from "../lib/content/validate";
 import { audienceIssues } from "../lib/content/audience";
@@ -44,4 +45,4 @@ for (const o of outputs) {
   if (unseal(encrypted, key) !== o.text) throw new Error("Encryption round-trip failed");
   writeFileSync(join(root, "content/sealed", o.name), JSON.stringify(encrypted) + "\n");
 }
-console.log(`Sealed ${edition}: ${pack.puzzles.length} set, ${result.prompts.length} prompts, ${result.prompts.reduce((n, p) => n + p.answers.length, 0)} answers. Canonical matching and 700-point reachability verified. ${result.warnings.length} editorial warnings.`);
+console.log(`Sealed ${edition}: ${pack.puzzles.length} set, ${result.prompts.length} prompts, ${result.prompts.reduce((n, p) => n + p.answers.length, 0)} answers. Canonical matching and ${START_DISTANCE}-point reachability verified. ${result.warnings.length} editorial warnings.`);

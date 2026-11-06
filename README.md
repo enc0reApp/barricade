@@ -1,7 +1,7 @@
 # BARRICADE
 
 **The daily push to the front.** A daily rarity game about live music and the
-culture around it. You get 7 prompts with 25 seconds each, and you type one
+culture around it. You get 5 prompts with 25 seconds each, and you type one
 answer per prompt. The rarer your answer, the further the crowd carries you
 toward the stage.
 
@@ -15,7 +15,7 @@ Play at **[fstvl.xyz](https://fstvl.xyz)** · made by [enc0re](https://enc0re.co
 
 ## How it plays
 
-You start at the back of the field, **700m** from the stage. Each prompt
+You start at the back of the field, **500m** from the stage. Each prompt
 ("Name a nightclub in Berlin", "Name a sound system crew at Notting Hill
 Carnival", "Name a city on the Eras Tour") has a closed list of accepted
 answers. Answers include artists, festivals, venues, cities, genres,
@@ -32,7 +32,7 @@ are outside the game's scope. Every accepted answer has a rarity tier:
 | BASEMENT | 85 | Very rare. Sweaty room, great sound system. |
 | YOU HAD TO BE THERE | 100 | Almost nobody says this. |
 
-Points are metres. Seven perfect answers put you **on the barricade**. Wrong
+Points are metres. Five perfect answers put you **on the barricade**. Wrong
 guesses cost nothing but time, so you can keep trying until the clock runs out.
 When you finish you get a ticket stub to share, and the next morning you can
 see what the crowd said.

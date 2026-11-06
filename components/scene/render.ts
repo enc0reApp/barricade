@@ -11,6 +11,8 @@
  *   sAt(z) = S × ZC / (z + ZC)                     (pixels per metre)
  */
 
+import { START_DISTANCE } from "@/lib/game/tiers";
+
 export const ROW_SPACING = 0.62;
 const ZC = 4;
 const STAGE_GAP = 6;
@@ -89,7 +91,7 @@ export const sAt = (v: View, z: number) => (v.S * ZC) / (z + ZC);
 export function stageWidth(v: View, d: number): number {
   const base = Math.max(28, v.W * 0.16);
   const c = 87.5;
-  return (base * (700 + c)) / (Math.max(0, d) + c);
+  return (base * (START_DISTANCE + c)) / (Math.max(0, d) + c);
 }
 
 /* ───────────────────────────── background (cached) ───────────────────────────── */

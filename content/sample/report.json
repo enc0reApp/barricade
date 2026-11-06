@@ -1,6 +1,6 @@
 {
   "kind": "sample",
-  "generatedAt": "2026-11-06T09:28:15.181Z",
+  "generatedAt": "2026-11-06T22:50:29.282Z",
   "epoch": "2026-01-01",
   "normalizeVersion": 2,
   "fame": {
@@ -9,7 +9,7 @@
   },
   "totals": {
     "prompts": 7,
-    "scheduledPrompts": 7,
+    "scheduledPrompts": 5,
     "days": 1,
     "answers": 745,
     "entities": 742,
@@ -27,22 +27,20 @@
       "prompts": [
         "sample-woodstock-1969",
         "sample-eurovision-host-countries",
-        "sample-coachella-headliners",
         "sample-berlin-clubs",
         "sample-benelux-festivals",
-        "sample-techno-subgenres",
-        "sample-lollapalooza-countries"
+        "sample-techno-subgenres"
       ],
-      "answers": 745,
+      "answers": 671,
       "tiers": {
-        "main": 30,
-        "tote": 3,
-        "side": 69,
-        "tent": 81,
-        "basement": 91,
-        "htbt": 471
+        "main": 22,
+        "tote": 2,
+        "side": 44,
+        "tent": 53,
+        "basement": 82,
+        "htbt": 468
       },
-      "summary": "#1 2026-01-01 \"SAMPLE SET\" · 7 prompts · d1122333 · artist/country/artist/venue/festival/genre/country · 745 answers · M30 T3 S69 N81 B91 H471 · 1 flagged",
+      "summary": "#1 2026-01-01 \"SAMPLE SET\" · 5 prompts · d11233 · artist/country/venue/festival/genre · 671 answers · M22 T2 S44 N53 B82 H468 · 1 flagged",
       "title": "SAMPLE SET"
     }
   ],
@@ -172,9 +170,7 @@
       "rarity": "guess",
       "difficulty": 2,
       "primaryType": "artist",
-      "days": [
-        1
-      ],
+      "days": [],
       "answers": 65,
       "withFame": 65,
       "missingWiki": [],
@@ -285,9 +281,7 @@
       "rarity": "guess",
       "difficulty": 3,
       "primaryType": "country",
-      "days": [
-        1
-      ],
+      "days": [],
       "answers": 9,
       "withFame": 0,
       "missingWiki": [],

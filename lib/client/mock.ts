@@ -6,7 +6,7 @@
  * tab). Extra flavours for state work: ?mock=closed (no set tonight),
  * ?mock=error (every call fails), ?mock=slow (2s latency). ?mock=0 turns it off.
  *
- * Two fake sets of 7 prompts alternate by set number; today is always #12.
+ * Two fake sets of 5 prompts alternate by set number; today is always #12.
  * The answer lists are small and illustrative, not the real content.
  *
  * Proof of play (RoundRequest.prevToken/prevReceipt, FinishRequest.tokens) is
@@ -36,7 +36,7 @@ import woodstockSample from "../../content/sample/source/prompts/sample-woodstoc
 import countriesSample from "../../content/sample/source/prompts/sample-lollapalooza-countries.json";
 import { addDays, isClosedDate, isDateString, isLiveDate, liveDateWindow, localDateString, numberForDate } from "../game/day";
 import { editDistance, matchKeys, primaryKey, typoBudget } from "../game/normalize";
-import { DEFAULT_SECONDS, GRACE_MS, TIERS, distanceFor, type Outcome, type TierId } from "../game/tiers";
+import { DEFAULT_SECONDS, GRACE_MS, ROUNDS_PER_SET, TIERS, distanceFor, type Outcome, type TierId } from "../game/tiers";
 import type { BarricadeApi, NoSetMeta } from "./api";
 
 /* ───────────────────────────── fake content ───────────────────────────── */
@@ -339,7 +339,7 @@ const EXTRAS: [string, EntityType][] = [
   ["Bassiani", "venue"],
 ];
 
-const MOCK_SETS = [SET_A, SET_B];
+const MOCK_SETS = [SET_A, SET_B].map((set) => ({ ...set, prompts: set.prompts.slice(0, ROUNDS_PER_SET) }));
 
 /* ───────────────────────────── indexes ───────────────────────────── */
 
@@ -492,7 +492,7 @@ function wait(ms: number): Promise<void> {
 
 /** Players further back than you, as a %, from a fake bell curve of distances. */
 function fakeBeatPct(distance: number): number {
-  const mean = 470;
+  const mean = 330;
   const sd = 105;
   const z = (distance - mean) / (sd * Math.SQRT2);
   // P(D > distance) = 0.5 * erfc(z)
@@ -650,7 +650,7 @@ export function createMockApi(flavour: MockFlavour = "on"): BarricadeApi {
           total: answers.length * 9,
         };
       });
-      const distance = distanceFor(outcomes);
+      const distance = distanceFor(outcomes, set.prompts.length);
       const plays = 2800 + (hash(req.date) % 1900);
       return {
         ok: true,
@@ -688,9 +688,9 @@ export function createMockApi(flavour: MockFlavour = "on"): BarricadeApi {
       const index = indexFor(c.number);
       const seed = hash(date);
       const plays = 3100 + (seed % 2400);
-      const distribution = Array.from({ length: 15 }, (_, b) => {
+      const distribution = Array.from({ length: 11 }, (_, b) => {
         const mid = b * 50 + 25;
-        const z = (mid - 455) / 110;
+        const z = (mid - 330) / 90;
         return Math.round(plays * 0.17 * Math.exp(-0.5 * z * z) * (0.85 + ((seed >> b) & 7) / 25));
       });
       const rounds: CrowdRound[] = set.prompts.map((p, i) => {

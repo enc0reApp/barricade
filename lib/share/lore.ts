@@ -10,10 +10,10 @@ export const LORE_MARKERS: Readonly<Record<number, string>> = {
   650: "wristband scanners",
   600: "the merch line (90 minutes, minimum)",
   550: "portaloo row. hold your breath",
-  500: "$19 noodles",
-  450: "people sitting on blankets",
-  400: "the delay towers",
-  350: "the flag guy",
+  500: "the car park. you can hear it from here",
+  450: "wristband scanners",
+  400: "the merch line (90 minutes, minimum)",
+  350: "portaloo row. hold your breath",
   300: "front-of-house. best mix in the field",
   250: 'the "excuse me, sorry" zone',
   200: "someone's on someone's shoulders",
@@ -27,7 +27,7 @@ export const LORE_MARKERS: Readonly<Record<number, string>> = {
 export function loreFor(distance: number): string {
   const d = Math.min(START_DISTANCE, Math.max(0, distance));
   const key = Math.ceil(d / 50) * 50;
-  return LORE_MARKERS[key] ?? LORE_MARKERS[700]!;
+  return LORE_MARKERS[key] ?? LORE_MARKERS[START_DISTANCE]!;
 }
 
 /** "Someone got 14m from the stage." — third person, for people who weren't there. */

@@ -58,7 +58,7 @@ function Barcode({ code }: { code: string }) {
 }
 
 export function ShareTicket({ number, outcomes, date, beatPct, className }: ShareTicketProps) {
-  const distance = distanceFor(outcomes);
+  const distance = distanceFor(outcomes, outcomes.length);
   const points = outcomes.reduce((s, o) => s + outcomePoints(o), 0);
   const code = encodeShareCode(number, outcomes);
   const dateLabel = date ? ticketDate(date) : "";

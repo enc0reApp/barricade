@@ -12,7 +12,7 @@ export default function ArchivePage() {
     <PageShell
       kicker="EVERY SET SINCE #1"
       title="THE ARCHIVE"
-      intro={<p>missed a night? play it here. archive sets aren&apos;t scored and never touch your streak.</p>}
+      intro={<p>Pick a night. Five questions, no streak pressure.</p>}
     >
       <ArchiveList />
     </PageShell>

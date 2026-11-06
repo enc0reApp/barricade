@@ -39,7 +39,7 @@ export async function GET(req: Request): Promise<Response> {
       date,
       plays: stats.plays,
       avgDistance: stats.plays > 0 ? Math.round(stats.distSum / stats.plays) : null,
-      distribution: distribution(stats.hist),
+      distribution: distribution(stats.hist, puzzle.prompts.length * 100),
       rounds: crowdRounds(puzzle, stats),
     };
     if (puzzle.title) out.title = puzzle.title;

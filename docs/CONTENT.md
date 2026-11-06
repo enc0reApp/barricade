@@ -1,6 +1,6 @@
 # Writing BARRICADE content
 
-A set is 7 prompts. Each prompt has a closed answer list with a rarity tier per
+A set is 5 prompts. Each prompt has a closed answer list with a rarity tier per
 answer. Players type one answer per prompt. If it's on the list, the crowd
 carries it forward by its tier's points. If it's not, they can try again until
 the clock runs out.
@@ -13,7 +13,7 @@ accepted makes the game a joke).
 
 ```
 content/source/                  ← gitignored (spoilers). Sealed into content/sealed/.
-  schedule.json                  ← SourceSchedule: epoch + days[] of 7 slugs each
+  schedule.json                  ← SourceSchedule: epoch + days[] of 5 slugs each
   prompts/<slug>.json            ← one SourcePrompt per file
 content/sample/source/           ← public demo content, same format
 ```
@@ -141,3 +141,14 @@ pack and supply `BARRICADE_SEAL_KEY` and a separate `BARRICADE_SECRET` through
 environment variables. Do not change the main pack or publish plaintext.
 The normal unseal command restores the main bundle only; exclusive source
 backups use the same `source` AES-GCM label and relative-file bundle format.
+
+## Ready-to-play archive collection
+
+`festival-archive-2026-11-06` serves five themed archive nights on November 1–5,
+then the LA After Hours exclusive on November 6. Themes are After Hours,
+Main Stage Energy, Bass in the City, Passport Stamps, and The Festival Circuit.
+Each has five questions; all 30 scheduled questions have a 100-point answer.
+Sources reuse the researched live-music lists, with a combined Coachella/EDC
+stage question in the LA set. Both the collection and its source backup are
+sealed separately. Serve `content/sealed/festival-archive-2026-11-06.json.enc`
+with the same environment-variable mechanism as other editions.

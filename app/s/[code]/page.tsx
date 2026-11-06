@@ -31,8 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = titleFor(s.number, s.distance);
   const description =
     s.distance === 0
-      ? `Someone made it to the barricade on set #${s.number}. 7 prompts about live music — the rarer your answer, the closer you get. Can you get closer?`
-      : `Someone got ${s.distance}m from the stage on set #${s.number}. 7 prompts about live music — the rarer your answer, the closer you get. Can you get closer?`;
+      ? `Someone made it to the barricade on set #${s.number}. ${s.outcomes.length} prompts about live music — the rarer your answer, the closer you get. Can you get closer?`
+      : `Someone got ${s.distance}m from the stage on set #${s.number}. ${s.outcomes.length} prompts about live music — the rarer your answer, the closer you get. Can you get closer?`;
   return {
     metadataBase: new URL(base),
     title: { absolute: title },

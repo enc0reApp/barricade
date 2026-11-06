@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     template: "%s · BARRICADE",
   },
   description:
-    "7 prompts. 25 seconds each. Name artists, festivals, venues, cities, genres and sound systems — the rarer your answer, the closer you get to the stage.",
+    "5 prompts. 25 seconds each. Name artists, festivals, venues, cities, genres and sound systems — the rarer your answer, the closer you get to the stage.",
   applicationName: "BARRICADE",
   openGraph: {
     type: "website",

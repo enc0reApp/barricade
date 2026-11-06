@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { START_DISTANCE } from "@/lib/game/tiers";
 import type { ReactNode } from "react";
 import Scene from "@/components/scene/Scene";
 import Footer from "./Footer";
@@ -9,7 +10,7 @@ import styles from "./PageShell.module.css";
 /** Text pages (how, archive, crowd, 404): the field behind, dimmed, and a readable column. */
 export default function PageShell({
   children,
-  distance = 700,
+  distance = START_DISTANCE,
   kicker,
   title,
   intro,

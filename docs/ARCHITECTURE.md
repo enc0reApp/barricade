@@ -32,8 +32,8 @@
   i-1's clock must have run out (`deadline + GRACE_MS`). `/api/finish` wants
   every round's token (same date, round, player, puzzle and pack), and a
   missed round's clock must have run out. Without this, one request with
-  seven nulls would reveal the live set's answers. The fastest reveal without
-  answering is now ~7 × 27.5 s, the same as playing through the UI. Archive
+  five nulls would reveal the live set's answers. The fastest reveal without
+  answering is now ~5 × 27.5 s, the same as playing through the UI. Archive
   plays need no tokens.
 - **Stateless verification.** Tokens and receipts are signed with
   `BARRICADE_SECRET`, so no session store is needed. `/api/finish` rebuilds
@@ -75,7 +75,7 @@ A set belongs to a calendar date and players get their **local** date
 - receipt: `{ k:"c", d:date, i:index, n:number, a:answerId, t:tier, p:playerId, h:packId }`
 
 `h` is the pack identity (`LoadedPack.id`: the first 8 bytes of
-`sha256(kind + ":" + epoch)`), `n` the puzzle number. `/api/answer` and
+`sha256(kind + ":" + epoch + ":r" + roundCount)`), `n` the puzzle number. `/api/answer` and
 `/api/finish` reject anything minted for another pack or puzzle, so a token
 or receipt from a deployment that served the sample (or a preview) never
 scores on production, even with the same `BARRICADE_SECRET`. Still, give each
@@ -127,3 +127,12 @@ the play is not counted. This raises the cost of stuffing the crowd numbers;
 it cannot stop bots spread across many IPs (add a Vercel Firewall rate-limit
 rule on `/api/*` for that). Rejected tries are logged at answer time, flags
 at flag time, each in one atomic `EVAL`.
+
+## Five-question edition
+
+New daily, exclusive, and sample sets contain five prompts. The field starts
+at 500m, so five 100-point answers reach the barricade. Tokens bind the pack's
+round count; older seven-question tickets still decode with their 700m field.
+The browser uses `barricade:v2`, leaving the previous storage key untouched so
+seven-round progress cannot be resumed against five-round content. The storage
+object schema remains version 1.

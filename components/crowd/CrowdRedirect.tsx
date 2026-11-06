@@ -15,7 +15,7 @@ export default function CrowdRedirect() {
   }, [router]);
   return (
     <>
-      <Scene distance={700} horizon={0.36} dim={0.38} />
+      <Scene distance={500} horizon={0.36} dim={0.38} />
       <StatusScreen title="THE MORNING AFTER" busy body={<p>finding last night&apos;s crowd…</p>} />
     </>
   );

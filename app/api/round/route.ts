@@ -18,7 +18,7 @@ const MAX_TOKEN_LENGTH = 1024;
  * "today" mode, index > 0: proof that round index-1 is over — its round token
  * (same date, player, puzzle and pack) plus its receipt, or, with no receipt,
  * that its clock has run out (deadline + GRACE_MS). A script can't open all
- * seven rounds at once.
+ * five rounds at once.
  *
  * With a store, the first start of a player's round is kept (SET NX): asking
  * for the same round again returns the ORIGINAL start and deadline.

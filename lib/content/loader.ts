@@ -20,6 +20,7 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { addDays, isDateString, liveDateWindow, numberForDate } from "../game/day";
 import { buildCatalogIndex, buildPromptIndex, type CatalogIndex, type MatchIndexes, type PromptIndex } from "../game/match";
+import { ROUNDS_PER_SET } from "../game/tiers";
 import { NORMALIZE_VERSION } from "../game/normalize";
 import { isSealedFile, unseal } from "./seal";
 import type { ContentPack, PackCatalogEntry, PackPrompt, PackPuzzle } from "./types";
@@ -145,8 +146,8 @@ export function validatePack(x: unknown, file = "pack"): ContentPack {
 }
 
 /** Pack identity for tokens: base64url of the first 8 bytes of sha256("kind:epoch"). */
-export function packIdentity(pack: Pick<ContentPack, "kind" | "epoch">): string {
-  return createHash("sha256").update(`${pack.kind}:${pack.epoch}`).digest().subarray(0, 8).toString("base64url");
+export function packIdentity(pack: Pick<ContentPack, "kind" | "epoch"> & Partial<Pick<ContentPack, "puzzles">>): string {
+  return createHash("sha256").update(`${pack.kind}:${pack.epoch}:r${pack.puzzles?.[0]?.prompts.length ?? ROUNDS_PER_SET}`).digest().subarray(0, 8).toString("base64url");
 }
 
 /** How many date-filtered catalog indexes to keep (live dates + a few archive ones). */

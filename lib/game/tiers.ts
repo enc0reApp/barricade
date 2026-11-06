@@ -5,7 +5,7 @@
  *
  * The scoring metaphor: every set starts at the back of the field,
  * START_DISTANCE metres from the stage. Each accepted answer moves you
- * `points` metres closer. Seven perfect answers (7 × 100) put you on the
+ * `points` metres closer. Five perfect answers (5 × 100) put you on the
  * barricade at 0m.
  */
 
@@ -81,8 +81,8 @@ export const TIERS: Record<TierId, TierDef> = {
 
 export const MISS = { label: "MISSED IT", emoji: "⬛", code: "x", points: 0 } as const;
 
-export const START_DISTANCE = 700;
-export const ROUNDS_PER_SET = 7;
+export const ROUNDS_PER_SET = 5;
+export const START_DISTANCE = ROUNDS_PER_SET * 100;
 export const DEFAULT_SECONDS = 25;
 /** Network/clock slack the server allows past the visible deadline. */
 export const GRACE_MS = 2500;
@@ -106,9 +106,9 @@ export function outcomeFromCode(c: string): Outcome | null {
 }
 
 /** Metres from the stage after a set of outcomes. Never below 0. */
-export function distanceFor(outcomes: readonly Outcome[]): number {
+export function distanceFor(outcomes: readonly Outcome[], rounds = ROUNDS_PER_SET): number {
   const pts = outcomes.reduce((sum, o) => sum + outcomePoints(o), 0);
-  return Math.max(0, START_DISTANCE - pts);
+  return Math.max(0, rounds * TIERS.htbt.points - pts);
 }
 
 /**

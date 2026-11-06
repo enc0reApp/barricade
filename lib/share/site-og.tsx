@@ -9,6 +9,7 @@
 
 import type { ReactElement } from "react";
 import { ImageResponse } from "next/og";
+import { ROUNDS_PER_SET, START_DISTANCE } from "../game/tiers";
 import { NIGHT } from "./colors";
 import { OG_FONT, loadOgFonts } from "./og-fonts";
 import { Box, Stars, makeStars, seeded } from "./og-parts";
@@ -163,10 +164,10 @@ function Ruler(): ReactElement {
   const x = 1110;
   const top = 132;
   const step = 30; // px per 50m
-  const marks = Array.from({ length: 15 }, (_, i) => i * 50);
+  const marks = Array.from({ length: START_DISTANCE / 50 + 1 }, (_, i) => i * 50);
   return (
     <div style={{ position: "absolute", left: 0, top: 0, width: W, height: H, display: "flex" }}>
-      <Box x={x} y={top} w={3} h={step * 14 + 3} style={{ background: NIGHT.inkFaint }} />
+      <Box x={x} y={top} w={3} h={step * (START_DISTANCE / 50) + 3} style={{ background: NIGHT.inkFaint }} />
       {marks.map((m, i) => (
         <Box key={m} x={x} y={top + i * step} w={m % 100 === 0 ? 15 : 9} h={3} style={{ background: NIGHT.inkFaint }} />
       ))}
@@ -188,8 +189,8 @@ function Ruler(): ReactElement {
             {`${m}m`}
           </div>
         ))}
-      {/* YOU ▶ at 700m — the triangle is stacked pixel rows (▶ isn't in Geist Pixel) */}
-      <div style={{ position: "absolute", left: x - 70, top: top + 14 * step - 9, display: "flex", alignItems: "center" }}>
+      {/* YOU ▶ at 500m — the triangle is stacked pixel rows (▶ isn't in Geist Pixel) */}
+      <div style={{ position: "absolute", left: x - 70, top: top + (START_DISTANCE / 50) * step - 9, display: "flex", alignItems: "center" }}>
         <div style={{ display: "flex", fontFamily: OG_FONT.pixel, fontSize: 20, color: NIGHT.magenta, letterSpacing: 2, marginRight: 6 }}>YOU</div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           {[3, 6, 9, 12, 9, 6, 3].map((w, i) => (
@@ -294,7 +295,7 @@ export function SiteOgImage(): ReactElement {
             color: NIGHT.ink,
           }}
         >
-          <div style={{ display: "flex" }}>7 prompts</div>
+          <div style={{ display: "flex" }}>{ROUNDS_PER_SET} prompts</div>
           <div style={{ display: "flex", color: NIGHT.magenta, margin: "0 16px" }}>·</div>
           <div style={{ display: "flex" }}>rarer answers get you closer</div>
           <div style={{ display: "flex", color: NIGHT.magenta, margin: "0 16px" }}>·</div>

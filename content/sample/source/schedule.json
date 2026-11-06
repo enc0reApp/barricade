@@ -7,11 +7,9 @@
       "prompts": [
         "sample-woodstock-1969",
         "sample-eurovision-host-countries",
-        "sample-coachella-headliners",
         "sample-berlin-clubs",
         "sample-benelux-festivals",
-        "sample-techno-subgenres",
-        "sample-lollapalooza-countries"
+        "sample-techno-subgenres"
       ]
     }
   ]

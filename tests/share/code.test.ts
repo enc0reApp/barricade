@@ -36,7 +36,15 @@ describe("share codes", () => {
     expect(decodeShareCode("12-hbxnbbs")?.distance).toBe(255); // 100+85+0+60+85+85+30 = 445
     expect(decodeShareCode("3-mmxtssm")?.distance).toBe(595);
     expect(decodeShareCode("9-hhhhhhh")?.distance).toBe(0);
-    expect(decodeShareCode("1-xxxxxxx")?.distance).toBe(START_DISTANCE);
+    expect(decodeShareCode("1-xxxxxxx")?.distance).toBe(700);
+  });
+
+  it("uses a 500m field for new five-question tickets and preserves old seven-question tickets", () => {
+    expect(decodeShareCode("6-xxxxx")?.distance).toBe(START_DISTANCE);
+    expect(decodeShareCode("6-hhhhh")?.distance).toBe(0);
+    expect(decodeShareCode("6-hbsnm")?.distance).toBe(215);
+    expect(decodeShareCode("1-xxxxxxx")?.distance).toBe(700);
+    expect(decodeShareCode("1-xxxxxx")).toBeNull();
   });
 
   it("uses one distinct letter per outcome", () => {

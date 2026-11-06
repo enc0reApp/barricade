@@ -178,6 +178,8 @@ describe("pack identity (C2)", () => {
     expect(packIdentity(sample)).not.toBe(packIdentity(production));
     expect(packIdentity({ kind: "production", epoch: "2027-01-01" })).not.toBe(packIdentity(production));
     expect(indexPack(production, "env", "x").id).toBe(packIdentity(production));
+    const shortened = { ...production, puzzles: production.puzzles.map((p) => ({ ...p, prompts: p.prompts.slice(0, 5) })) };
+    expect(packIdentity(shortened)).not.toBe(packIdentity(production));
   });
 });
 

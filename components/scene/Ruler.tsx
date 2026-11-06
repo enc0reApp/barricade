@@ -15,7 +15,7 @@ export interface RulerProps {
 
 const TICKS = Array.from({ length: START_DISTANCE / 50 + 1 }, (_, i) => i * 50);
 
-/** Vertical distance ruler on the right edge: 0m (the stage) at the top, 700m at the bottom. */
+/** Vertical distance ruler on the right edge: 0m (the stage) at the top, 500m at the bottom. */
 export default function Ruler({ distance, lore = "near" }: RulerProps) {
   const d = Math.max(0, Math.min(START_DISTANCE, distance));
   const pct = (m: number) => `${(m / START_DISTANCE) * 100}%`;

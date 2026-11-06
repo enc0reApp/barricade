@@ -13,7 +13,7 @@ import type { ApiError, ApiFail } from "../api/contract";
 import { PackConfigError } from "../content/loader";
 import { SecretMissingError } from "../game/token";
 
-/** Largest JSON body any endpoint accepts (7 receipts ≈ 2 KB). */
+/** Largest JSON body any endpoint accepts (5 receipts ≈ 2 KB). */
 export const MAX_BODY_BYTES = 16_384;
 
 const STATUS: Record<ApiError, number> = {

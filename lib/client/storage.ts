@@ -4,7 +4,7 @@
  * If storage is missing, full, or throws (private mode, blocked cookies), the
  * store keeps working in memory for the life of the page.
  *
- * Shape (key "barricade:v1"):
+ * Shape (key "barricade:v2"; the previous seven-question store stays untouched):
  *   { version: 1, playerId, games: { [date]: StoredGame }, streak, settings }
  *
  * The resume rules live here as pure functions so they can be tested:
@@ -21,7 +21,7 @@ import type { AcceptedAnswer, FinishResult, RoundPrompt } from "../api/contract"
 import { addDays } from "../game/day";
 import { GRACE_MS, type Outcome } from "../game/tiers";
 
-export const STORAGE_KEY = "barricade:v1";
+export const STORAGE_KEY = "barricade:v2";
 export const STORAGE_VERSION = 1;
 /** Rejected tries remembered per round (for the "should this have counted?" link). */
 export const MAX_TRIES = 5;
@@ -53,7 +53,7 @@ export interface StoredGame {
   date: string;
   mode: GameMode;
   status: "playing" | "finished";
-  /** Rounds in the set (7). */
+  /** Rounds in this set (five for new sets). */
   total: number;
   rounds: StoredRound[];
   finish?: FinishResult;

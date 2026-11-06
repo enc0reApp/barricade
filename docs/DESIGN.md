@@ -1,6 +1,6 @@
 # BARRICADE — design
 
-> You're at the back of the field, 700 metres from the stage. Every answer is a
+> You're at the back of the field, 500 metres from the stage. Every answer is a
 > crowd you push through. The rarer the answer, the further the crowd carries you.
 
 The feel: an eight-bit festival poster, with acid lime, cobalt, coral and warm cream colour blocks. Large pixels, hard offset shadows and a solid wordmark replace neon glows and glass panels. Home has a framed pixel crowd; play keeps the moving festival field, with a cream question card and clear clock/input hierarchy.
@@ -40,7 +40,7 @@ From the back of the field, looking at the stage:
 - **Crowd:** rows of pixel silhouettes (heads, shoulders, the odd raised hand,
   phone lights, a flag on a pole, someone on shoulders). Rows nearer the
   viewer are bigger, giving parallax depth.
-- **Distance drives the scene.** At 700m the stage is tiny. As the distance
+- **Distance drives the scene.** At 500m the stage is tiny. As the distance
   falls toward 0m, the stage grows until the LED wall fills the top of the
   screen and the barricade rail appears in the foreground.
   `<Scene distance={n} />` animates between distances.
@@ -50,14 +50,10 @@ From the back of the field, looking at the stage:
 
 | m | marker |
 |---|---|
-| 700 | the car park. you can hear it from here |
-| 650 | wristband scanners |
-| 600 | the merch line (90 minutes, minimum) |
-| 550 | portaloo row. hold your breath |
-| 500 | $19 noodles |
-| 450 | people sitting on blankets |
-| 400 | the delay towers |
-| 350 | the flag guy |
+| 500 | the car park. you can hear it from here |
+| 450 | wristband scanners |
+| 400 | the merch line (90 minutes, minimum) |
+| 350 | portaloo row. hold your breath |
 | 300 | front-of-house. best mix in the field |
 | 250 | the "excuse me, sorry" zone |
 | 200 | someone's on someone's shoulders |
@@ -73,7 +69,7 @@ From the back of the field, looking at the stage:
 - A framed, low-resolution festival poster with a cobalt sky and a chunky crowd.
 - Logo **BARRICADE** in large, solid acid-lime Geist Pixel.
 - Under it: **THE DAILY PUSH** (wide tracking), then
-  `7 prompts · 25 seconds each · rarer answers get you closer`.
+  `5 prompts · 25 seconds each · rarer answers get you closer`.
 - Primary CTA: **▲ PUSH TO THE FRONT ▲**. A solid acid-lime button with hard
   offset shadow and stepped corners. The game rules sit in a compact three-cell strip.
 - `SET #12 · MON 09 NOV` and `DOORS CLOSE IN 06:12:33` (time until local
@@ -88,11 +84,11 @@ From the back of the field, looking at the stage:
 
 ### 2. The push (a round)
 
-- **HUD** (top): left panel `DISTANCE` / `700m` (it ticks down when you
+- **HUD** (top): left panel `DISTANCE` / `500m` (it ticks down when you
   move). In the centre, 7 progress squares that fill with the tier colour; the
-  current one pulses gently. Below them, `PROMPT 1 OF 7`. Right panel
+  current one pulses gently. Below them, `PROMPT 1 OF 5`. Right panel
   `POINTS` / `0`.
-- **Prompt card**: a warm-cream panel with dark text and stepped corners. `PROMPT 1 OF 7` in
+- **Prompt card**: a warm-cream panel with dark text and stepped corners. `PROMPT 1 OF 5` in
   magenta with wide tracking, the prompt text big (about 26–30px on mobile),
   the optional hint small and dim in Geist Mono, and a foot line
   `▲ rarer answers get you closer ▲`.
