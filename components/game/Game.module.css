@@ -176,3 +176,18 @@
     opacity: 0.6;
   }
 }
+
+.rulerDesk { display:none; }
+@media (min-width: 900px) { .rulerDesk { display:none; } .frame { --stage-gap:clamp(28px,calc(22vh - 84px),160px); } }
+
+@media (max-width: 760px) {
+ .frame { --stage-gap:22px; --ruler-space:0px; }
+ .cardSlot { padding-right:var(--gutter); }
+ .keep { padding-right:var(--gutter); }
+ .keep :global(.px-btn) { min-height:64px; font-size:18px; letter-spacing:0.06em; }
+ .revealSlot { bottom:calc(118px + var(--safe-bottom)); }
+ .cardCenter { padding-right:var(--gutter); }
+ .frame[data-kb] { --stage-gap:12px; }
+}
+
+@media (max-width: 760px) { .frame[data-kb] .spacer { min-height:4px; } }

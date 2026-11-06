@@ -221,3 +221,8 @@
     transform: translateY(6px);
   }
 }
+
+/* Once the result lands, let the tier card carry the result on its own. */
+.reveal:not([data-playing]) .line { display:none; }
+.line[data-final] { filter:none; }
+.plaque::after { background:var(--panel); }

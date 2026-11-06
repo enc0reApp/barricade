@@ -41,3 +41,12 @@
   color: var(--tier-tent);
   text-align: center;
 }
+
+.primary { letter-spacing:0.08em; }
+.preview { background:var(--panel); }
+
+.more summary { display:flex; justify-content:center; align-items:center; min-height:44px; cursor:pointer; font-size:10px; letter-spacing:0.08em; color:var(--ink-dim); text-decoration:underline; text-underline-offset:4px; list-style:none; }
+.more summary::-webkit-details-marker { display:none; }
+.more summary:focus-visible { outline:2px solid var(--cyan); outline-offset:2px; }
+.more[open] .row { padding-top:8px; }
+@media (max-width: 419px) { .row { flex-wrap:wrap; } .preview { flex-basis:100%; } }

@@ -5,39 +5,39 @@
 
 import type { Outcome, TierId } from "../game/tiers";
 
-export const PAPER = "#F1EEE8";
-export const PAPER_SHADE = "#E2DDD3";
+export const PAPER = "#F5EDDA";
+export const PAPER_SHADE = "#E3D9C5";
 export const INK = "#0B0D17";
 export const INK_SOFT = "#4A4E63";
 
 export const NIGHT = {
-  sky0: "#05060d",
-  sky1: "#0a0e22",
-  sky2: "#141a3d",
-  sky3: "#232a5c",
-  field0: "#090c18",
-  field1: "#0f1426",
-  panel: "#0c1124",
-  panelEdge: "#273160",
-  ink: "#f1eee8",
-  inkDim: "#9aa1c2",
-  inkFaint: "#5a6290",
-  cyan: "#45e5ff",
-  magenta: "#ff4fa3",
-  amber: "#ffb547",
-  uv: "#8b5cff",
+  sky0: "#151618",
+  sky1: "#1c1d22",
+  sky2: "#292b38",
+  sky3: "#343be8",
+  field0: "#1a1b20",
+  field1: "#25262d",
+  panel: "#24252b",
+  panelEdge: "#474952",
+  ink: "#f5edda",
+  inkDim: "#c4c0b9",
+  inkFaint: "#85878e",
+  cyan: "#d6ff62",
+  magenta: "#ff805c",
+  amber: "#ffca6b",
+  uv: "#9b8bff",
 } as const;
 
 export const TIER_HEX: Record<TierId, string> = {
-  main: "#e8e6e3",
-  tote: "#d9a066",
-  side: "#4da3ff",
-  tent: "#3ddc84",
-  basement: "#b26bff",
-  htbt: "#ffd447",
+  main: "#f5edda",
+  tote: "#e8ac79",
+  side: "#80aaff",
+  tent: "#b4e889",
+  basement: "#b7a5ff",
+  htbt: "#ffe16c",
 };
 
-export const MISS_HEX = "#2a3150";
+export const MISS_HEX = "#43454d";
 
 export function outcomeHex(o: Outcome): string {
   return o === "miss" ? MISS_HEX : TIER_HEX[o];

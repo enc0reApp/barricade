@@ -15,14 +15,13 @@ export interface HudProps {
   total: number;
 }
 
-export default function Hud({ distance, points, outcomes, current, total }: HudProps) {
+export default function Hud({ distance, outcomes, current, total }: HudProps) {
   const d = useCountUp(distance, 600);
-  const p = useCountUp(points, 600);
   const roundNo = current === null ? Math.min(total, outcomes.filter(Boolean).length + 1) : current + 1;
   return (
     <header className={styles.hud}>
       <div className={`px-panel ${styles.panel}`}>
-        <span className={styles.label}>DISTANCE</span>
+        <span className={styles.label}>FROM THE STAGE</span>
         <span className={styles.distance} aria-live="off">
           {d === 0 ? "0m" : `${d}m`}
         </span>
@@ -39,10 +38,6 @@ export default function Hud({ distance, points, outcomes, current, total }: HudP
         <span className={styles.count}>
           PROMPT {roundNo} OF {total}
         </span>
-      </div>
-      <div className={`px-panel ${styles.panel} ${styles.right}`}>
-        <span className={styles.label}>POINTS</span>
-        <span className={styles.points}>{p}</span>
       </div>
     </header>
   );

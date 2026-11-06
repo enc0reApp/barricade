@@ -36,13 +36,13 @@
 
 .row::before {
   inset: 0;
-  background: #1c2449;
+  background: var(--panel-edge);
   z-index: -2;
 }
 
 .row::after {
   inset: 2px;
-  background: rgba(9, 12, 28, 0.92);
+  background: var(--panel);
   z-index: -1;
 }
 

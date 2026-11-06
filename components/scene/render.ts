@@ -30,22 +30,22 @@ const mix = (a: RGB, b: RGB, t: number): RGB => [
 ];
 
 const C = {
-  sky0: hex("#05060d"),
-  sky1: hex("#0a0e22"),
-  sky2: hex("#141a3d"),
-  sky3: hex("#232a5c"),
-  field0: hex("#06080f"),
-  field1: hex("#11152c"),
-  glow: hex("#3a2466"),
-  cyan: hex("#45e5ff"),
-  magenta: hex("#ff4fa3"),
-  amber: hex("#ffb547"),
-  uv: hex("#8b5cff"),
-  ink: hex("#f1eee8"),
-  silNear: hex("#04050a"),
-  silFar: hex("#2a2152"),
-  steel: hex("#1a1f3d"),
-  steelHi: hex("#3b4a8a"),
+  sky0: hex("#151618"),
+  sky1: hex("#1c1d22"),
+  sky2: hex("#27282f"),
+  sky3: hex("#343be8"),
+  field0: hex("#16171b"),
+  field1: hex("#24252d"),
+  glow: hex("#343be8"),
+  cyan: hex("#d6ff62"),
+  magenta: hex("#ff805c"),
+  amber: hex("#ffca6b"),
+  uv: hex("#9b8bff"),
+  ink: hex("#f5edda"),
+  silNear: hex("#101113"),
+  silFar: hex("#48425b"),
+  steel: hex("#23252d"),
+  steelHi: hex("#77718f"),
   rail: hex("#8a93b8"),
   railHi: hex("#d8dcef"),
   phone: hex("#e6f8ff"),
@@ -99,38 +99,19 @@ const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map((n) => 
 /** Sky + field gradients with ordered dithering, as pixel data. */
 export function drawBackground(ctx: CanvasRenderingContext2D, v: View): void {
   const { W, H, hy } = v;
-  const img = ctx.createImageData(W, H);
-  const data = img.data;
-  const sky: RGB[] = [C.sky0, C.sky1, C.sky2, C.sky3, mix(C.sky3, C.glow, 0.55)];
-  const field: RGB[] = [mix(C.field1, C.glow, 0.85), mix(C.field1, C.glow, 0.3), C.field1, mix(C.field1, C.field0, 0.6), C.field0];
-  for (let y = 0; y < H; y++) {
-    const isSky = y < hy;
-    const pal = isSky ? sky : field;
-    let u: number;
-    if (isSky) u = hy > 0 ? Math.pow(y / hy, 1.6) : 1;
-    else u = v.fieldH > 0 ? Math.pow((y - hy) / v.fieldH, 0.45) : 0;
-    const f = u * (pal.length - 1);
-    const base = Math.min(pal.length - 1, Math.floor(f));
-    const frac = f - base;
-    const a = pal[base]!;
-    const b = pal[Math.min(pal.length - 1, base + 1)]!;
-    for (let x = 0; x < W; x++) {
-      const c = frac > BAYER[(y & 3) * 4 + (x & 3)]! ? b : a;
-      const i = (y * W + x) * 4;
-      data[i] = c[0];
-      data[i + 1] = c[1];
-      data[i + 2] = c[2];
-      data[i + 3] = 255;
-    }
-  }
-  ctx.putImageData(img, 0, 0);
+  ctx.fillStyle = rgb(C.sky0);
+  ctx.fillRect(0, 0, W, hy);
+  ctx.fillStyle = rgb(C.sky2);
+  ctx.fillRect(0, Math.max(0, hy - 12), W, 12);
+  ctx.fillStyle = rgb(C.field0);
+  ctx.fillRect(0, hy, W, H - hy);
 }
 
 /* ───────────────────────────── sky detail ───────────────────────────── */
 
 export function drawStars(ctx: CanvasRenderingContext2D, v: View, t: number, still: boolean): void {
   const rnd = mulberry32(7);
-  const n = Math.round((v.W * v.hy) / 70);
+  const n = Math.round((v.W * v.hy) / 280);
   for (let i = 0; i < n; i++) {
     const x = Math.floor(rnd() * v.W);
     const y = Math.floor(rnd() * Math.max(1, v.hy - 6));
@@ -230,11 +211,7 @@ export function drawBeams(ctx: CanvasRenderingContext2D, v: View, d: number, t: 
     const y1 = y0 - Math.cos(ang) * len;
     const nx = Math.cos(ang);
     const ny = Math.sin(ang);
-    const g = ctx.createLinearGradient(x0, y0, x1, y1);
-    g.addColorStop(0, rgb(beam.colour, 0.34));
-    g.addColorStop(0.5, rgb(beam.colour, 0.12));
-    g.addColorStop(1, rgb(beam.colour, 0));
-    ctx.fillStyle = g;
+    ctx.fillStyle = rgb(beam.colour, 0.18);
     ctx.beginPath();
     ctx.moveTo(x0 - nx * 0.6, y0 - ny * 0.6);
     ctx.lineTo(x0 + nx * 0.6, y0 + ny * 0.6);
@@ -530,7 +507,7 @@ function drawRow(ctx: CanvasRenderingContext2D, v: View, k: number, z: number, o
     }
     ctx.fillStyle = rgb(mix(C.phone, sil, 0.15 + shade * 0.35));
     for (let i = 0; i < xs.length; i++) {
-      if ((row.bits[i]! & 1) === 0 || row.hand[i]! > handThreshold * 0.28) continue;
+      if (i % 9 !== 0 || (row.bits[i]! & 1) === 0 || row.hand[i]! > handThreshold * 0.28) continue;
       const wx = xs[i]!;
       if (wx < -visibleHalf || wx > visibleHalf) continue;
       ctx.fillRect(Math.round(v.cx + wx * s), yy - 2, 1, 1);

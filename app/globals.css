@@ -13,13 +13,13 @@
   --vu-red: #ff5468;
   --vu-off: #1b2246;
   /* --ink-faint is ~3.3:1 on the night sky; text that carries meaning uses this (≥4.5:1). */
-  --ink-quiet: #7f87b4;
-  --paper: #f1eee8;
-  --paper-shade: #e2ddd3;
+  --ink-quiet: #b0b0ad;
+  --paper: #f5edda;
+  --paper-shade: #e3d9c5;
   --paper-ink: #0b0d17;
   --paper-ink-soft: #4a4e63;
-  --glass: rgba(9, 13, 30, 0.86);
-  --glass-hi: rgba(18, 25, 54, 0.9);
+  --glass: #24252b;
+  --glass-hi: #30313a;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --ruler-space: 52px;
@@ -151,9 +151,7 @@ a {
 
 .px-panel::after {
   inset: var(--bw);
-  background:
-    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 3px),
-    var(--fill);
+  background: var(--fill);
   z-index: -1;
 }
 
@@ -206,9 +204,7 @@ a {
 
 .px-btn::after {
   inset: var(--bw);
-  background:
-    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 3px),
-    var(--fill);
+  background: var(--fill);
   z-index: -1;
 }
 
@@ -335,3 +331,14 @@ a {
     scroll-behavior: auto !important;
   }
 }
+
+/* Solid pixel controls: colour carries the hierarchy, without a glow layer. */
+.px-btn { --edge:#101113; --fill:var(--cyan); --bw:0px; color:#151618; filter:drop-shadow(4px 4px 0 #08090b); font-family:var(--font-pixel); letter-spacing:0.08em; }
+.px-btn:hover { filter:drop-shadow(6px 6px 0 #08090b); transform:translate(-1px,-1px); }
+.px-btn:active { transform:translate(2px,2px); filter:drop-shadow(1px 1px 0 #08090b); }
+.px-btn:focus-visible { outline:3px solid var(--uv); outline-offset:5px; filter:drop-shadow(4px 4px 0 #08090b); }
+.px-btn--hot { --fill:var(--magenta); color:#151618; }
+.px-btn--hot:hover { filter:drop-shadow(6px 6px 0 #08090b); }
+.px-btn--ghost { --fill:var(--panel); --edge:var(--panel-edge); --bw:2px; color:var(--ink); filter:none; }
+.px-btn--ghost:hover { --edge:var(--uv); color:var(--ink); filter:none; }
+.px-panel { --fill:var(--panel); --edge:var(--panel-edge); }

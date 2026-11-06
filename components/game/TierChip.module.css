@@ -96,3 +96,5 @@
       0 0 0 0 rgba(69, 229, 255, 0);
   }
 }
+
+.square[data-current] { animation:none; outline:2px solid var(--cyan); outline-offset:2px; }

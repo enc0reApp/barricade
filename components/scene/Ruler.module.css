@@ -139,3 +139,5 @@
     transition: none;
   }
 }
+
+@media (max-width: 760px) { .ruler { display:none; } }

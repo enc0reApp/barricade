@@ -3,7 +3,9 @@
 > You're at the back of the field, 700 metres from the stage. Every answer is a
 > crowd you push through. The rarer the answer, the further the crowd carries you.
 
-The feel: a pixel-art night at a festival. It borrows Krillion's lo-fi,
+The feel: an eight-bit festival poster, with acid lime, cobalt, coral and warm cream colour blocks. Large pixels, hard offset shadows and a solid wordmark replace neon glows and glass panels. Home has a framed pixel crowd; play keeps the moving festival field, with a cream question card and clear clock/input hierarchy.
+
+The foundation is a pixel-art night at a festival. It borrows Krillion's lo-fi,
 letter-spaced pixel UI and its suspenseful "how far did it go?" reveal. It
 borrows enc0re's ticket stubs, `/// TRIPLE-SLASH ///` calls to action, and
 monospace serial numbers. Type is **Geist Pixel** throughout, with Geist Mono
@@ -17,8 +19,8 @@ for long small text. Tokens are in `app/tokens.css`.
 - **Authentic pixels.** Draw the scene on a low-resolution canvas (for example
   180×320 logical pixels) and scale it up with `image-rendering: pixelated`. No
   rounded corners. Give panels stepped (notched) corners with `clip-path`.
-- **Night palette.** Deep navy sky (`--sky-*`). Stage light in cyan, magenta,
-  amber and UV. Ink is warm off-white. Tier colours are `--tier-*`.
+- **Night palette.** Charcoal and cobalt (`--sky-*`), with acid lime, coral,
+  warm cream and lavender as solid blocks. Ink is warm off-white. Tier colours are `--tier-*`.
 - **No strobes.** Light beams sweep slowly. Nothing flashes more than 3 times a
   second, and nothing large ever flashes red. `prefers-reduced-motion` gets a
   still scene and instant reveals.
@@ -68,13 +70,12 @@ From the back of the field, looking at the stage:
 
 ### 1. Doors (home)
 
-- The scene, with the stage far away.
-- Logo **BARRICADE** in Geist Pixel at large size, with a cyan/magenta
-  chromatic split (offset 2px) and faint scanlines.
+- A framed, low-resolution festival poster with a cobalt sky and a chunky crowd.
+- Logo **BARRICADE** in large, solid acid-lime Geist Pixel.
 - Under it: **THE DAILY PUSH** (wide tracking), then
   `7 prompts · 25 seconds each · rarer answers get you closer`.
-- Primary CTA: **▲ PUSH TO THE FRONT ▲**. A large panel button with a cyan
-  glow edge and stepped corners.
+- Primary CTA: **▲ PUSH TO THE FRONT ▲**. A solid acid-lime button with hard
+  offset shadow and stepped corners. The game rules sit in a compact three-cell strip.
 - `SET #12 · MON 09 NOV` and `DOORS CLOSE IN 06:12:33` (time until local
   midnight). Show `STREAK 3` when there's a streak.
 - Secondary row: `HOW TO PLAY` · `ARCHIVE ⟲` · `LAST NIGHT'S CROWD`.
@@ -91,7 +92,7 @@ From the back of the field, looking at the stage:
   move). In the centre, 7 progress squares that fill with the tier colour; the
   current one pulses gently. Below them, `PROMPT 1 OF 7`. Right panel
   `POINTS` / `0`.
-- **Prompt card**: a dark panel with stepped corners. `PROMPT 1 OF 7` in
+- **Prompt card**: a warm-cream panel with dark text and stepped corners. `PROMPT 1 OF 7` in
   magenta with wide tracking, the prompt text big (about 26–30px on mobile),
   the optional hint small and dim in Geist Mono, and a foot line
   `▲ rarer answers get you closer ▲`.
@@ -103,7 +104,7 @@ From the back of the field, looking at the stage:
   - Text input `type one answer…` with `autocomplete=off`,
     `autocapitalize=off`, `spellcheck=false`, `enterkeyhint=go`, max 80 chars.
     It autofocuses when the round starts.
-  - A **PUSH** button in magenta. Enter submits.
+  - A **PUSH** button in coral. Enter submits.
 - **Feedback line** above the dock (`aria-live=polite`):
   - unknown: `"banana": not on tonight's list. try again`
   - off-prompt: `BERGHAIN is real — just not an answer here.`
@@ -156,7 +157,7 @@ and in the OG image (`app/s/[code]/opengraph-image.tsx`).
 └──────────────────────────────────────┴─ ─ ┴───────────┘
 ```
 
-- The paper is off-white `#F1EEE8` and the ink is `#0B0D17`, in Geist Pixel.
+- The paper is cream `#F5EDDA` and the ink is charcoal `#151618`, in Geist Pixel.
   Half-circle notches sit at the top and bottom of the dotted perforation. The
   stub carries `ADMIT ONE` vertically.
 - The **barcode** is a pixel barcode generated deterministically from the
@@ -205,3 +206,18 @@ opens in 04:12:00`.
 
 Short, dry and affectionate about festival life. Lowercase for feedback lines,
 UPPERCASE with wide tracking for labels. Never mean about wrong answers.
+
+## Simplified mobile flow
+
+Home has one start button and a short rules line. During play, distance is the
+score: the duplicate points counter is omitted. Small screens omit the side
+ruler and duplicate prompt metadata. The question remains scrollable above
+the keyboard; the clock and at least 52px-high answer controls keep their size.
+A focused short viewport also activates the compact layout for browsers that
+resize both viewports. IME confirmation does not submit an unfinished answer.
+Results lead with the ticket and a single share button; answer review and raw
+share text are available as optional disclosures.
+
+Edition titles appear above the wordmark. A one-off edition shows no fictional
+next-set countdown. The preview may serve an isolated encrypted pack; the
+normal daily schedule stays independent.

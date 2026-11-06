@@ -85,3 +85,31 @@
     font-size: 30px;
   }
 }
+
+.panel { --fill:var(--cyan); --edge:var(--cyan); --step:3px; gap:8px; padding:12px 14px; }
+.right { --fill:var(--uv); --edge:var(--uv); }
+.label { color:#151618; font-size:9px; letter-spacing:0.06em; }
+.distance,.points { color:#151618; text-shadow:none; letter-spacing:-0.04em; }
+.count { text-shadow:none; letter-spacing:0.08em; }
+.progress { padding-top:10px; }
+
+.hud { grid-template-columns:auto 1fr; align-items:center; gap:20px; }
+.progress { align-items:flex-end; gap:8px; padding-top:0; }
+.panel { padding:10px 12px; gap:6px; min-width:112px; max-width:none; }
+.label { font-size:8px; }
+.distance { font-size:28px; }
+@media (max-width: 760px) {
+ .hud { padding-top:calc(var(--safe-top) + var(--hud-pad, 10px)); gap:14px; }
+ .panel { padding:8px 10px; min-width:96px; }
+ .distance { font-size:24px; }
+ .squares { --sq:18px; gap:4px; }
+ .count { font-size:9px; }
+}
+
+@media (max-width: 760px) {
+ [data-kb] .hud { padding-top:calc(var(--safe-top) + 6px); }
+ [data-kb] .panel { padding:6px 10px; gap:0; }
+ [data-kb] .label { display:none; }
+ [data-kb] .distance { font-size:22px; }
+ [data-kb] .progress { gap:4px; }
+}

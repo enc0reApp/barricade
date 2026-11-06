@@ -54,7 +54,7 @@ const InputDock = forwardRef<HTMLInputElement, InputDockProps>(function InputDoc
             className={styles.input}
             type="text"
             inputMode="text"
-            placeholder="type one answer…"
+            placeholder="Your answer…"
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
@@ -63,12 +63,16 @@ const InputDock = forwardRef<HTMLInputElement, InputDockProps>(function InputDoc
             maxLength={80}
             value={value}
             onChange={(e) => onChange(e.target.value)}
+            onKeyDown={(e) => {
+              // Enter confirms an IME composition before it submits an answer.
+              if (e.key === "Enter" && e.nativeEvent.isComposing) e.preventDefault();
+            }}
             tabIndex={hidden ? -1 : 0}
             aria-describedby="prompt-text prompt-hint feedback"
           />
         </div>
-        <button type="submit" className={`px-btn px-btn--hot ${styles.push}`} disabled={busy || hidden} tabIndex={hidden ? -1 : 0}>
-          {busy ? "…" : "PUSH"}
+        <button type="submit" aria-label={busy ? "Checking your answer" : "Submit your answer"} className={`px-btn px-btn--hot ${styles.push}`} disabled={busy || hidden} tabIndex={hidden ? -1 : 0}>
+          {busy ? "…" : "GO"}
         </button>
       </form>
     </div>
@@ -79,7 +83,7 @@ export default InputDock;
 
 export function Feedback({ text, tone }: { text: string | null; tone: "warn" | "info" | "good" }) {
   return (
-    <p id="feedback" className={styles.feedback} data-tone={tone} role="status" aria-live="polite">
+    <p id="feedback" className={styles.feedback} data-tone={tone} data-empty={!text || undefined} role="status" aria-live="polite">
       {text ?? " "}
     </p>
   );

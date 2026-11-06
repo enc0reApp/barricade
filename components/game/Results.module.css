@@ -107,3 +107,18 @@
 .next > * {
   flex: 1 1 auto;
 }
+
+.results { gap:24px; }
+.head { padding:12px 0 16px; border-bottom:4px solid var(--uv); }
+.where { font-size:20px; text-shadow:none; letter-spacing:-0.02em; line-height:1.5; }
+.lore { font-family:var(--font-mono); font-size:12px; letter-spacing:0; }
+.sub,.crowd,.doors { text-shadow:none; }
+
+.where { font-size:24px; }
+.review { border-top:2px solid var(--panel-edge); border-bottom:2px solid var(--panel-edge); }
+.review > summary { display:flex; justify-content:space-between; align-items:center; min-height:56px; padding:0 4px; cursor:pointer; font-size:12px; letter-spacing:0.08em; list-style:none; }
+.review > summary::-webkit-details-marker { display:none; }
+.review[open] > summary span { transform:rotate(45deg); }
+.review[open] { padding-bottom:18px; }
+.review > summary:focus-visible { outline:2px solid var(--cyan); outline-offset:4px; }
+@media (max-width: 760px) { .results { gap:18px; } .head { gap:12px; } }

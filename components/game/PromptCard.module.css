@@ -98,3 +98,22 @@
     transform: none;
   }
 }
+
+.card { --fill:#f5edda; --edge:#f5edda; --step:4px; padding:24px; filter:drop-shadow(6px 6px 0 #08090b); }
+.kicker { color:#51448b; font-size:10px; letter-spacing:0.1em; }
+.types { color:#54544e; font-family:var(--font-pixel); font-size:10px; }
+.text { color:#151618; text-shadow:none; font-size:clamp(26px,6.7vw,38px); line-height:1.16; letter-spacing:-0.02em; margin-top:18px; text-wrap:pretty; }
+.hint { color:#55534c; font-size:12px; line-height:1.6; }
+.foot { display:none; }
+.wait { color:#67645e; }
+
+.top { display:none; }
+.text { margin-top:0; }
+@media (max-width: 760px) {
+ .card { padding:18px; }
+ .text { font-size:26px; line-height:1.18; }
+ .hint { margin-top:10px; font-size:12px; line-height:1.45; }
+ [data-kb] .card { padding:14px 16px; }
+ [data-kb] .text { margin:0; font-size:22px; line-height:1.15; }
+ [data-kb] .hint { font-size:11px; line-height:1.4; }
+}

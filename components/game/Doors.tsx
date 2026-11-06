@@ -7,6 +7,7 @@ import Countdown from "@/components/ui/Countdown";
 import Logo from "@/components/ui/Logo";
 import PixelIcon from "@/components/ui/PixelIcon";
 import Footer from "@/components/ui/Footer";
+import FieldPoster from "@/components/scene/FieldPoster";
 import styles from "./Doors.module.css";
 
 export interface DoorsProps {
@@ -19,6 +20,8 @@ export interface DoorsProps {
   archive: boolean;
   /** A round was started and is resumable. */
   resume?: boolean;
+  sample?: boolean;
+  nextOpen?: number | null;
   onStart(): void;
   onMidnight?(): void;
 }
@@ -26,21 +29,21 @@ export interface DoorsProps {
 export function SecondaryNav({ archive = false }: { archive?: boolean }) {
   return (
     <nav className={styles.nav} aria-label="More">
-      <Link className="px-btn px-btn--ghost" href="/how">
+      <Link href="/how">
         HOW TO PLAY
       </Link>
-      <Link className="px-btn px-btn--ghost" href="/archive">
-        {archive ? "ALL SETS" : "ARCHIVE"} <PixelIcon name="archive" size={2} />
+      <Link href="/archive">
+        {archive ? "ALL SETS" : "ARCHIVE"}
       </Link>
-      <Link className="px-btn px-btn--ghost" href="/crowd">
-        LAST NIGHT&apos;S CROWD
+      <Link href="/crowd">
+        THE CROWD
       </Link>
     </nav>
   );
 }
 
 const Doors = forwardRef<HTMLButtonElement, DoorsProps>(function Doors(
-  { number, date, title, rounds, seconds, streak, archive, resume = false, onStart, onMidnight },
+  { number, date, title, rounds, seconds, streak, archive, sample = false, nextOpen, resume = false, onStart, onMidnight },
   ref,
 ) {
   return (
@@ -51,23 +54,20 @@ const Doors = forwardRef<HTMLButtonElement, DoorsProps>(function Doors(
         </p>
       ) : null}
       <div className={styles.top}>
-        <p className={styles.presents}>FSTVL.XYZ PRESENTS</p>
+        {sample || title ? <p className={styles.presents}>{sample ? "DEMO SET" : title}</p> : null}
         <Logo size="lg" />
-        <p className={styles.daily}>{archive ? `SET #${number} · ${formatSetDate(date)}` : "THE DAILY PUSH"}</p>
-        <p className={styles.tag}>
-          <span>
-            {rounds} prompts · {seconds} seconds each
-          </span>
-          <span>rarer answers get you closer</span>
-        </p>
-        {title ? <p className={styles.title}>{`/// ${title} ///`}</p> : null}
+        <p className={styles.daily}>{archive ? `SET #${number} · ${formatSetDate(date)}` : "THE DAILY PUSH TO THE FRONT."}</p>
+        <p className={styles.tag}>Rarer answers get you closer to the stage.</p>
       </div>
-      <div className={styles.window} aria-hidden="true" />
+      <figure className={styles.window}>
+        <FieldPoster />
+        <figcaption><span>YOU START HERE</span><span>700m → 0m</span></figcaption>
+      </figure>
       <div className={styles.bottom}>
+        <p className={styles.rules}>{rounds} questions · {seconds} seconds each</p>
         <button ref={ref} type="button" className={`px-btn px-btn--big ${styles.cta}`} onClick={onStart}>
-          <span className="tri" aria-hidden="true">▲</span>
-          {resume ? "KEEP PUSHING" : "PUSH TO THE FRONT"}
-          <span className="tri" aria-hidden="true">▲</span>
+          {resume ? "RESUME SET" : archive ? "PLAY THIS SET" : "PLAY TODAY’S SET"}
+          <span aria-hidden="true">→</span>
         </button>
         <div className={styles.meta}>
           <span>
@@ -81,14 +81,16 @@ const Doors = forwardRef<HTMLButtonElement, DoorsProps>(function Doors(
               <PixelIcon name="left" size={2} /> back to the archive
             </Link>
           </p>
+        ) : nextOpen === null ? (
+          <p className={styles.close}>ONE-OFF SET · PLAY IT TODAY</p>
         ) : (
           <p className={styles.close}>
-            DOORS CLOSE IN <Countdown className={styles.count} onDone={onMidnight} />
+            NEW SET IN <Countdown className={styles.count} target={nextOpen} onDone={onMidnight} />
           </p>
         )}
         <SecondaryNav archive={archive} />
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 });

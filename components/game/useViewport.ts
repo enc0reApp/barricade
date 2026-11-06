@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from "react";
 
+/** Also handles mobile browsers that resize both the layout and visual viewport. */
+export function keyboardLikelyOpen(layoutHeight: number, visibleHeight: number, focused: boolean, zoomed = false): boolean {
+  return !zoomed && (layoutHeight - visibleHeight > 120 || (focused && visibleHeight < 500));
+}
+
 /**
  * Tracks the visual viewport so the game frame (and the input dock at its
  * foot) stays above the iOS / Android on-screen keyboard. Writes --vv-h and
@@ -10,7 +15,10 @@ import { useEffect, useState } from "react";
 export function useVisualViewport(active: boolean): boolean {
   const [keyboard, setKeyboard] = useState(false);
   useEffect(() => {
-    if (!active) return;
+    if (!active) {
+      setKeyboard(false);
+      return;
+    }
     const root = document.documentElement;
     const vv = window.visualViewport;
     const update = () => {
@@ -21,16 +29,21 @@ export function useVisualViewport(active: boolean): boolean {
       const top = vv && !zoomed ? vv.offsetTop : 0;
       root.style.setProperty("--vv-h", `${Math.round(h)}px`);
       root.style.setProperty("--vv-top", `${Math.round(top)}px`);
-      setKeyboard(window.innerHeight - h > 120);
+      const tag = document.activeElement?.tagName;
+      setKeyboard(keyboardLikelyOpen(window.innerHeight, h, tag === "INPUT" || tag === "TEXTAREA", zoomed));
     };
     update();
     vv?.addEventListener("resize", update);
     vv?.addEventListener("scroll", update);
     window.addEventListener("resize", update);
+    document.addEventListener("focusin", update);
+    document.addEventListener("focusout", update);
     return () => {
       vv?.removeEventListener("resize", update);
       vv?.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
+      document.removeEventListener("focusin", update);
+      document.removeEventListener("focusout", update);
       root.style.removeProperty("--vv-h");
       root.style.removeProperty("--vv-top");
     };

@@ -39,3 +39,5 @@
   background: var(--sky-0);
   transition: opacity 600ms ease;
 }
+
+.scan,.vignette { display:none; }

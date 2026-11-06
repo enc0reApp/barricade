@@ -9,8 +9,6 @@ import {
   drawBackground,
   drawBeams,
   drawCrowd,
-  drawFog,
-  drawHaze,
   drawStage,
   drawStars,
   farCrowdOpts,
@@ -56,7 +54,7 @@ function makeCanvas(w: number, h: number): HTMLCanvasElement {
 
 /** Logical canvas size: ~180px wide on phones, ~4 CSS px per pixel on desktop, whole device pixels per pixel. */
 function measure(cssW: number, cssH: number, dpr: number) {
-  const target = cssW < 700 ? 180 : Math.min(420, Math.max(240, cssW / 4));
+  const target = cssW < 700 ? 140 : Math.min(240, Math.max(180, cssW / 6));
   const k = Math.max(1, Math.round((cssW * dpr) / target));
   const W = Math.max(60, Math.ceil((cssW * dpr) / k));
   const H = Math.max(80, Math.ceil((cssH * dpr) / k));
@@ -145,10 +143,10 @@ export default function Scene({ distance, horizon = 0.5, hype = 0, dim = 0 }: Sc
       }
       ctx.drawImage(bg, 0, 0);
       drawStars(ctx, v, t, L.still);
-      drawHaze(ctx, v, d, t);
+
       drawBeams(ctx, v, d, t, L.still);
       drawStage(ctx, v, d, t, L.still);
-      drawFog(ctx, v, d, t, L.still);
+
 
       const hq = Math.round(hy * 10) / 10;
       const fk = `${bk}x${d.toFixed(2)}x${hq}`;

@@ -90,3 +90,8 @@
 .intro p {
   margin: 0;
 }
+
+.head { align-items:flex-start; text-align:left; padding:28px 0 16px; border-bottom:4px solid var(--uv); }
+.title { font-size:clamp(32px,7vw,52px); text-shadow:none; letter-spacing:-0.03em; color:var(--cyan); }
+.kicker { color:var(--magenta); }
+.intro { text-shadow:none; font-family:var(--font-mono); letter-spacing:0; }

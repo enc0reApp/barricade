@@ -1,43 +1,43 @@
 /*
  * Design tokens. Shared by every component — extend, don't fork.
- * Night-time festival field: deep navy sky, stage-light cyan + magenta,
- * warm amber from the stage wash. Pixel unit is 4px.
+ * Festival-poster palette: charcoal, cobalt, acid lime, coral and warm cream.
+ * Legacy cyan/magenta variable names map to lime/coral. Pixel unit is 4px.
  */
 :root {
   /* sky → field */
-  --sky-0: #05060d;
-  --sky-1: #0a0e22;
-  --sky-2: #141a3d;
-  --sky-3: #232a5c;
-  --field-0: #090c18;
-  --field-1: #0f1426;
+  --sky-0: #151618;
+  --sky-1: #1c1d22;
+  --sky-2: #292b38;
+  --sky-3: #343be8;
+  --field-0: #1a1b20;
+  --field-1: #25262d;
 
   /* surfaces */
-  --panel: #0c1124;
-  --panel-2: #121936;
-  --panel-edge: #273160;
-  --panel-edge-hi: #3b4a8a;
+  --panel: #24252b;
+  --panel-2: #30313a;
+  --panel-edge: #474952;
+  --panel-edge-hi: #646672;
 
   /* ink */
-  --ink: #f1eee8;
-  --ink-dim: #9aa1c2;
-  --ink-faint: #5a6290;
+  --ink: #f5edda;
+  --ink-dim: #c4c0b9;
+  --ink-faint: #85878e;
 
   /* stage lights */
-  --cyan: #45e5ff;
-  --magenta: #ff4fa3;
-  --amber: #ffb547;
-  --uv: #8b5cff;
-  --warn: #ff8a5c; /* rejected-answer text; never flashed */
+  --cyan: #d6ff62;
+  --magenta: #ff805c;
+  --amber: #ffca6b;
+  --uv: #9b8bff;
+  --warn: #ffaf96; /* rejected-answer text; never flashed */
 
-  /* tiers (keep in sync with lib/game/tiers.ts) */
-  --tier-main: #e8e6e3;
-  --tier-tote: #d9a066;
-  --tier-side: #4da3ff;
-  --tier-tent: #3ddc84;
-  --tier-basement: #b26bff;
-  --tier-htbt: #ffd447;
-  --tier-miss: #2a3150;
+  /* tiers (mirror in lib/share/colors.ts; IDs and points live in lib/game/tiers.ts) */
+  --tier-main: #f5edda;
+  --tier-tote: #e8ac79;
+  --tier-side: #80aaff;
+  --tier-tent: #b4e889;
+  --tier-basement: #b7a5ff;
+  --tier-htbt: #ffe16c;
+  --tier-miss: #43454d;
 
   /* type — variables are set by next/font in app/layout.tsx */
   --font-pixel: var(--font-geist-pixel-square), ui-monospace, monospace;
@@ -50,10 +50,10 @@
   /* rhythm */
   --px: 4px;
   --gutter: 16px;
-  --column: 560px;
+  --column: 640px;
   --radius: 0px; /* pixel world: no rounded corners */
-  --tracking-wide: 0.18em;
-  --tracking-wider: 0.32em;
+  --tracking-wide: 0.12em;
+  --tracking-wider: 0.18em;
 
   color-scheme: dark;
 }

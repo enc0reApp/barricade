@@ -1,5 +1,5 @@
 .panel {
-  --fill: rgba(8, 11, 26, 0.9);
+  --fill: var(--panel);
   --step: 6px;
   padding: 20px 18px 18px;
 }

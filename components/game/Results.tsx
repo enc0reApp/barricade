@@ -60,7 +60,7 @@ const Results = forwardRef<HTMLHeadingElement, ResultsProps>(function Results(
       </header>
 
       <h1 className={styles.where} ref={ref} tabIndex={-1}>
-        {finish.distance === 0 ? "you made it to the barricade." : `you ended up ${finish.distance}m from the stage.`}
+        {finish.distance === 0 ? "ON THE BARRICADE." : "YOUR TICKET."}
         <span className={styles.lore}>{loreFor(finish.distance)}</span>
       </h1>
 
@@ -143,11 +143,16 @@ const Results = forwardRef<HTMLHeadingElement, ResultsProps>(function Results(
         </div>
       ) : (
         <p className={styles.doors}>
-          NEXT DOORS OPEN IN <Countdown className={styles.count} target={nextOpen} onDone={() => setOpen(true)} />
+          NEXT SET IN <Countdown className={styles.count} target={nextOpen} onDone={() => setOpen(true)} />
         </p>
       )}
 
-      {detail ? <YourSet rounds={finish.rounds} tries={tries} flagged={flagged} onFlag={onFlag} reportsAvailable={finish.reportsAvailable} /> : null}
+      {detail ? (
+        <details className={styles.review}>
+          <summary>REVIEW YOUR {finish.rounds.length} ANSWERS <span aria-hidden="true">+</span></summary>
+          <YourSet rounds={finish.rounds} tries={tries} flagged={flagged} onFlag={onFlag} reportsAvailable={finish.reportsAvailable} />
+        </details>
+      ) : null}
 
       <SecondaryNav archive={archive} />
       <Footer />

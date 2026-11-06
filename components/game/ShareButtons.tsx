@@ -70,9 +70,11 @@ export default function ShareButtons({ number, outcomes }: { number: number; out
   return (
     <div className={styles.share}>
       <button type="button" className={`px-btn px-btn--hot px-btn--big ${styles.primary}`} onClick={share}>
-        {status === "copied" ? "COPIED" : status === "shared" ? "SHARED" : "/// SHARE YOUR TICKET ///"}
+        {status === "copied" ? "COPIED" : status === "shared" ? "SHARED" : "SHARE TICKET"}
       </button>
-      <div className={styles.row}>
+      <details className={styles.more}>
+        <summary>COPY OR VIEW SHARE TEXT</summary>
+        <div className={styles.row}>
         <button type="button" className="px-btn px-btn--ghost" onClick={copyText}>
           <PixelIcon name={status === "copied" ? "check" : "copy"} size={2} />
           {status === "copied" ? "COPIED" : "COPY TEXT"}
@@ -80,9 +82,10 @@ export default function ShareButtons({ number, outcomes }: { number: number; out
         <pre className={styles.preview} aria-label="Share text preview">
           {text}
         </pre>
-      </div>
+        </div>
+      </details>
       <p className={styles.status} role="status" aria-live="polite">
-        {status === "copied" ? "copied to your clipboard" : status === "failed" ? "couldn't copy. long-press the text above" : ""}
+        {status === "copied" ? "copied to your clipboard" : status === "failed" ? "couldn't copy. open the share text above and copy it" : ""}
       </p>
     </div>
   );

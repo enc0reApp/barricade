@@ -611,7 +611,7 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
   }
 
   const archive = route.kind === "archive";
-  const scene = <Scene distance={distance} horizon={horizon} hype={hype} dim={phase.k === "ticket" ? 0.3 : 0} />;
+  const scene = inFrame || phase.k === "ticket" ? <Scene distance={distance} horizon={horizon} hype={hype} dim={phase.k === "ticket" ? 0.7 : 0.45} /> : null;
 
   /* ───────────── screens ───────────── */
 
@@ -690,6 +690,8 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
           seconds={set.seconds[0] ?? DEFAULT_SECONDS}
           streak={streak}
           archive={archive}
+          sample={set.pack === "sample"}
+          nextOpen={nextSetOpensAt(set.date, set.nextDate)}
           resume={(game?.rounds.length ?? 0) > 0}
           onStart={() => {
             // Focus inside the tap so mobile keyboards open for the first prompt.
@@ -742,7 +744,7 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
     <div className={styles.frame} data-phase={phase.k} data-kb={keyboard || undefined} data-archive={archive || undefined} data-off={!inFrame || undefined} aria-hidden={!inFrame || undefined}>
       {archive ? <p className={styles.archiveTag}>ARCHIVE · NOT SCORED</p> : null}
       <Hud distance={distance} points={points} outcomes={shown} current={currentIndex} total={total} />
-      {inFrame ? <Ruler distance={distance} lore={phase.k === "reveal" ? "all" : "none"} /> : null}
+      {inFrame ? <Ruler distance={distance} lore={phase.k === "reveal" ? "near" : "none"} /> : null}
 
       {phase.k === "starting" || phase.k === "round" ? (
         <div className={styles.cardSlot}>
@@ -803,9 +805,9 @@ export default function Game({ route: routeProp }: { route: GameRoute }) {
 
       {phase.k === "reveal" && !phase.travel ? (
         <div className={styles.keep}>
-          <button ref={keepRef} type="button" aria-describedby={TIER_CARD_ID} className="px-btn px-btn--big" data-long={phase.index >= lastIndex || undefined} onClick={advance}>
+          <button ref={keepRef} type="button" aria-describedby={TIER_CARD_ID} className="px-btn px-btn--big" onClick={advance}>
             <span className="tri" aria-hidden="true">▲</span>
-            {phase.index >= lastIndex ? "SEE WHERE YOU ENDED UP" : "KEEP PUSHING"}
+            {phase.index >= lastIndex ? "SEE YOUR TICKET" : "NEXT QUESTION"}
             <span className="tri" aria-hidden="true">▲</span>
           </button>
         </div>

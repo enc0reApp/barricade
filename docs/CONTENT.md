@@ -115,3 +115,29 @@ pnpm content:seal      # encrypt pack + sources → content/sealed/ (needs BARRI
 pnpm content:unseal    # restore content/source from content/sealed (needs the key)
 pnpm content:sample    # compile the public sample pack
 ```
+
+## Isolated exclusive editions
+
+The LA festival edition for November 6, 2026 is separate from the daily
+November 9–23 schedule. Its pack and source backup are encrypted in
+`content/sealed/la-edm-2026-11-06.json.enc` and
+`content/sealed/la-edm-2026-11-06-source.json.enc`.
+
+For a new exclusive, place `schedule.json` and `prompts/*.json` under the
+ignored `content/source/special/<edition-slug>/`, then run:
+
+```bash
+pnpm exec tsx scripts/build-exclusive.ts <edition-slug>
+```
+
+This validates the live-music audience rule, checks canonical answer matching
+and verifies each question has a 100-point answer before sealing both pack
+and sources. Editorial warnings still need review; short, bounded festival
+lineups are an intentional exception for this themed edition. The exclusive
+uses fixed editorial tiers for an LA electronic-festival audience.
+
+To serve an edition, set the deployment's `BARRICADE_PACK_PATH` to its sealed
+pack and supply `BARRICADE_SEAL_KEY` and a separate `BARRICADE_SECRET` through
+environment variables. Do not change the main pack or publish plaintext.
+The normal unseal command restores the main bundle only; exclusive source
+backups use the same `source` AES-GCM label and relative-file bundle format.

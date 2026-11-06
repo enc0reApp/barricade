@@ -264,3 +264,7 @@
     transform: none;
   }
 }
+
+.ticket { background:var(--paper); }
+.brand,.barricade { text-shadow:none; }
+.stub { background:#e3d9c5; }

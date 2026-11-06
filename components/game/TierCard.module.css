@@ -107,3 +107,11 @@
     transform: none;
   }
 }
+
+.card { --fill:var(--c); --edge:var(--c); --step:4px; padding:28px 22px; filter:drop-shadow(6px 6px 0 #08090b); gap:14px; }
+.tier { color:#151618; text-shadow:none; font-size:clamp(28px,8vw,44px); letter-spacing:-0.02em; }
+.answer { color:#151618; text-shadow:none; letter-spacing:-0.01em; }
+.moved { color:#151618; }
+.flavour,.share,.note { color:#30312d; }
+.flavour { font-family:var(--font-mono); font-size:12px; letter-spacing:0; }
+.note { border-color:#15161855; }
